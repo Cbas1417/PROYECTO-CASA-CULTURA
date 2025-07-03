@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio | Casa de la Cultura Caldas</title>
+    <link rel="stylesheet" href="start.css">
+    <link rel="stylesheet" href="inicio.css">
+    <link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png" style="width: 16px; height: 16px;">
+</head>
+<body id="contenedor">
+    <header id="cabeza">
+    <nav id="social-icons">
+        <figure class="icono">
+            <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" class="icon" />
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://www.instagram.com/caldascultura/" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" class="icon" />
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://twitter.com/culturacaldas" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="Twitter/X" class="icon" />
+            </a>
+        </figure>
+        </nav>
+        <div id="user-actions">
+  <a href="registrar.html" id="btn-iniciar">Registrarse</a>
+  <a href="iniciar.html" id="btn-registrar" onclick="guardarPaginaActual()">Iniciar Sesión</a>
+  
+  <div class="perfil-dropdown" id="perfil-icono" style="display: block;">
+  <img id="perfil-img" src="../imagenes/perfil.png" alt="Usuario">
+  <div id="dropdown-menu" class="hidden">
+    <a href="../usuario/verperfil.html">Ver perfil</a>
+    <a href="#" id="cerrar-sesion">Cerrar sesión</a>
+  </div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+    <nav id="nav">
+    <img id="logo" src="../imagenes/logo1.png" alt="" width="50px" height="102px">
+    <button id="menu-toggle" aria-label="Abrir menú">&#9776;</button>
+    <div id="menu">
+        <ul>
+            <li><a href="inicio.html">Inicio</a></li>
+            <li><a href="../servicios/nuestra.html">Nuestra casa</a></li>
+            <li><a href="../servicios/programas.html">Programas de formación</a></li>  
+            <li><a href="../servicios/museo1.html">Museo</a></li>
+            <li><a href="../servicios/mapa.html">Mapa</a></li>
+            <li><a href="../servicios/index.html">Infantil</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div id="slider">
+  <div id="slide1" class="slide active">
+    <img src="../imagenes/inicio3.jpg" alt="Slide 1">
+  </div>
+  <div id="slide2" class="slide">
+    <img src="../imagenes/inicio1.jpg" alt="Slide 2">
+  </div>
+  <div id="slide3" class="slide">
+    <img src="../imagenes/inicio2.jpg" alt="Slide 3">
+  </div>
+
+  <button id="prev">&#10094;</button>
+  <button id="next">&#10095;</button>
+
+  <div id="dots">
+    <span id="dot1" class="dot active"></span>
+    <span id="dot2" class="dot"></span>
+    <span id="dot3" class="dot"></span>
+  </div>
+</div>
+
+<div class="container">
+    <!-- Historia Section -->
+    <div class="section">
+      <img src="../imagenes/Captura de pantalla 2025-05-16 150420.png" alt="Casa de la Cultura Caldas" width="420px" height="280px">
+      <div class="section-content">
+        <h2>Mision</h2>
+        <p>
+          Promover los derechos culturales de los ciudadanos caldeños, y salvaguardar la identidad y el patrimonio del territorio, con un enfoque de sostenibilidad ambiental, mediante la consolidación de espacios que fomenten la diversidad artística y cultural, y fortalezcan el tejido social de sus comunidades.
+        </p>
+      </div>
+      <!-- Espacio vacío para simetría en desktop, opcional -->
+      <div style="width:180px;"></div>
+    </div>
+
+    <!-- Visión Section -->
+    <div class="vision-section">
+      <div style="width:180px;"></div>
+      <div class="vision-content">
+        <h2>Visión</h2>
+        <p>
+          La Casa Municipal de la Cultura de Caldas, Antioquia, se proyecta para 2034 como una institución reconocida por su liderazgo en el Área Metropolitana en proyectos culturales que promuevan la cultura ciudadana, la protección y conservación del patrimonio, la memoria histórica y la identidad local, la certificación de sus programas de formación, y la inclusión de las ruralidades, para democratizar el arte y la cultura, y generar valor agregado.
+        </p>
+      </div>
+      <img src="../imagenes/Captura de pantalla 2025-05-16 150620.png" alt="Reunión Casa de la Cultura" style="object-fit:cover;" width="420px" height="280px">
+    </div>
+  </div>
+
+<footer id="footer">
+<div id="footer-container">
+    <div id="footer-logo">
+    <img src="../imagenes/logo2.png" alt="Logo Casa de la Cultura" />
+    </div>
+    <div id="footer-divider"></div>
+    <div id="footer-info">
+    <p><strong>Instagram:</strong> @caldascultura</p>
+    <p><strong>Facebook:</strong> Casa de la Cultura Caldas Antioquia</p>
+    <p><strong>X:</strong> @culturacaldas</p>
+    </div>
+</div>
+</footer>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btnIniciar = document.getElementById("btn-iniciar");
+  const btnRegistrar = document.getElementById("btn-registrar");
+  const userMenu = document.getElementById("user-menu");
+  const dropdownMenu = document.getElementById("dropdown-menu");
+  const userIcon = document.getElementById("user-icon");
+  const cerrarSesion = document.getElementById("cerrar-sesion");
+  const menuToggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("menu");
+
+  const estaLogueado = sessionStorage.getItem("usuarioLogueado") === "true";
+
+  // Mostrar/ocultar botones según sesión
+  if (estaLogueado) {
+    if (btnIniciar) btnIniciar.style.display = "none";
+    if (btnRegistrar) btnRegistrar.style.display = "none";
+    if (userMenu) userMenu.style.display = "flex";
+  } else {
+    if (btnIniciar) btnIniciar.style.display = "inline-block";
+    if (btnRegistrar) btnRegistrar.style.display = "inline-block";
+    if (userMenu) userMenu.style.display = "none";
+  }
+
+  // Toggle menú de usuario
+  let menuAbierto = false; // Controla si está abierto o cerrado
+
+userIcon.addEventListener("click", (e) => {
+  e.stopPropagation();
+  menuAbierto = !menuAbierto;
+  dropdownMenu.classList.toggle("hidden", !menuAbierto);
+});
+
+document.addEventListener("click", (e) => {
+  if (!userMenu.contains(e.target)) {
+    menuAbierto = false;
+    dropdownMenu.classList.add("hidden");
+  }
+});
+
+  // Cerrar sesión
+  if (cerrarSesion) {
+    cerrarSesion.addEventListener("click", (e) => {
+      e.preventDefault();
+      sessionStorage.removeItem("usuarioLogueado");
+      if (btnIniciar) btnIniciar.style.display = "inline-block";
+      if (btnRegistrar) btnRegistrar.style.display = "inline-block";
+      if (userMenu) userMenu.style.display = "none";
+      window.location.href = "inicio.html";
+    });
+  }
+
+  // Guardar la página actual antes de iniciar sesión
+  if (btnRegistrar) {
+    btnRegistrar.addEventListener("click", guardarPaginaActual);
+  }
+
+  // Menú hamburguesa
+  if (menuToggle && menu) {
+    menuToggle.addEventListener("click", () => {
+      menu.classList.toggle("active");
+    });
+  }
+
+  // SLIDER
+  const slides = [
+    document.getElementById('slide1'),
+    document.getElementById('slide2'),
+    document.getElementById('slide3')
+  ];
+
+  const dots = [
+    document.getElementById('dot1'),
+    document.getElementById('dot2'),
+    document.getElementById('dot3')
+  ];
+
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+
+  let currentIndex = 0;
+  let slideInterval = setInterval(nextSlide, 4000);
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+      dots[i].classList.toggle('active', i === index);
+    });
+    currentIndex = index;
+  }
+
+  function nextSlide() {
+    let nextIndex = (currentIndex + 1) % slides.length;
+    showSlide(nextIndex);
+  }
+
+  function prevSlide() {
+    let prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+    showSlide(prevIndex);
+  }
+
+  function resetInterval() {
+    clearInterval(slideInterval);
+    slideInterval = setInterval(nextSlide, 4000);
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      nextSlide();
+      resetInterval();
+    });
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+      prevSlide();
+      resetInterval();
+    });
+  }
+
+  dots.forEach((dot, idx) => {
+    dot.addEventListener("click", () => {
+      showSlide(idx);
+      resetInterval();
+    });
+  });
+
+  showSlide(currentIndex); // Inicializar
+});
+
+// Guardar página actual
+function guardarPaginaActual() {
+  sessionStorage.setItem("paginaAnterior", window.location.href);
+}
+
+
+//cerrar sesion
+document.addEventListener("DOMContentLoaded", () => {
+  const registroBtn = document.getElementById("btn-iniciar");
+  const loginBtn = document.getElementById("btn-registrar");
+  const perfilDropdown = document.getElementById("perfil-icono");
+  const cerrarSesion = document.getElementById("cerrar-sesion");
+
+  const estaLogueado = sessionStorage.getItem("usuarioLogueado") === "true";
+
+  if (estaLogueado) {
+    if (registroBtn) registroBtn.style.display = "none";
+    if (loginBtn) loginBtn.style.display = "none";
+    if (perfilDropdown) perfilDropdown.style.display = "inline-block";
+  } else {
+    if (registroBtn) registroBtn.style.display = "inline-block";
+    if (loginBtn) loginBtn.style.display = "inline-block";
+    if (perfilDropdown) perfilDropdown.style.display = "none";
+  }
+
+  if (cerrarSesion) {
+    cerrarSesion.addEventListener("click", (e) => {
+      e.preventDefault();
+      sessionStorage.removeItem("usuarioLogueado");
+      window.location.href = "inicio.html";
+    });
+  }
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const perfilIcono = document.getElementById("perfil-icono");
+  const dropdownMenu = document.getElementById("dropdown-menu");
+
+
+  perfilIcono.addEventListener("click", function (e) {
+    e.stopPropagation(); // Evita que se cierre al hacer click en el mismo icono
+    dropdownMenu.classList.toggle("hidden");
+  });
+
+  document.addEventListener("click", function () {
+    dropdownMenu.classList.add("hidden"); // Cierra al hacer clic fuera
+  });
+
+  // Cerrar sesión
+  document.getElementById("cerrar-sesion").addEventListener("click", function (e) {
+    e.preventDefault();
+    // Aquí puedes limpiar el sessionStorage o localStorage si lo usas
+    window.location.href = "../index.html"; // Redireccionar al inicio
+  });
+});
+
+
+
+</script>
+</body>
+</html>

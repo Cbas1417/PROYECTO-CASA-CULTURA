@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Recuperar Contraseña | Casa de la Cultura Caldas</title>
+<link rel="stylesheet" href="recuperar.css" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png" style="width: 16px; height: 16px;">
+</head>
+
+<body>
+<header class="top-bar">
+    <nav id="social-icons">
+        <figure class="icono">
+            <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" class="icon" />
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://www.instagram.com/caldascultura/" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" class="icon" />
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://twitter.com/culturacaldas" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="Twitter/X" class="icon" />
+            </a>
+        </figure>
+        </nav>
+</header>
+
+<a href="iniciar.html" class="volver" aria-label="Volver">
+    <i class="fas fa-arrow-left"></i>
+</a>
+
+<main class="container">
+    <form class="carta" action="#" method="post">
+    <h1>Recuperar Contraseña</h1>
+
+    <label for="email">Correo Electrónico</label>
+    <input type="email" id="email" name="email" required />
+
+    <button type="submit" class="btn-primary">Enviar</button>
+
+    <p class="problema">
+        ¿No recuerdas tu correo? <a href="#">Contáctanos</a>
+    </p>
+    </form>
+</main>
+
+<div id="modal-success" class="modal">
+<div class="modal-content">
+    ¡Registro exitoso!
+    <img src="../imagenes/pngtree-tick-icon-vector-symbol-green-checkmark-isolated-transparent-background-png-image_6629080.png" alt=""> <br>
+    Serás redirigido a iniciar sesión...
+</div>
+</div>
+
+
+<script src="recuperar.js"></script>
+
+<footer id="footer">
+<div id="footer-container">
+    <div id="footer-logo">
+    <img src="../imagenes/logo2.png" alt="Logo Casa de la Cultura" />
+    </div>
+    <div id="footer-divider"></div>
+    <div id="footer-info">
+    <p><strong>Instagram:</strong> @caldascultura</p>
+    <p><strong>Facebook:</strong> Casa de la Cultura Caldas Antioquia</p>
+    <p><strong>X:</strong> @culturacaldas</p>
+    </div>
+</div>
+</footer>
+</body>
+</html>

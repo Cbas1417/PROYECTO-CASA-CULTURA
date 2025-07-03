@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png" style="width: 16px; height: 16px;">
+    <title>Mapa | Casa de la Cultura Caldas</title>
+    <link rel="stylesheet" href="mapa.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>		
+	<link rel="stylesheet" type="text/css" href="mapa.css"/>	
+
+</head>
+<body>
+    <header id="cabeza">
+    <nav id="social-icons">
+        <figure class="icono">
+            <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" width="39" height="39">
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://www.instagram.com/caldascultura/related_profiles/?hl=es-la" target="_blank" rel="noopener">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" width="39" height="39">
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="Twitter/X" width="39" height="39">
+            </a>
+        </figure>
+    </nav>
+    <div id="user-actions">
+        <a id="registrarse" href="../usuario/registrar.html">Registrarse</a>
+        <a id="iniciar" href="../usuario/iniciar.html">Iniciar Sesión</a>
+    </div>
+</header>
+
+    <nav id="nav">
+    <img id="logo" src="../imagenes/logo1.png" alt="" width="50px" height="102px">
+    <button id="menu-toggle" aria-label="Abrir menú">&#9776;</button>
+    <div id="menu">
+        <ul>
+            <li><a href="../usuario/inicio.html">Inicio</a></li>
+            <li><a href="nuestra.html">Nuestra casa</a></li>
+            <li><a href="programas.html">Programas de formación</a></li>
+            <li><a href="museo1.html">Museo</a></li>
+            <li><a href="mapa.html">Mapa</a></li>
+            <li><a href="index.html">Infantil</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+
+<select id="select-location">
+    <option value="6.0918804,-75.6357673">Monumento Ciro Mendía</option>
+    <option value="6.0925,-75.6360">Parque Principal</option>
+    <option value="6.0908,-75.6352">Iglesia Central</option>
+</select>
+
+<div id="map" style="height: 400px;"></div>
+
+<section id="infoCiroMendia" style="margin-top: 300px;">
+    <h2>Monumento Ciro Mendía</h2>
+    <p>Texto informativo sobre el monumento...</p>
+</section>
+
+<section id="infoParquePrincipal" style="margin-top: 300px;">
+    <h2>Parque Principal</h2>
+    <p>Texto informativo sobre el parque...</p>
+</section>
+
+<section id="infoIglesiaCentral" style="margin-top: 300px;">
+    <h2>Iglesia Central</h2>
+    <p>Texto informativo sobre la iglesia...</p>
+</section>
+
+
+	<div id="map"></div>
+
+<footer id="footer">
+<div id="footer-container">
+    <div id="footer-logo">
+    <img src="../imagenes/logo2.png" alt="Logo Casa de la Cultura" />
+    </div>
+    <div id="footer-divider"></div>
+    <div id="footer-info">
+    <p><strong>Instagram:</strong> @caldascultura</p>
+    <p><strong>Facebook:</strong> Casa de la Cultura Caldas Antioquia</p>
+    <p><strong>X:</strong> @culturacaldas</p>
+    </div>
+</div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>   		
+	
+	<script src="mapa.js"></script>
+</body>
+</html>

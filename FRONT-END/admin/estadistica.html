@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+        <head>
+        <meta charset="UTF-8">
+        <title>Dashboard | Casa de la Cultura Caldas</title>
+        <link rel="stylesheet" href="estadistica.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        </head>
+        <body>
+        <header id="cabeza">
+            <nav id="social-icons">
+        <figure class="icono">
+            <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" class="icon" />
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://www.instagram.com/caldascultura/" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" class="icon" />
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://twitter.com/culturacaldas" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="Twitter/X" class="icon" />
+            </a>
+        </figure>
+        </nav>
+
+            <div class="header-actions">
+            <a href="dashboard.html" class="header-button">Administrador</a>
+            <a href="estadistica.html" class="header-button">Estadísticas</a>
+            <a href="inventario.html" class="header-button">Inventario</a>
+            <a href="doc_admin.html" class="header-button">Usuarios</a>
+
+            <div id="user-menu">
+                <div id="user-icon" tabindex="0">
+                <img src="../imagenes/perfil.png" alt="Usuario" />
+                </div>
+                <div id="dropdown-menu" class="hidden">
+                <a href="../usuario/verperfil.html">Ver perfil</a>
+                <a href="../usuario/iniciar.html">Cerrar sesión</a>
+                </div>
+            </div>
+            </div>
+        </header>
+
+        <nav id="nav">
+            <img id="logo" src="../imagenes/logo1.png" alt="Logo">
+            <button id="menu-toggle" aria-label="Abrir menú">&#9776;</button>
+            <div id="menu">
+            <ul>
+                <li><a href="../usuario/inicio.html">Inicio</a></li>
+                <li><a href="../servicios/nuestra.html">Nuestra casa</a></li>
+                <li><a href="../servicios/programas.html">Programas de formación</a></li>
+                <li><a href="../servicios/museo1.html">Museo</a></li>
+                <li><a href="../servicios/mapa.html">Mapa</a></li>
+                <li><a href="../servicios/index.html">Infantil</a></li>
+            </ul>
+            </div>
+        </nav>
+        <main id="main-dashboard">
+        <h1>Panel de Estadísticas</h1>
+        <div class="dashboard-row">
+            <section>
+            <h2>Usuarios registrados</h2>
+            <canvas id="usuariosChart"></canvas>
+            </section>
+            <section>
+            <h2>Programas populares</h2>
+            <canvas id="programasChart"></canvas>
+            </section>
+            <section>
+            <h2>Obras más visitadas</h2>
+            <canvas id="museoChart"></canvas>
+            </section>
+        </div>
+        </main>
+
+<footer id="footer">
+<div id="footer-container">
+    <div id="footer-logo">
+    <img src="../imagenes/logo2.png" alt="Logo Casa de la Cultura" />
+    </div>
+    <div id="footer-divider"></div>
+    <div id="footer-info">
+    <p><strong>Instagram:</strong> @caldascultura</p>
+    <p><strong>Facebook:</strong> Casa de la Cultura Caldas Antioquia</p>
+    <p><strong>X:</strong> @culturacaldas</p>
+    </div>
+</div>
+</footer>
+
+<script src="estadistica.js"></script>
+</body>
+</html>

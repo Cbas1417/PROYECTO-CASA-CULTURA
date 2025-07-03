@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png" style="width: 16px; height: 16px;">
+    <title>Inventario | Casa de la Cultura Caldas</title>
+  <link rel="stylesheet" href="inventario.css">
+</head>
+<body>
+  <header id="cabeza">
+            <nav id="social-icons">
+        <figure class="icono">
+            <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" class="icon" />
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://www.instagram.com/caldascultura/" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" class="icon" />
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://twitter.com/culturacaldas" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="Twitter/X" class="icon" />
+            </a>
+        </figure>
+        </nav>
+
+            <div class="header-actions">
+            <a href="dashboard.html" class="header-button">Administrador</a>
+            <a href="estadistica.html" class="header-button">Estadísticas</a>
+            <a href="inventario.html" class="header-button">Inventario</a>
+            <a href="doc_admin.html" class="header-button">Usuarios</a>
+
+            <div id="user-menu">
+                <div id="user-icon" tabindex="0">
+                <img src="../imagenes/perfil.png" alt="Usuario" />
+                </div>
+                <div id="dropdown-menu" class="hidden">
+                <a href="../usuario/verperfil.html">Ver perfil</a>
+                <a href="../usuario/iniciar.html">Cerrar sesión</a>
+                </div>
+            </div>
+            </div>
+        </header>
+
+        <nav id="nav">
+            <img id="logo" src="../imagenes/logo1.png" alt="Logo">
+            <button id="menu-toggle" aria-label="Abrir menú">&#9776;</button>
+            <div id="menu">
+            <ul>
+                <li><a href="../usuario/inicio.html">Inicio</a></li>
+                <li><a href="../servicios/nuestra.html">Nuestra casa</a></li>
+                <li><a href="../servicios/programas.html">Programas de formación</a></li>
+                <li><a href="../servicios/museo1.html">Museo</a></li>
+                <li><a href="../servicios/mapa.html">Mapa</a></li>
+                <li><a href="../servicios/index.html">Infantil</a></li>
+            </ul>
+            </div>
+        </nav>
+<main id="contenido-principal">
+<main class="panel-documentos">
+    <h2>Buscar</h2>
+    <input type="text" id="buscador" placeholder="Buscar producto..."/>
+
+    <div class="botones">
+      <button id="btnagregar">Agregar</button>
+      <button id="btneditar">Editar</button>
+      <button id="btneliminar">Eliminar</button>
+    </div>
+
+    <div id="contenedor-tabla">
+      <table id="table">
+        <thead>
+          <tr>
+            <th>Imagen</th>
+            <th>ID</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Detalles</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+  </main>
+</main>
+
+  <!-- Modal Agregar -->
+  <div id="modalagregar" class="modal">
+    <div class="modal-content">
+      <form id="formagregar">
+        <p id="p1">Agregar Producto</p>
+        <input type="file" id="imgagregar" accept="image/*" required><br>
+        <input type="text" id="idagregar" placeholder="ID" required><br>
+        <input type="text" id="productoagregar" placeholder="Producto" required><br>
+        <input type="number" id="cantidadagregar" placeholder="Cantidad" required><br>
+        <input type="text" id="detallesagregar" placeholder="Detalles" required><br>
+        <button type="submit">Confirmar</button>
+        <button type="button" onclick="cerrarModal('modalagregar')">Cancelar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Editar -->
+  <div id="modaleditar" class="modal">
+    <div class="modal-content">
+      <form id="formeditar">
+        <p id="p1">Editar Producto</p>
+        <input type="file" id="imgeditar" accept="image/*"><br>
+        <input type="text" id="ideditar" placeholder="ID"><br>
+        <input type="text" id="productoeditar" placeholder="Producto"><br>
+        <input type="number" id="cantidadeditar" placeholder="Cantidad"><br>
+        <input type="text" id="detalleseditar" placeholder="Detalles"><br>
+        <button type="submit">Guardar</button>
+        <button type="button" onclick="cerrarModal('modaleditar')">Cancelar</button>
+      </form>
+    </div>
+  </div>
+
+<footer id="footer">
+<div id="footer-container">
+    <div id="footer-logo">
+    <img src="../imagenes/logo2.png" alt="Logo Casa de la Cultura" />
+    </div>
+    <div id="footer-divider"></div>
+    <div id="footer-info">
+    <p><strong>Instagram:</strong> @caldascultura</p>
+    <p><strong>Facebook:</strong> Casa de la Cultura Caldas Antioquia</p>
+    <p><strong>X:</strong> @culturacaldas</p>
+    </div>
+</div>
+</footer>
+<script src="inventario.js"></script>
+</body>
+</html>

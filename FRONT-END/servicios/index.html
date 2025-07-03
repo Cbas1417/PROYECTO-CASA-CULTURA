@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png" style="width: 16px; height: 16px;">
+    <title>Infantil | Casa de la Cultura Caldas</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+    <header id="cabeza">
+    <nav id="social-icons">
+        <figure class="icono">
+            <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" width="39" height="39">
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://www.instagram.com/caldascultura/related_profiles/?hl=es-la" target="_blank" rel="noopener">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" width="39" height="39">
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="Twitter/X" width="39" height="39">
+            </a>
+        </figure>
+    </nav>
+    <div id="user-actions">
+        <a id="registrarse" href="../usuario/registrar.html">Registrarse</a>
+        <a id="iniciar" href="../usuario/iniciar.html">Iniciar Sesión</a>
+    </div>
+</header>
+
+    <nav id="nav">
+    <img id="logo" src="../imagenes/logo1.png" alt="" width="50px" height="102px">
+    <button id="menu-toggle" aria-label="Abrir menú">&#9776;</button>
+    <div id="menu">
+        <ul>
+            <li><a href="../usuario/inicio.html">Inicio</a></li>
+            <li><a href="nuestra.html">Nuestra casa</a></li>
+            <li><a href="programas.html">Programas de formación</a></li>
+            <li><a href="museo1.html">Museo</a></li>
+            <li><a href="mapa.html">Mapa</a></li>
+            <li><a href="index.html">Infantil</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <section class="seccion1">
+        <h1>Juego de memoria</h1>
+        <table>
+        <tr>
+            <td><button id="0" onclick="destapar(0)"></button></td>
+            <td><button id="1" onclick="destapar(1)" ></button></td>
+            <td><button id="2" onclick="destapar(2)" ></button></td>
+            <td><button id="3" onclick="destapar(3)"></button></td>
+        </tr>
+        <tr>
+            <td><button id="4" onclick="destapar(4)"></button></td>
+            <td><button id="5" onclick="destapar(5)"></button></td>
+            <td><button id="6" onclick="destapar(6)"></button></td>
+            <td><button id="7" onclick="destapar(7)"></button></td>
+        </tr>
+        <tr>
+            <td><button id="8" onclick="destapar(8)"></button></td>
+            <td><button id="9" onclick="destapar(9)"></button></td>
+            <td><button id="10" onclick="destapar(10)"></button></td>
+            <td><button id="11"onclick="destapar(11)"></button></td>
+        </tr>
+        <tr>
+            <td><button id="12" onclick="destapar(12)"></button></td>
+            <td><button id="13" onclick="destapar(13)"></button></td>
+            <td><button id="14" onclick="destapar(14)"></button></td>
+            <td><button id="15" onclick="destapar(15)"></button></td>
+        </tr>
+        </table>
+    </section>
+    <section class="seccion2">
+        <div id="aciertos" class="estadisticas">Aciertos: 0 </div>
+        <div id="t-restante" class="estadisticas">Tiempo: 120 segundos </div>
+        <div id="movimientos" class="estadisticas">Movimientos: 0 </div>
+    </section>
+</main>
+
+<footer id="footer">
+<div id="footer-container">
+    <div id="footer-logo">
+    <img src="../imagenes/logo2.png" alt="Logo Casa de la Cultura" />
+    </div>
+    <div id="footer-divider"></div>
+    <div id="footer-info">
+    <p><strong>Instagram:</strong> @caldascultura</p>
+    <p><strong>Facebook:</strong> Casa de la Cultura Caldas Antioquia</p>
+    <p><strong>X:</strong> @culturacaldas</p>
+    </div>
+</div>
+</footer>
+<script src="main.js"></script>
+</body>
+</html>

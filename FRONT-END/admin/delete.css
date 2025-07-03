@@ -1,0 +1,133 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  font-style: oblique;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.superior{
+  background-color: #FF9015;
+  padding: 1px 10px;
+  display: flex;
+  gap: 70px;
+  justify-content: flex-end;
+  align-items: center;
+  height: 40px;
+}
+
+.top-bar{
+  background-color: #FF9015  ;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.superior .buttons{
+  display: flex;
+  gap: 20px;
+}
+
+.superior button{
+  background-color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.superior button:hover{
+  background-color: #ffd180;
+}
+
+.nav-principal{
+  background-color: #3D4543;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 105px;
+}
+
+.logo img {
+  height: 85px;
+}
+
+.botones-nav{
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.nav-principal button {
+  background-color: #3D4543;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.nav-principal button:hover {
+  background-color: orange;
+}
+
+.bg-image {
+  background-image: url('imagenes/casaltral.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
+  z-index: 0;
+}
+
+.contenedor-eliminar {
+  background-color: #fbb26a;
+  width: 90%;
+  max-width: 500px;
+  z-index: 1;
+}
+
+
+
+.footer{
+  background-color: #FF9015;
+  padding: 20px;
+}
+
+.contenido{
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.logo img{
+  height: 100px;
+}
+
+.linea{
+  width: 1px;
+  background-color: #000;
+  height: 80px;
+  margin-left: 700px;
+}
+
+.footer-text{
+  color: black;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1.6;
+  margin-left: 40px;
+}
+
