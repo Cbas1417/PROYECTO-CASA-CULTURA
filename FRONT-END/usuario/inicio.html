@@ -125,7 +125,6 @@
 </footer>
 
 <script>
-
 document.addEventListener("DOMContentLoaded", () => {
   const btnIniciar = document.getElementById("btn-iniciar");
   const btnRegistrar = document.getElementById("btn-registrar");
@@ -135,6 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const cerrarSesion = document.getElementById("cerrar-sesion");
   const menuToggle = document.getElementById("menu-toggle");
   const menu = document.getElementById("menu");
+  const perfilDropdown = document.getElementById("perfil-icono");
 
   const estaLogueado = sessionStorage.getItem("usuarioLogueado") === "true";
 
@@ -143,43 +143,40 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnIniciar) btnIniciar.style.display = "none";
     if (btnRegistrar) btnRegistrar.style.display = "none";
     if (userMenu) userMenu.style.display = "flex";
+    if (perfilDropdown) perfilDropdown.style.display = "inline-block";
   } else {
     if (btnIniciar) btnIniciar.style.display = "inline-block";
     if (btnRegistrar) btnRegistrar.style.display = "inline-block";
     if (userMenu) userMenu.style.display = "none";
+    if (perfilDropdown) perfilDropdown.style.display = "none";
   }
 
-  // Toggle menú de usuario
-  let menuAbierto = false; // Controla si está abierto o cerrado
+  // Toggle menú de usuario (ícono)
+  if (perfilDropdown) {
+    perfilDropdown.addEventListener("click", function (e) {
+      e.stopPropagation(); 
+      dropdownMenu.classList.toggle("hidden");
+    });
 
-userIcon.addEventListener("click", (e) => {
-  e.stopPropagation();
-  menuAbierto = !menuAbierto;
-  dropdownMenu.classList.toggle("hidden", !menuAbierto);
-});
-
-document.addEventListener("click", (e) => {
-  if (!userMenu.contains(e.target)) {
-    menuAbierto = false;
-    dropdownMenu.classList.add("hidden");
+    document.addEventListener("click", function () {
+      dropdownMenu.classList.add("hidden");
+    });
   }
-});
 
   // Cerrar sesión
   if (cerrarSesion) {
     cerrarSesion.addEventListener("click", (e) => {
       e.preventDefault();
       sessionStorage.removeItem("usuarioLogueado");
-      if (btnIniciar) btnIniciar.style.display = "inline-block";
-      if (btnRegistrar) btnRegistrar.style.display = "inline-block";
-      if (userMenu) userMenu.style.display = "none";
       window.location.href = "inicio.html";
     });
   }
 
-  // Guardar la página actual antes de iniciar sesión
+  // Guardar página actual
   if (btnRegistrar) {
-    btnRegistrar.addEventListener("click", guardarPaginaActual);
+    btnRegistrar.addEventListener("click", () => {
+      sessionStorage.setItem("paginaAnterior", window.location.href);
+    });
   }
 
   // Menú hamburguesa
@@ -226,24 +223,15 @@ document.addEventListener("click", (e) => {
     showSlide(prevIndex);
   }
 
-  function resetInterval() {
-    clearInterval(slideInterval);
-    slideInterval = setInterval(nextSlide, 4000);
-  }
+  nextBtn.addEventListener('click', () => {
+    nextSlide();
+    resetInterval();
+  });
 
-  if (nextBtn) {
-    nextBtn.addEventListener("click", () => {
-      nextSlide();
-      resetInterval();
-    });
-  }
-
-  if (prevBtn) {
-    prevBtn.addEventListener("click", () => {
-      prevSlide();
-      resetInterval();
-    });
-  }
+  prevBtn.addEventListener('click', () => {
+    prevSlide();
+    resetInterval();
+  });
 
   dots.forEach((dot, idx) => {
     dot.addEventListener("click", () => {
@@ -252,65 +240,14 @@ document.addEventListener("click", (e) => {
     });
   });
 
-  showSlide(currentIndex); // Inicializar
-});
-
-// Guardar página actual
-function guardarPaginaActual() {
-  sessionStorage.setItem("paginaAnterior", window.location.href);
-}
-
-
-//cerrar sesion
-document.addEventListener("DOMContentLoaded", () => {
-  const registroBtn = document.getElementById("btn-iniciar");
-  const loginBtn = document.getElementById("btn-registrar");
-  const perfilDropdown = document.getElementById("perfil-icono");
-  const cerrarSesion = document.getElementById("cerrar-sesion");
-
-  const estaLogueado = sessionStorage.getItem("usuarioLogueado") === "true";
-
-  if (estaLogueado) {
-    if (registroBtn) registroBtn.style.display = "none";
-    if (loginBtn) loginBtn.style.display = "none";
-    if (perfilDropdown) perfilDropdown.style.display = "inline-block";
-  } else {
-    if (registroBtn) registroBtn.style.display = "inline-block";
-    if (loginBtn) loginBtn.style.display = "inline-block";
-    if (perfilDropdown) perfilDropdown.style.display = "none";
+  function resetInterval() {
+    clearInterval(slideInterval);
+    slideInterval = setInterval(nextSlide, 4000);
   }
 
-  if (cerrarSesion) {
-    cerrarSesion.addEventListener("click", (e) => {
-      e.preventDefault();
-      sessionStorage.removeItem("usuarioLogueado");
-      window.location.href = "inicio.html";
-    });
-  }
+  showSlide(currentIndex);
 });
-
-
-document.addEventListener("DOMContentLoaded", function () {
-  const perfilIcono = document.getElementById("perfil-icono");
-  const dropdownMenu = document.getElementById("dropdown-menu");
-
-
-  perfilIcono.addEventListener("click", function (e) {
-    e.stopPropagation(); // Evita que se cierre al hacer click en el mismo icono
-    dropdownMenu.classList.toggle("hidden");
-  });
-
-  document.addEventListener("click", function () {
-    dropdownMenu.classList.add("hidden"); // Cierra al hacer clic fuera
-  });
-
-  // Cerrar sesión
-  document.getElementById("cerrar-sesion").addEventListener("click", function (e) {
-    e.preventDefault();
-    // Aquí puedes limpiar el sessionStorage o localStorage si lo usas
-    window.location.href = "../index.html"; // Redireccionar al inicio
-  });
-});
+</script>
 
 
 

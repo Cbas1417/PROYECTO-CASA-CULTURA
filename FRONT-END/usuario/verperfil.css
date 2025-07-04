@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-style: oblique;
   }
 
   body {
@@ -379,6 +378,7 @@
   border-radius: 50%;
   cursor: pointer;
   border: 2px solid white;
+  background: white;
 }
 
 .dropdown-menu {
@@ -387,6 +387,7 @@
   top: 48px;
   right: 0;
   background-color: white;
+  background: white;
   min-width: 160px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   z-index: 2;
@@ -399,11 +400,26 @@
   padding: 10px 16px;
   text-decoration: none;
   display: block;
-  font-family: 'Poppins', sans-serif;
   font-size: 14px;
-  transition: background 0.2s;
+  transition: background-color 0.2s ease;
 }
 
 .dropdown-menu a:hover {
   background-color: #f0f0f0;
 }
+
+@media (max-width: 600px) {
+  .perfil-dropdown {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    z-index: 100;
+  }
+
+  .dropdown-menu {
+    right: 0;
+    left: auto;
+    min-width: 140px;
+  }
+}
+
