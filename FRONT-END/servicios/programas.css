@@ -18,7 +18,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
-  z-index: 1;
+  z-index: 100;
   position: relative;
   flex-wrap: wrap;
 }
@@ -35,8 +35,8 @@ body {
 }
 
 #social-icons img {
-  height: 39px;
-  width: 39px;
+  height: 30px;
+  width: 30px;
   filter: brightness(0) invert(1);
   object-fit: contain;
   transition: transform 0.2s;
@@ -423,4 +423,64 @@ h2 {
 
 .btn-primary:hover {
   opacity: 0.9;
+}
+
+
+
+/*parte de logueo*/
+.acordeon_perfil {
+  width: 40px;
+  height: 40px;
+}
+
+
+.acordeon_perfil details {
+  position: relative;
+}
+
+.acordeon_perfil summary {
+  list-style: none;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.acordeon_perfil summary::-webkit-details-marker {
+  display: none;
+}
+
+.submenu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: white;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 150px;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.submenu li {
+  border-bottom: 1px solid #eee;
+}
+
+.submenu li:last-child {
+  border-bottom: none;
+}
+
+.submenu li a {
+  display: block;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.submenu li a:hover {
+  background-color: #f0f0f0;
 }

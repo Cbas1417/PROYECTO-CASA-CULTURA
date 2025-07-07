@@ -17,7 +17,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
-  z-index: 1;
+  z-index: 100;
   position: relative;
   flex-wrap: wrap;
 }
@@ -394,3 +394,61 @@ display: block;
     height: 65px;
   }
 }
+
+
+/*logueo*/
+.perfil-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+#perfil-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 48px;
+  right: 0;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 10;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.dropdown-menu a {
+  color: #333 !important;
+  padding: 10px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f0f0f0;
+}
+
+/* Responsive ajuste */
+@media (max-width: 600px) {
+  .perfil-dropdown {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    z-index: 100;
+  }
+
+  .dropdown-menu {
+    right: 0;
+    left: auto;
+    min-width: 140px;
+  }
+}
+

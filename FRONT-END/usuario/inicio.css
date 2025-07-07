@@ -88,13 +88,8 @@ body {
   padding: 10px 16px;
   text-decoration: none;
   color: #333 !important;
-  font-family: 'Poppins', sans-serif;
   font-size: 14px;
   transition: background-color 0.2s ease;
-}
-
-#dropdown-menu a:hover {
-  background-color: #f0f0f0;
 }
 
 .hidden {
@@ -502,8 +497,6 @@ body {
   height: 40px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid white;
-  background: white;
 }
 
 

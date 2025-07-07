@@ -26,10 +26,24 @@
             </a>
         </figure>
     </nav>
-    <div id="user-actions">
-        <a id="registrarse" href="../usuario/registrar.html">Registrarse</a>
-        <a id="iniciar" href="../usuario/iniciar.html">Iniciar Sesión</a>
-    </div>
+    <div class="acordeon_perfil" style="display: none;">
+    <details>
+    <summary>
+        <img src="../imagenes/perfill.png" alt="Perfil" width="35" height="35" style="filter: brightness(0) invert(1);">
+
+    </summary>
+    <ul class="submenu">
+        <li><a href="../usuario/perfil.html">Ver perfil</a></li>
+        <li><a href="#" onclick="cerrarSesion()">Cerrar sesión</a></li>
+    </ul>
+    </details>
+</div>
+
+<div id="user-actions">
+    <a id="registrarse" href="../usuario/registrar.html">Registrarse</a>
+    <a id="iniciar" href="../usuario/iniciar.html?from=">Iniciar Sesión</a>
+
+</div>
 </header>
 
     <nav id="nav">
@@ -140,7 +154,7 @@
 </div>
 </div>
 
-<script src="programas.js"></script>
+
 
 <footer id="footer">
 <div id="footer-container">
@@ -156,7 +170,8 @@
 </div>
 </footer>
 
-
+<script src="programas.js"></script>
+<script src="../usuario/global.js"></script>
 
 </body>
 </html>

@@ -18,7 +18,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
-    z-index: 1;
+    z-index: 100;
     position: relative;
     flex-wrap: wrap;
 }
@@ -301,4 +301,50 @@ select:hover, select:focus {
   border-color: #FF9015;
   outline: none;
 }
+
+/*logueo */
+.perfil-dropdown {
+  position: relative;
+  display: none;
+  cursor: pointer;
+}
+
+.perfil-dropdown img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#dropdown-menu {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 160px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  padding: 6px 0;
+}
+
+#dropdown-menu a {
+  padding: 10px 16px;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+#dropdown-menu a:hover {
+  background-color: #f2f2f2;
+}
+
+.hidden {
+  display: none !important;
+}
+
 

@@ -12,30 +12,29 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Simulación de validación: correos de administrador
     const correosAdmin = ['admin@cultura.com', 'admin@caldas.gov.co'];
 
-    // Guardar estado de sesión
-    sessionStorage.setItem("usuarioLogueado", "true");
+    // Guardar sesión
+    localStorage.setItem("usuarioActivo", email);
 
-    // Redirección según tipo de usuario
+    // Obtener parámetro de redirección
+    const params = new URLSearchParams(window.location.search);
+    const paginaAnterior = params.get("from");
+
+    // Redirección
     if (correosAdmin.includes(email)) {
       window.location.href = 'admin.html';
+    } else if (paginaAnterior) {
+      window.location.href = decodeURIComponent(paginaAnterior);
     } else {
       window.location.href = 'inicio.html';
     }
   });
 });
 
+// Suponiendo que aquí validas el login exitoso
+sessionStorage.setItem("usuarioLogueado", "true");
 
-//pagina anterior de iniciar sesion
-// Recupera la página anterior
-    const paginaAnterior = sessionStorage.getItem("paginaAnterior");
+// Si quieres guardar también una imagen personalizada en el futuro:
+// sessionStorage.setItem("imagenPerfil", "ruta/a/la/imagen.jpg");
 
-    if (correosAdmin.includes(email)) {
-      window.location.href = "admin.html"; // si eres admin vas a admin
-    } else if (paginaAnterior) {
-      window.location.href = paginaAnterior; // si no, vuelve a donde estabas
-    } else {
-      window.location.href = "inicio.html"; // si no hay página guardada
-    }
