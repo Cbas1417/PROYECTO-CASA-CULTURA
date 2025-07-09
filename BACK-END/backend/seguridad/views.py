@@ -29,7 +29,7 @@ class class1(APIView):
             return JsonResponse({"Estado":"Error","Mensaje":f"El correo {correo} no esta disponible"}, status=HTTPStatus.BAD_REQUEST)
         
         token=str(uuid.uuid4())
-        url=f"{os.getenv("BASE_URL")}api/v1/verificacion/{token}"
+        url=f"{os.getenv("BASE_URL")}api/v1/seguridad/verificacion/{token}"
         print(url)
         
         #try:
@@ -41,24 +41,35 @@ class class1(APIView):
                                     is_active=0)
         UserMetadata.objects.create(token=token, user_id=u.id) 
 
-        html= f"""
-                <h1>Verificación de cuentas</h1>
-                Hola {nombre} te haz registrado exitosamente. Para activar tu cuenta
-                en el siguiente enlace:<br>
-                <a href="{url}">{url}</a>
-                </br>
-                O copia o pega el siguiente enlace en tu navegador favorito:
-                </br>
-                {url}
-                """
-        
-        utilidades.sendmail( html, "Verificación" , correo )
-        
+        try:
+            html= f"""
+                    <h1>Verificación de cuentas</h1>
+                    Hola {nombre} te haz registrado exitosamente. Para activar tu cuenta
+                    en el siguiente enlace:<br>
+                    <a href="{url}">{url}</a>
+                    <br>
+                    O copia o pega el siguiente enlace en tu navegador favorito:
+                    <br>
+                    {url}
+                    """
+            
+            utilidades.sendmail( html, "Verificación" , correo )
+            
+            return JsonResponse ({"Estado":"OK","Mensaje":"Se creo exitosamente"}, status=HTTPStatus.CREATED)
+        except Exception as e:
+            return JsonResponse ({"Estado":"Error","Mensaje":"Ocurrio un error inesperado"}, status=HTTPStatus.BAD_REQUEST)
 
-        return JsonResponse ({"Estado":"OK","Mensaje":"Se creo exitosamente"}, status=HTTPStatus.CREATED)
-
-        #except Exception as e:
-        #    return JsonResponse ({"Estado":"Error","Mensaje":"Ocurrio un error inesperado"}, status=HTTPStatus.BAD_REQUEST)
+class class2(APIView):
+    def get(self,request,token):
+        if token==None or not token:
+            return JsonResponse ({"Estado":"Error","Mensaje":"Recurso no disponible"}, status=404)
+        try:
+            data=UserMetadata.objects.filter(token=token).get()
+            UserMetadata.objects.filter(token=token).update(token="")
+            User.objects.filter(id=data.user_id).update(is_active=1)
+            return JsonResponse({"Estado": "OK", "Mensaje": "Cuenta verificada con éxito"}, status=200)
+        except UserMetadata.DoesNotExist:
+            raise Http404
 
 class class3(APIView):
     def post(self,request):
