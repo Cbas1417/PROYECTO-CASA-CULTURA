@@ -36,7 +36,7 @@ class class1(APIView):
                     <li>Mensaje:{request.data['mensaje']}</li>
                 </ul>
             """
-            utilidades.sendMail(html,"Prueba correo",request.data['correo'])
+            utilidades.sendmail(html,"Prueba correo",request.data['correo'])
 
 
         except Exception as e:

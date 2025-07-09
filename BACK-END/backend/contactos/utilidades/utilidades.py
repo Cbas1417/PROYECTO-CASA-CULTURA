@@ -7,7 +7,7 @@ from smtplib import SMTPResponseException
 
 
 def sendmail(html,asunto, para):
-    msg= MIMEMultipart('alternave')
+    msg= MIMEMultipart('alternative')
     msg['subject']=asunto
     msg['from']=os.getenv("SMTP_USER")
     msg['to']=para

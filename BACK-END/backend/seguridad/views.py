@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 import uuid
 import os
 from dotenv import load_dotenv
+from contactos.utilidades import utilidades
 # Create your views here.
 
 class class1(APIView):
@@ -31,18 +32,33 @@ class class1(APIView):
         url=f"{os.getenv("BASE_URL")}api/v1/verificacion/{token}"
         print(url)
         
-        try:
-            u=User.objects.create_user(username=correo,
-                                        password=password,
-                                        email=correo,
-                                        first_name=nombre,
-                                        last_name="",
-                                        is_active=0)
-            UserMetadata.objects.create(token=token, user_id=u.id)
-            return JsonResponse ({"Estado":"OK","Mensaje":"Se creo exitosamente"}, status=HTTPStatus.CREATED)
+        #try:
+        u=User.objects.create_user(username=correo,
+                                    password=password,
+                                    email=correo,
+                                    first_name=nombre,
+                                    last_name="",
+                                    is_active=0)
+        UserMetadata.objects.create(token=token, user_id=u.id) 
 
-        except Exception as e:
-            return JsonResponse ({"Estado":"Error","Mensaje":"Ocurrio un error inesperado"}, status=HTTPStatus.BAD_REQUEST)
+        html= f"""
+                <h1>Verificación de cuentas</h1>
+                Hola {nombre} te haz registrado exitosamente. Para activar tu cuenta
+                en el siguiente enlace:<br>
+                <a href="{url}">{url}</a>
+                </br>
+                O copia o pega el siguiente enlace en tu navegador favorito:
+                </br>
+                {url}
+                """
+        
+        utilidades.sendmail( html, "Verificación" , correo )
+        
+
+        return JsonResponse ({"Estado":"OK","Mensaje":"Se creo exitosamente"}, status=HTTPStatus.CREATED)
+
+        #except Exception as e:
+        #    return JsonResponse ({"Estado":"Error","Mensaje":"Ocurrio un error inesperado"}, status=HTTPStatus.BAD_REQUEST)
 
 class class3(APIView):
     def post(self,request):
