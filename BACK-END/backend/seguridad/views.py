@@ -1,13 +1,18 @@
 from django.http.response import JsonResponse
 from .models import *
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from http import HTTPStatus
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 import uuid
 import os
 from dotenv import load_dotenv
 from contactos.utilidades import utilidades
+from jose import jwt
+from django.conf import settings
+from datetime import datetime, timedelta
+import time
 # Create your views here.
 
 class class1(APIView):
@@ -84,6 +89,24 @@ class class3(APIView):
             return JsonResponse({"Estado":"Error","Mensaje":"el campo password es obligatorio"},status=HTTPStatus.BAD_REQUEST)
         
         try:
-            pass
+            user=User.objects.filter(email=correo).get()
         except User.DoesNotExist:
-            return JsonResponse({"Estado":"error","mensaje":"el campo password es obligatorio"},status=HTTPStatus.NOT_FOUND)
+            return JsonResponse({"Estado":"error","mensaje":"Recusrso no disponible"},status=HTTPStatus.NOT_FOUND)
+        
+        auth=authenticate(request, username=correo, password=password)
+        if auth is not None:
+            #construimos token
+            fecha=datetime.now()
+            despues=fecha+timedelta(days=1)
+            fecha_numero=int(datetime.timestamp(despues))
+            payload = {"id":user.id,
+                        "ISS":os.getenv("BASE_URL"),
+                        "iat":int(time.time()),
+                        "exp":int(fecha_numero)}
+            try:
+                token = jwt.encode(payload, settings.SECRET_KEY, algorithm="HS512")
+                return JsonResponse ({"ID":user.id,"Nombre":user.first_name,"Token":token})
+            except Exception as e:
+                return JsonResponse({"Estado":"error","mensaje":"Ocurrio un error inesperado"},status=HTTPStatus.BAD_REQUEST)
+        else:
+            return JsonResponse({"Estado":"error","mensaje":"Las credenciales ingresadas no son correctas"},status=HTTPStatus.BAD_REQUEST)
