@@ -8,7 +8,7 @@ class Exposicion(models.Model):
     def __str__(self):
         return self.nombre
     
-    class meta:
+    class Meta:
         db_table='exposicion'
         verbose_name='Exposicion'
         verbose_name_plural='Exposiciones' 

@@ -26,24 +26,19 @@
             </a>
         </figure>
     </nav>
-    <div class="acordeon_perfil" style="display: none;">
-    <details>
-    <summary>
-        <img src="../imagenes/perfill.png" alt="Perfil" width="35" height="35" style="filter: brightness(0) invert(1);">
+    <div id="user-actions">
+    <a id="btn-iniciar" href="../usuario/registrar.html">Registrarse</a>
+    <a id="btn-registrar" href="../usuario/iniciar.html">Iniciar Sesión</a>
 
-    </summary>
-    <ul class="submenu">
-        <li><a href="../usuario/perfil.html">Ver perfil</a></li>
-        <li><a href="#" onclick="cerrarSesion()">Cerrar sesión</a></li>
-    </ul>
-    </details>
+    <div class="perfil-dropdown" id="perfil-icono" style="display: none;">
+        <img id="perfil-img" src="../imagenes/perfill.png" alt="Usuario">
+        <div id="dropdown-menu" class="hidden">
+            <a href="../usuario/verperfil.html">Ver perfil</a>
+            <a href="#" id="cerrar-sesion">Cerrar sesión</a>
+        </div>
+    </div>
 </div>
 
-<div id="user-actions">
-    <a id="registrarse" href="../usuario/registrar.html">Registrarse</a>
-    <a id="iniciar" href="../usuario/iniciar.html?from=">Iniciar Sesión</a>
-
-</div>
 </header>
 
     <nav id="nav">
