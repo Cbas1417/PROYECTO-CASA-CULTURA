@@ -11,7 +11,7 @@ const errors = {
 name: document.getElementById("name-error"),
 email: document.getElementById("email-error"),
 phone: document.getElementById("phone-error"),
-document: document.getElementById("document-error"),
+document: document.getElementById("document-type-error"),
 password: document.getElementById("password-error"),
 confirm: document.getElementById("confirm-password-error")
 };
@@ -97,26 +97,26 @@ validateConfirmPassword();
 confirmPassword.addEventListener("input", validateConfirmPassword);
 
 // cuando se envia el registro y esa monda
-form.addEventListener("submit", function (e) {
-e.preventDefault();
+// form.addEventListener("submit", function (e) {
+// e.preventDefault();
 
-const isNameValid = validateName();
-const isEmailValid = validateEmail();
-const isPhoneValid = validatePhone();
-const isDocumentValid = validateDocument();
-const isPasswordValid = validatePassword();
-const isConfirmPasswordValid = validateConfirmPassword();
+// const isNameValid = validateName();
+// const isEmailValid = validateEmail();
+// const isPhoneValid = validatePhone();
+// const isDocumentValid = validateDocument();
+// const isPasswordValid = validatePassword();
+// const isConfirmPasswordValid = validateConfirmPassword();
 
-//esto pa el menu en el celcho
-if (isNameValid && isEmailValid && isPhoneValid && isDocumentValid && isPasswordValid && isConfirmPasswordValid) {
-    const modal = document.getElementById("modal-success");
-    modal.style.display = "flex";
+// //esto pa el menu en el celcho
+// if (isNameValid && isEmailValid && isPhoneValid && isDocumentValid && isPasswordValid && isConfirmPasswordValid) {
+//     const modal = document.getElementById("modal-success");
+//     modal.style.display = "flex";
 
-    setTimeout(() => {
-    window.location.href = "iniciar.html";
-    }, 3000);
-}
-});
+//     setTimeout(() => {
+//     window.location.href = "iniciar.html";
+//     }, 3000);
+// }
+// });
 
 
 //ojito pa la contra
@@ -128,5 +128,62 @@ document.querySelectorAll(".toggle-password").forEach(icon => {
         input.setAttribute("type", type);
         icon.classList.toggle("fa-eye");
         icon.classList.toggle("fa-eye-slash");
+    });
+});
+
+
+//conexion backend con fronend por axios
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("register-form");
+
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const tipo_documento = document.getElementById("document-type").value;
+        const numero_documento = document.getElementById("document-number").value;
+        const nombre = document.getElementById("name").value;
+        const fecha_nacimiento = document.getElementById("birthdate").value;
+        const correo = document.getElementById("email").value;
+        const telefono = document.getElementById("phone").value;
+        const password = document.getElementById("password").value;
+        const password_confirm = document.getElementById("confirm-password").value;
+
+        const data = {
+            tipo_documento,
+            numero_documento,
+            nombre,
+            fecha_nacimiento,
+            correo,
+            telefono,
+            password,
+            password_confirm
+        };
+
+        try {
+            const response = await axios.post("http://192.168.0.103:8000/api/v1/seguridad/registro", data);
+
+            if (response.data.estado === "ok") {
+                const modal = document.getElementById("modal-success");
+                modal.style.display = "flex";
+
+                setTimeout(() => {
+                    window.location.href = "iniciar.html";
+                }, 3000);
+            } else {
+                alert("Error: " + response.data.mensaje);
+            }
+        } catch (error) {
+            console.error("Error completo:", error);
+
+            if (error.response) {
+                const mensaje = error.response.data?.mensaje ||
+                                error.response.data?.detail ||
+                                "Error no especificado desde el servidor";
+
+                alert("Error: " + mensaje);
+            } else {
+                alert("Error: no hay respuesta del servidor");
+            }
+        }
     });
 });

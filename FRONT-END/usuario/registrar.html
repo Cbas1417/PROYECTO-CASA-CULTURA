@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="registrar.css">
 <link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png" style="width: 16px; height: 16px;">
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script defer src="registrar.js"></script>
 <title>Registro | Casa de la Cultura Caldas</title>
 
@@ -37,15 +38,17 @@
 </a>
 
 <main class="container">
-    <form class="carta" action="#" method="post">
+    <form id="register-form" class="carta" action="#" method="post">
     <h1>Registro</h1>
 
     <label for="document-type">Tipo de documento</label>
 <select id="document-type" name="document-type" class="input-style" required>
     <option value="" disabled selected>Seleccione una opción</option>
-    <option value="ti">Tarjeta de Identidad</option>
     <option value="cc">Cédula de Ciudadanía</option>
+    <option value="ti">Tarjeta de Identidad</option>
     <option value="ce">Cédula de Extranjería</option>
+    <option value="pas">Pasaporte</option>
+    <option value="nit">NIT</option>
 </select>
 <span class="error" id="document-type-error"></span>
 
@@ -57,8 +60,8 @@
     <input type="text" id="name" name="name" required />
     <span class="error" id="name-error"></span>
 
-    <label for="name">Fecha de nacimiento</label>
-    <input type="date" id="name" name="name" required />
+    <label for="birthdate">Fecha de nacimiento</label>
+    <input type="date" id="birthdate" name="birthdate" required />
     <span class="error" id="name-error"></span>
 
     <label for="email">Correo</label>
