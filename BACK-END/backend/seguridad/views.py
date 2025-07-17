@@ -13,16 +13,31 @@ from jose import jwt
 from django.conf import settings
 from datetime import datetime, timedelta
 import time
+from usuarios.models import Usuario
+from django.contrib.auth.hashers import make_password
 # Create your views here.
 
 class class1(APIView):
     def post(self,request):
+        tipo_documento = request.data.get("tipo_documento")
+        documento = request.data.get("numero_documento")
         nombre = request.data.get("nombre")
+        fecha = request.data.get("fecha_nacimiento")
         correo = request.data.get("correo")
+        telefono = request.data.get("telefono")
         password = request.data.get("password")
 
+        if not tipo_documento :
+            return JsonResponse({"estado":"error","mensaje":"el campo tipo de documento es obligatorio"},status=HTTPStatus.BAD_REQUEST)
+        
+        if not documento:
+            return JsonResponse({"estado":"error","mensaje":"el campo documento es obligatorio"},status=HTTPStatus.BAD_REQUEST)
+        
         if not nombre :
             return JsonResponse({"estado":"error","mensaje":"el campo nombre es obligatorio"},status=HTTPStatus.BAD_REQUEST)
+        
+        if not fecha:
+            return JsonResponse({"estado":"error","mensaje":"el campo fecha es obligatorio"},status=HTTPStatus.BAD_REQUEST)
         
         if not correo:
             return JsonResponse({"estado":"error","mensaje":"el campo E-mail es obligatorio"},status=HTTPStatus.BAD_REQUEST)
@@ -31,13 +46,12 @@ class class1(APIView):
             return JsonResponse({"estado":"error","mensaje":"el campo password es obligatorio"},status=HTTPStatus.BAD_REQUEST)
         
         if User.objects.filter(email=correo).exists():
-            return JsonResponse({"Estado":"Error","Mensaje":f"El correo {correo} no esta disponible"}, status=HTTPStatus.BAD_REQUEST)
+            return JsonResponse({"estado":"error","mensaje":f"el correo {correo} no esta disponible"}, status=HTTPStatus.BAD_REQUEST)
         
         token=str(uuid.uuid4())
         url=f"{os.getenv("BASE_URL")}api/v1/seguridad/verificacion/{token}"
         print(url)
         
-        #try:
         u=User.objects.create_user(username=correo,
                                     password=password,
                                     email=correo,
@@ -45,6 +59,15 @@ class class1(APIView):
                                     last_name="",
                                     is_active=0)
         UserMetadata.objects.create(token=token, user_id=u.id) 
+
+        Usuario.objects.create(
+            tipo_documento=tipo_documento,
+            numero_documento=documento,
+            fecha_nacimiento=fecha,
+            telefono=telefono,
+            correo=correo,
+            contraseña=make_password(password)
+        )
 
         try:
             html= f"""
@@ -60,19 +83,19 @@ class class1(APIView):
             
             utilidades.sendmail( html, "Verificación" , correo )
             
-            return JsonResponse ({"Estado":"OK","Mensaje":"Se creo exitosamente"}, status=HTTPStatus.CREATED)
+            return JsonResponse ({"estado":"ok","mensaje":"se creo exitosamente"}, status=HTTPStatus.CREATED)
         except Exception as e:
-            return JsonResponse ({"Estado":"Error","Mensaje":"Ocurrio un error inesperado"}, status=HTTPStatus.BAD_REQUEST)
+            return JsonResponse ({"estado":"error","mensaje":"ocurrio un error inesperado"}, status=HTTPStatus.BAD_REQUEST)
 
 class class2(APIView):
     def get(self,request,token):
         if token==None or not token:
-            return JsonResponse ({"Estado":"Error","Mensaje":"Recurso no disponible"}, status=404)
+            return JsonResponse ({"estado":"error","mensaje":"recurso no disponible"}, status=404)
         try:
             data=UserMetadata.objects.filter(token=token).get()
             UserMetadata.objects.filter(token=token).update(token="")
             User.objects.filter(id=data.user_id).update(is_active=1)
-            return JsonResponse({"Estado": "OK", "Mensaje": "Cuenta verificada con éxito"}, status=200)
+            return JsonResponse({"estado": "OK", "mensaje": "cuenta verificada con éxito"}, status=200)
         except UserMetadata.DoesNotExist:
             raise Http404
 
@@ -83,15 +106,15 @@ class class3(APIView):
         password = request.data.get("password")
 
         if not correo:
-            return JsonResponse({"Estado":"Error","Mensaje":"el campo E-mail es obligatorio"},status=HTTPStatus.BAD_REQUEST)
+            return JsonResponse({"estado":"error","mensaje":"el campo e-mail es obligatorio"},status=HTTPStatus.BAD_REQUEST)
         
         if not password:
-            return JsonResponse({"Estado":"Error","Mensaje":"el campo password es obligatorio"},status=HTTPStatus.BAD_REQUEST)
+            return JsonResponse({"estado":"error","mensaje":"el campo password es obligatorio"},status=HTTPStatus.BAD_REQUEST)
         
         try:
             user=User.objects.filter(email=correo).get()
         except User.DoesNotExist:
-            return JsonResponse({"Estado":"error","mensaje":"Recusrso no disponible"},status=HTTPStatus.NOT_FOUND)
+            return JsonResponse({"estado":"error","mensaje":"Recusrso no disponible"},status=HTTPStatus.NOT_FOUND)
         
         auth=authenticate(request, username=correo, password=password)
         if auth is not None:
@@ -107,6 +130,6 @@ class class3(APIView):
                 token = jwt.encode(payload, settings.SECRET_KEY, algorithm="HS512")
                 return JsonResponse ({"ID":user.id,"Nombre":user.first_name,"Token":token})
             except Exception as e:
-                return JsonResponse({"Estado":"error","mensaje":"Ocurrio un error inesperado"},status=HTTPStatus.BAD_REQUEST)
+                return JsonResponse({"estado":"error","mensaje":"ocurrio un error inesperado"},status=HTTPStatus.BAD_REQUEST)
         else:
-            return JsonResponse({"Estado":"error","mensaje":"Las credenciales ingresadas no son correctas"},status=HTTPStatus.BAD_REQUEST)
+            return JsonResponse({"estado":"error","mensaje":"las credenciales ingresadas no son correctas"},status=HTTPStatus.BAD_REQUEST)
