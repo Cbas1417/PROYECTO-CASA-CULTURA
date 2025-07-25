@@ -121,3 +121,53 @@ window.addEventListener('click', e => {
       });
     }
   });
+
+
+
+//conexion, lo mas probable, no se
+axios.get("http://localhost:8000/api/programas/prog_forma/get_post")
+  .then(res => {
+    console.log(res.data.data);  // ← 'data' viene del JsonResponse en tu view
+  });
+
+
+// POST
+const formDataPost = new FormData();
+formDataPost.append("titulo", "Título nuevo");
+formDataPost.append("descripcion", "Descripción larga");
+formDataPost.append("foto_programa", archivoInput.files[0]);
+
+axios.post("http://localhost:8000/api/programas/prog_forma/get_post", formDataPost, {
+  headers: { "Content-Type": "multipart/form-data" }
+})
+.then(res => console.log(res.data))
+.catch(err => console.error(err));
+
+// PUT
+const formDataPut = new FormData();
+formDataPut.append("titulo", "Nuevo título");
+formDataPut.append("descripcion", "Nueva descripción");
+formDataPut.append("foto_programa", archivoInput.files[0]);
+
+axios.put(`http://localhost:8000/api/programas/prog_forma/put_delete/${id}`, formDataPut, {
+  headers: { "Content-Type": "multipart/form-data" }
+})
+.then(res => console.log(res.data));
+
+
+//delete
+axios.delete(`http://localhost:8000/api/programas/prog_forma/put_delete/${id}`)
+  .then(res => console.log(res.data));
+
+
+
+//prueba
+axios.get("http://localhost:8000/api/programas/prog_forma/get_post")
+  .then(res => {
+    alert("✅ ¡El frontend está conectado al backend!");
+    console.log(res.data.data);  // Asegúrate de tener la consola del navegador abierta (F12)
+  })
+  .catch(err => {
+    alert("❌ Error en la conexión. Revisa si el backend está corriendo y si la URL es correcta.");
+    console.error(err);
+  });

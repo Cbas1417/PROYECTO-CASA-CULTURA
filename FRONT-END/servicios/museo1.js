@@ -66,3 +66,30 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+
+//conectar yo creo
+axios.get("http://localhost:8000/api/exposiciones/")
+  .then(res => {
+    const exposiciones = res.data.data;
+    console.log("✅ Exposiciones cargadas:", exposiciones);
+
+    const contenedor = document.getElementById("contenedor-exposiciones");
+
+    exposiciones.forEach(expo => {
+      const div = document.createElement("div");
+      div.classList.add("exposicion");
+
+      div.innerHTML = `
+        <h3>${expo.nombre}</h3>
+        <p>${expo.descripcion}</p>
+        <p><strong>Duración:</strong> ${expo.tiempo}</p>
+      `;
+
+      contenedor.appendChild(div);
+    });
+  })
+  .catch(err => {
+    console.error("❌ Error al conectar con exposiciones:", err);
+  });
+
