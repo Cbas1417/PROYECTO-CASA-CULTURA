@@ -246,13 +246,14 @@ body {
 #slider {
     position: relative;
     width: 100%;
-    max-width: 720px;
+    max-width: 100%;
     aspect-ratio: 3 / 2; /* Proporción 720x480 */
-    margin: 40px auto;
+    margin: 1px auto;
     overflow: hidden;
-    border-radius: 8px;
+    border-radius: 4px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     background: #000;
+    height: 600px;
 }
 
 .slide {
@@ -337,6 +338,9 @@ body {
     justify-content: space-between;
     margin-bottom: 80px;
     flex-wrap: wrap;
+    border: 1px;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.10) ;
 }
 
 .section img,
@@ -344,8 +348,11 @@ body {
     max-width: 100%;
     height: auto;
     border-radius: 6px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+    box-shadow: 0 1px 4px rgba(248, 7, 7, 0.1);
     flex: 0 0 280px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 .section-content,
