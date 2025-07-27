@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate
 import uuid
 import os
 from dotenv import load_dotenv
+load_dotenv()
 from contactos.utilidades import utilidades
 from jose import jwt
 from django.conf import settings
@@ -63,6 +64,7 @@ class class1(APIView):
         Usuario.objects.create(
             tipo_documento=tipo_documento,
             numero_documento=documento,
+            nombre=nombre,
             fecha_nacimiento=fecha,
             telefono=telefono,
             correo=correo,

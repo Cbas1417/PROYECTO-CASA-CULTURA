@@ -17,7 +17,7 @@ class Usuario(models.Model):
     tipo_documento = models.CharField(max_length=3,choices=tipos_documento,default='cc', blank=False, null=False)
     numero_documento= models.CharField(max_length=100, blank=False, null=False,verbose_name="Numero de documento")
     nombre= models.CharField(max_length=50, blank=False, null=False, verbose_name="Nombre de usuario")
-    slug = AutoSlugField(populate_from='nombre', null=True)
+    slug = AutoSlugField(populate_from='nombre', unique=True, blank=True, null=True)
     fecha_nacimiento=models.DateField(blank=False, null=False, verbose_name="Fecha de nacimiento")
     correo=models.EmailField(blank=False, null=False)
     telefono=models.CharField(max_length=20, blank=False, null=False)
