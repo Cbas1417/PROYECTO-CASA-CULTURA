@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         try {
-            const response = await axios.post("http://192.168.0.103:8000/api/v1/seguridad/registro", data);
+            const response = await axios.post("http://127.0.0.1:8000/api/v1/seguridad/registro", data);
 
             if (response.data.estado === "ok") {
                 const modal = document.getElementById("modal-success");
