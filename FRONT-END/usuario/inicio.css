@@ -523,3 +523,28 @@ body {
     min-width: 140px;
   }
 }
+
+
+/*parte admin*/
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-button {
+  background-color: #3D4543;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+.header-button:hover {
+  transform: scale(1.05);
+}
+
+.admin-only {
+    display: none;
+  }
