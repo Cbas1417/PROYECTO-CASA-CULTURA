@@ -44,36 +44,67 @@ const descripciones = {
   // Agrega más entradas según tus programas...
 };
 
-const programas = document.querySelectorAll('.programa');
-const modal = document.getElementById('modal');
-const titulo = document.getElementById('modal-titulo');
-const descripcion = document.getElementById('modal-descripcion');
-const cerrar = document.getElementById('cerrar-modal');
+
+//inscripcion
+const programas = document.querySelectorAll(".programa");
+const modal = document.getElementById("modal");
+const titulo = document.getElementById("titulo-modal");
+const descripcion = document.getElementById("descripcion-modal");
+const formInscripcion = document.getElementById("form-inscripcion");
+const btnIrIniciar = document.getElementById("btn-ir-iniciar");
+const closeBtn = document.getElementById("close");
+
+const usuarioAutenticado = sessionStorage.getItem("usuarioLogueado") === "true";
+
 
 programas.forEach(p => {
-  p.querySelector('.botonn').addEventListener('click', e => {
-    e.preventDefault();
-    const id = p.dataset.id;
-    if (descripciones[id]) {
-      titulo.textContent = descripciones[id].titulo;
-      descripcion.textContent = descripciones[id].texto;
-      modal.style.display = "flex";
-    }
+    p.querySelector('.botonn').addEventListener('click', e => {
+      e.preventDefault();
+      const id = p.dataset.id;
+
+      if (descripciones[id]) {
+        titulo.textContent = descripciones[id].titulo;
+        descripcion.textContent = descripciones[id].texto;
+        modal.style.display = "flex";
+
+        modal.dataset.programaId = id;
+
+        if (usuarioAutenticado) {
+          formInscripcion.style.display = "block";
+          btnIrIniciar.style.display = "none";
+        } else {
+          formInscripcion.style.display = "none";
+          btnIrIniciar.style.display = "inline-block";
+        }
+      }
+    });
   });
-});
 
-cerrar.addEventListener('click', () => {
-  modal.style.display = "none";
-});
-
-window.addEventListener('click', e => {
-  if (e.target === modal) {
+  // Cerrar modal
+  closeBtn.addEventListener("click", () => {
     modal.style.display = "none";
-  }
-});
+  });
 
+  // Confirmar inscripción
+  document.getElementById("btn-inscribirse").addEventListener("click", () => {
+    const contacto = document.getElementById("contacto-inscripcion").value.trim();
+    const programaId = modal.dataset.programaId;
 
- document.addEventListener("DOMContentLoaded", () => {
+    if (!contacto) {
+      alert("Por favor, escribe tu correo o dirección de contacto.");
+      return;
+    }
+
+    console.log(`📨 Inscripción enviada`);
+    console.log(`Programa ID: ${programaId}`);
+    console.log(`Contacto del usuario: ${contacto}`);
+
+    alert("✅ ¡Te has inscrito exitosamente!");
+    modal.style.display = "none";
+    document.getElementById("contacto-inscripcion").value = "";
+  });
+//no me acuerdo
+document.addEventListener("DOMContentLoaded", () => {
     const btnIniciar = document.getElementById("btn-iniciar");
     const btnRegistrar = document.getElementById("btn-registrar");
     const perfilDropdown = document.getElementById("perfil-icono");
@@ -121,6 +152,10 @@ window.addEventListener('click', e => {
       });
     }
   });
+
+
+
+
 
 
 

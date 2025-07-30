@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio | Casa de la Cultura Caldas</title>
-    <link rel="stylesheet" href="start.css">
     <link rel="stylesheet" href="inicio.css">
     <link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png" style="width: 16px; height: 16px;">
 </head>
@@ -27,6 +26,13 @@
             </a>
         </figure>
         </nav>
+        <div class="header-actions">
+  <a href="dashboard.html" class="header-button admin-only">Administrador</a>
+  <a href="estadistica.html" class="header-button admin-only">Estadísticas</a>
+  <a href="inventario.html" class="header-button admin-only">Inventario</a>
+  <a href="doc_admin.html" class="header-button admin-only">Usuarios</a>
+</div>
+
         <div id="user-actions">
   <a href="registrar.html" id="btn-iniciar">Registrarse</a>
   <a href="iniciar.html" id="btn-registrar" onclick="guardarPaginaActual()">Iniciar Sesión</a>
@@ -79,32 +85,39 @@
   </div>
 </div>
 
-<div class="container">
-    <!-- Historia Section -->
-    <div class="section">
-      <img src="../imagenes/Captura de pantalla 2025-05-16 150420.png" alt="Casa de la Cultura Caldas" width="420px" height="280px">
-      <div class="section-content">
-        <h2>Mision</h2>
-        <p>
-          Promover los derechos culturales de los ciudadanos caldeños, y salvaguardar la identidad y el patrimonio del territorio, con un enfoque de sostenibilidad ambiental, mediante la consolidación de espacios que fomenten la diversidad artística y cultural, y fortalezcan el tejido social de sus comunidades.
-        </p>
-      </div>
-      <!-- Espacio vacío para simetría en desktop, opcional -->
-      <div style="width:180px;"></div>
+<!-- Misión Section -->
+<section class="full-section mision-section">
+  <div class="section-content-container aparecer">
+    <div class="section-image">
+      <img src="../imagenes/Captura de pantalla 2025-05-16 150420.png" alt="Casa de la Cultura Caldas">
     </div>
-
-    <!-- Visión Section -->
-    <div class="vision-section">
-      <img src="../imagenes/Captura de pantalla 2025-05-16 150620.png" alt="Reunión Casa de la Cultura" style="object-fit:cover;" width="420px" height="280px">
-      <div style="width:180px;"></div>
-      <div class="vision-content">
-        <h2>Visión</h2>
-        <p>
-          La Casa Municipal de la Cultura de Caldas, Antioquia, se proyecta para 2034 como una institución reconocida por su liderazgo en el Área Metropolitana en proyectos culturales que promuevan la cultura ciudadana, la protección y conservación del patrimonio, la memoria histórica y la identidad local, la certificación de sus programas de formación, y la inclusión de las ruralidades, para democratizar el arte y la cultura, y generar valor agregado.
-        </p>
-      </div>
+    <div class="separator-line"></div>
+    <div class="section-text mision-text">
+      <h2>Misión</h2>
+      <p>
+        Promover los derechos culturales de los ciudadanos caldeños, y salvaguardar la identidad y el patrimonio del territorio, con un enfoque de sostenibilidad ambiental, mediante la consolidación de espacios que fomenten la diversidad artística y cultural, y fortalezcan el tejido social de sus comunidades.
+      </p>
     </div>
   </div>
+</section>
+
+<!-- Visión Section -->
+<section class="full-section vision-section">
+  <div class="section-content-container aparecer">
+    <div class="section-text vision-text">
+      <h2>Visión</h2>
+      <p>
+        La Casa Municipal de la Cultura de Caldas, Antioquia, se proyecta para 2034 como una institución reconocida por su liderazgo en el Área Metropolitana en proyectos culturales que promuevan la cultura ciudadana, la protección y conservación del patrimonio, la memoria histórica y la identidad local, la certificación de sus programas de formación, y la inclusión de las ruralidades, para democratizar el arte y la cultura, y generar valor agregado.
+      </p>
+    </div>
+    <div class="separator-line"></div>
+    <div class="section-image">
+      <img src="../imagenes/Captura de pantalla 2025-05-16 150620.png" alt="Reunión Casa de la Cultura">
+    </div>
+  </div>
+</section>
+
+
 
 <footer id="footer">
 <div id="footer-container">
@@ -243,6 +256,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
   showSlide(currentIndex);
 });
+
+
+//scroll
+document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('aparecer');
+        } else {
+          entry.target.classList.remove('aparecer');
+        }
+      });
+    }, {
+      threshold: 0.2
+    });
+
+    document.querySelectorAll('.section-content-container').forEach(el => {
+      observer.observe(el);
+    });
+  });
+
+  //parte admin
+document.addEventListener("DOMContentLoaded", () => {
+    const rol = localStorage.getItem("rol"); // Obtenemos el rol guardado
+
+    const adminBotones = document.querySelectorAll(".admin-only");
+
+    if (rol !== "admin") {
+      // Si no es admin, ocultamos los botones
+      adminBotones.forEach(boton => {
+        boton.style.display = "none";
+      });
+    }
+  });
+
+
+//ni se
+
 </script>
 
 

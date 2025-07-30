@@ -1,15 +1,35 @@
 const tabla = document.querySelector('#table tbody');
 let filaSeleccionada = null;
-let productos = JSON.parse(localStorage.getItem("productos")) || [];
+let productos = [];
 
-renderizarTabla();
+cargarInventario()
+
+// cargar inventario desde django
+async function cargarInventario() {
+  try {
+    const response = await axios.get("http://127.0.0.1:8000/api/v1/inventario/get_post");
+    productos = response.data.data.map((item, index) => ({
+      id: item.id,
+      producto: item.nombre,
+      cantidad: item.cantidad,
+      detalles: item.descripcion,
+      imagen: item.imagen // esta debe ser URL válida del backend
+    }));
+    renderizarTabla();
+  } catch (error) {
+    alert("Error al cargar inventario");
+    console.error(error);
+  }
+}
+
+
 
 // Agregar fila
 document.getElementById('btnagregar').addEventListener('click', () => {
   document.getElementById('modalagregar').style.display = 'flex';
 });
 
-document.getElementById('formagregar').addEventListener('submit', function(e) {
+document.getElementById('formagregar').addEventListener('submit', async function(e) {
   e.preventDefault();
 
   if (productos.length >= 15) {
@@ -17,32 +37,37 @@ document.getElementById('formagregar').addEventListener('submit', function(e) {
     return;
   }
 
-  const id = document.getElementById('idagregar').value.trim();
   const producto = document.getElementById('productoagregar').value.trim();
   const cantidad = document.getElementById('cantidadagregar').value.trim();
   const detalles = document.getElementById('detallesagregar').value.trim();
   const imgFile = document.getElementById('imgagregar').files[0];
 
-  if (!id || !producto || !cantidad || !detalles || !imgFile) {
+  if (!producto || !cantidad || !detalles || !imgFile) {
     alert("Todos los campos son obligatorios.");
     return;
   }
 
-  if (productos.some(p => p.id === id)) {
-    alert("Ese ID ya existe.");
-    return;
+  const formData= new FormData();
+  formData.append("nombre", producto);
+  formData.append("cantidad", cantidad);
+  formData.append("descripcion", detalles);
+  formData.append("imagen", imgFile);
+
+  try {
+    const response = await axios.post("http://127.0.0.1:8000/api/v1/inventario/get_post", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
+
+    alert(response.data.Mensaje);
+    cerrarModal("modalagregar");
+    this.reset();
+    await cargarInventario();
+  } catch (error) {
+    console.log(error);
+    alert(error.response?.data?.Mensaje || "Error al agregar producto");
   }
-
-  const reader = new FileReader();
-  reader.onload = function(event) {
-    productos.push({ imagen: event.target.result, id, producto, cantidad, detalles });
-    guardarEnLocalStorage();
-    renderizarTabla();
-  };
-  reader.readAsDataURL(imgFile);
-
-  cerrarModal("modalagregar");
-  this.reset();
 });
 
 document.getElementById('btneditar').addEventListener('click', () => {
@@ -54,7 +79,6 @@ document.getElementById('btneditar').addEventListener('click', () => {
   const index = filaSeleccionada.rowIndex - 1;
   const producto = productos[index];
 
-  document.getElementById('ideditar').value = producto.id;
   document.getElementById('productoeditar').value = producto.producto;
   document.getElementById('cantidadeditar').value = producto.cantidad;
   document.getElementById('detalleseditar').value = producto.detalles;
@@ -62,50 +86,58 @@ document.getElementById('btneditar').addEventListener('click', () => {
   document.getElementById('modaleditar').style.display = 'flex';
 });
 
-document.getElementById('formeditar').addEventListener('submit', function(e) {
+document.getElementById('formeditar').addEventListener('submit', async function(e) {
   e.preventDefault();
 
   const index = filaSeleccionada.rowIndex - 1;
-  const id = document.getElementById('ideditar').value.trim();
+  const id = productos[index].id;
   const producto = document.getElementById('productoeditar').value.trim();
   const cantidad = document.getElementById('cantidadeditar').value.trim();
   const detalles = document.getElementById('detalleseditar').value.trim();
   const imgFile = document.getElementById('imgeditar').files[0];
 
-  if (!id || !producto || !cantidad || !detalles) {
+  if (!producto || !cantidad || !detalles) {
     alert("Todos los campos excepto la imagen son obligatorios.");
     return;
   }
 
-  productos[index] = { ...productos[index], id, producto, cantidad, detalles };
+  const formData = new FormData();
+  formData.append("nombre", producto);
+  formData.append("cantidad", cantidad);
+  formData.append("descripcion", detalles);
+  if (imgFile) formData.append("imagen", imgFile);
 
-  if (imgFile) {
-    const reader = new FileReader();
-    reader.onload = function(event) {
-      productos[index].imagen = event.target.result;
-      guardarEnLocalStorage();
-      renderizarTabla();
-    };
-    reader.readAsDataURL(imgFile);
-  } else {
-    guardarEnLocalStorage();
-    renderizarTabla();
+  try {
+    const response = await axios.put(`http://127.0.0.1:8000/api/v1/inventario/put_delete/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
+
+    alert(response.data.Mensaje);
+    cerrarModal("modaleditar");
+    this.reset();
+    await cargarInventario();
+  } catch (error) {
+    alert(error.response?.data?.Mensaje || "Error al editar producto");
   }
-
-  cerrarModal("modaleditar");
-  this.reset();
 });
 
-document.getElementById('btneliminar').addEventListener('click', () => {
+document.getElementById('btneliminar').addEventListener('click', async () => {
   if (!filaSeleccionada) {
     alert("Selecciona una fila para eliminar.");
     return;
   }
-
   const index = filaSeleccionada.rowIndex - 1;
-  productos.splice(index, 1);
-  guardarEnLocalStorage();
-  renderizarTabla();
+  const id = productos[index].id;
+  try {
+    const response = await axios.delete(`http://127.0.0.1:8000/api/v1/inventario/put_delete/${id}`);
+    alert(response.data.mensaje);
+    await cargarInventario();
+    filaSeleccionada = null;
+  } catch (error) {
+    alert("Error al eliminar");
+  }
   filaSeleccionada = null;
 });
 
@@ -120,9 +152,9 @@ tabla.addEventListener('click', function(e) {
 document.getElementById('buscador').addEventListener('input', function() {
   const texto = this.value.toLowerCase();
   [...tabla.rows].forEach(row => {
-    const coincide = [...row.cells].some(cell =>
-      cell.textContent.toLowerCase().includes(texto)
-    );
+    const id = row.cells[1]?.textContent.toLowerCase();
+    const nombre = row.cells[2]?.textContent.toLowerCase();
+    const coincide = id.includes(texto) || nombre.includes(texto);
     row.style.display = coincide ? '' : 'none';
   });
 });

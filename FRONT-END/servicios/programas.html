@@ -139,15 +139,25 @@
 </div>
 </div>
 
-<div id="modal" class="modal">
+<!-- Modal de información del programa -->
+<div class="modal" id="modal">
 <div class="modal-content">
-    <span id="cerrar-modal" class="cerrar">&times;</span>
-    <h2 id="modal-titulo"></h2>
-    <p id="modal-descripcion"></p>
-    <a href="../usuario/iniciar.html" class="btn-primary">Iniciar sesión</a>
+    <span class="close" id="close">&times;</span>
+    <h2 id="titulo-modal"></h2>
+    <p id="descripcion-modal"></p>
 
+    <!-- Formulario para usuarios logueados -->
+    <div id="form-inscripcion" style="display: none;">
+        <label for="contacto-inscripcion">¿Dónde deseas recibir la información del programa?</label>
+        <input type="text" id="contacto-inscripcion" placeholder="Correo electrónico o dirección">
+        <button id="btn-inscribirse" class="btn-primary">Confirmar inscripción</button>
+    </div>
+
+    <!-- Botón para usuarios no logueados -->
+    <a href="../usuario/iniciar.html" id="btn-ir-iniciar" class="btn-primary" style="display: none;">Iniciar sesión</a>
 </div>
 </div>
+
 
 
 
