@@ -8,67 +8,129 @@ from .models import *
 from .serializers import *
 from django.core.files.storage import FileSystemStorage
 from datetime import datetime
-
-
-# Create your views here.
+from seguridad import logueado
+import os
 
 class class1(APIView):
-    def get(self,request):
-        data=Programa.objects.order_by('-id').all()
-        serializer=ProgramaSerializer(data, many=True)
-        return JsonResponse ({"data":serializer.data})
-    
+    @logueado
+    def get(self, request):
+        data = Programa.objects.order_by('-id').all()
+        serializer = ProgramaSerializer(data, many=True)
+        return JsonResponse({"data": serializer.data}, status=HTTPStatus.OK)
+
+    @logueado
     def post(self, request):
         titulo = request.data.get('titulo')
         descripcion = request.data.get('descripcion')
         foto_programa = request.FILES.get('foto_programa')
 
         if not titulo or not descripcion:
-            return JsonResponse({"Estado": "Error", "Mensaje": "Todos los campos tiene  que estar llenos"}, status=HTTPStatus.BAD_REQUEST)
-
+            return JsonResponse(
+                {"estado": "error", "mensaje": "Todos los campos tienen que estar llenos"},
+                status=HTTPStatus.BAD_REQUEST,
+            )
         if not foto_programa:
-            return JsonResponse({"Estado": "Error", "Mensaje": "Tiene que haber una imagen"}, status=HTTPStatus.BAD_REQUEST)
+            return JsonResponse(
+                {"estado": "error", "mensaje": "Tiene que existir una imagen"},
+                status=HTTPStatus.BAD_REQUEST,
+            )
+
+        # Validar tipo de archivo imagen (opcinal)
+        if foto_programa.content_type not in ["image/jpeg", "image/png"]:
+            return JsonResponse(
+                {"estado": "error", "mensaje": "La imagen debe ser JPG o PNG"},
+                status=HTTPStatus.BAD_REQUEST,
+            )
 
         try:
+            # Guardar archivo con FileSystemStorage si quieres controlar la ruta
+            # Pero si usas ImageField en el modelo, Django lo gestiona automáticamente.
             nuevo = Programa.objects.create(
-                                                titulo=titulo,
-                                                descripcion=descripcion,
-                                                foto_programa=foto_programa
+                titulo=titulo,
+                descripcion=descripcion,
+                foto_programa=foto_programa,
             )
-            return JsonResponse({"Estado": "Ok", "Mensaje": "Registro creado correctamente"})
+            return JsonResponse({"estado": "ok", "mensaje": "Registro creado correctamente"}, status=HTTPStatus.CREATED)
         except Exception as e:
-            return JsonResponse({"Estado": "Error", "Mensaje": str(e)}, status=HTTPStatus.BAD_REQUEST)
+            return JsonResponse(
+                {"estado": "error", "mensaje": f"Error creando el registro: {str(e)}"},
+                status=HTTPStatus.BAD_REQUEST,
+            )
+
 
 class class2(APIView):
-
-    def put(self,request,id):
+    @logueado
+    def put(self, request, id):
         titulo = request.data.get('titulo')
         descripcion = request.data.get('descripcion')
         foto_programa = request.FILES.get('foto_programa')
-        try:
-            data=Programa.objects.filter(id=id).get
-        except:
-            raise Http404
-        
-        if not titulo or not descripcion or not descripcion:
-            return JsonResponse({"Estado": "Error", "Mensaje": "Todos los campos tiene  que estar llenos"}, status=HTTPStatus.BAD_REQUEST)
-        
-        if not foto_programa:
-            return JsonResponse({"Estado": "Error", "Mensaje": "Tiene que haber una imagen"}, status=HTTPStatus.BAD_REQUEST)
-        
-        try:
-            Programa.objects.filter(id=id).update(titulo=titulo,
-                                                descripcion=descripcion,
-                                                foto_programa=foto_programa)
-            return JsonResponse({"Estado":"Ok","Mensaje":"Se modifico el elemento correctamente"},
-                status=HTTPStatus.OK)
-        except Programa.DoesNotExist:
-            raise Http404
 
-    def delete(self,request,id):
         try:
-            Programa.objects.filter(id=id).delete()
-            return JsonResponse({"estado":"ok","mensaje":"eliminado correctamente"},status=HTTPStatus.OK)
-        
+            programa = Programa.objects.get(id=id)
         except Programa.DoesNotExist:
-            raise Http404
+            return JsonResponse(
+                {"estado": "error", "mensaje": "El programa no existe"},
+                status=HTTPStatus.NOT_FOUND,
+            )
+
+        if not titulo or not descripcion:
+            return JsonResponse(
+                {"estado": "error", "mensaje": "Todos los campos tienen que estar llenos"},
+                status=HTTPStatus.BAD_REQUEST,
+            )
+        if not foto_programa:
+            return JsonResponse(
+                {"estado": "error", "mensaje": "Tiene que haber una imagen"},
+                status=HTTPStatus.BAD_REQUEST,
+            )
+
+        # Validar tipo de archivo imagen
+        if foto_programa.content_type not in ["image/jpeg", "image/png"]:
+            return JsonResponse(
+                {"estado": "error", "mensaje": "La imagen debe ser JPG o PNG"},
+                status=HTTPStatus.BAD_REQUEST,
+            )
+
+        try:
+            # Eliminar foto anterior si existe para evitar acumulación
+            if programa.foto_programa and os.path.isfile(programa.foto_programa.path):
+                os.remove(programa.foto_programa.path)
+
+            programa.titulo = titulo
+            programa.descripcion = descripcion
+            programa.foto_programa = foto_programa
+            programa.save()
+            return JsonResponse(
+                {"estado": "ok", "mensaje": "Se modificó el elemento correctamente"},
+                status=HTTPStatus.OK,
+            )
+        except Exception as e:
+            return JsonResponse(
+                {"estado": "error", "mensaje": f"Error modificando el registro: {str(e)}"},
+                status=HTTPStatus.BAD_REQUEST,
+            )
+
+    @logueado
+    def delete(self, request, id):
+        try:
+            programa = Programa.objects.get(id=id)
+
+            # Eliminar foto antes de borrar el registro
+            if programa.foto_programa and os.path.isfile(programa.foto_programa.path):
+                os.remove(programa.foto_programa.path)
+
+            programa.delete()
+            return JsonResponse(
+                {"estado": "ok", "mensaje": "Eliminado correctamente"},
+                status=HTTPStatus.OK,
+            )
+        except Programa.DoesNotExist:
+            return JsonResponse(
+                {"estado": "error", "mensaje": "El programa no existe"},
+                status=HTTPStatus.NOT_FOUND,
+            )
+        except Exception as e:
+            return JsonResponse(
+                {"estado": "error", "mensaje": f"Error eliminando el registro: {str(e)}"},
+                status=HTTPStatus.BAD_REQUEST,
+            )
