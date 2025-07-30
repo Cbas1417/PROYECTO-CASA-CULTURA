@@ -79,7 +79,6 @@ document.getElementById('btneditar').addEventListener('click', () => {
   const index = filaSeleccionada.rowIndex - 1;
   const producto = productos[index];
 
-  document.getElementById('ideditar').value = producto.id;
   document.getElementById('productoeditar').value = producto.producto;
   document.getElementById('cantidadeditar').value = producto.cantidad;
   document.getElementById('detalleseditar').value = producto.detalles;
@@ -91,13 +90,13 @@ document.getElementById('formeditar').addEventListener('submit', async function(
   e.preventDefault();
 
   const index = filaSeleccionada.rowIndex - 1;
-  const id = document.getElementById('ideditar').value.trim();
+  const id = productos[index].id;
   const producto = document.getElementById('productoeditar').value.trim();
   const cantidad = document.getElementById('cantidadeditar').value.trim();
   const detalles = document.getElementById('detalleseditar').value.trim();
   const imgFile = document.getElementById('imgeditar').files[0];
 
-  if (!id || !producto || !cantidad || !detalles) {
+  if (!producto || !cantidad || !detalles) {
     alert("Todos los campos excepto la imagen son obligatorios.");
     return;
   }
@@ -153,9 +152,9 @@ tabla.addEventListener('click', function(e) {
 document.getElementById('buscador').addEventListener('input', function() {
   const texto = this.value.toLowerCase();
   [...tabla.rows].forEach(row => {
-    const coincide = [...row.cells].some(cell =>
-      cell.textContent.toLowerCase().includes(texto)
-    );
+    const id = row.cells[1]?.textContent.toLowerCase();
+    const nombre = row.cells[2]?.textContent.toLowerCase();
+    const coincide = id.includes(texto) || nombre.includes(texto);
     row.style.display = coincide ? '' : 'none';
   });
 });

@@ -48,22 +48,25 @@ class class2(APIView):
         descripcion = request.data.get('descripcion')
         imagen = request.FILES.get('imagen')
         try:
-            data=Inventario.objects.filter(id=id).get
+            producto = Inventario.objects.get(id=id)
         except:
-            raise Http404
+            raise Http404("Producto no encontrado")
         
         if not nombre or not cantidad or not descripcion:
             return JsonResponse({"Estado": "Error", "Mensaje": "Todos los campos tiene  que estar llenos"}, status=HTTPStatus.BAD_REQUEST)
         
-        if not imagen:
-            return JsonResponse({"Estado": "Error", "Mensaje": "Tiene que haber una imagen"}, status=HTTPStatus.BAD_REQUEST)
+        
+        producto.nombre=nombre
+        producto.cantidad=cantidad
+        producto.descripcion=descripcion
+        
+        if imagen:
+            if producto.imagen:
+                producto.imagen.delete(save=False)
+            producto.imagen = imagen
         
         try:
-            Inventario.objects.filter(id=id).update(
-                                                    nombre=nombre,
-                                                    cantidad=cantidad,
-                                                    descripcion=descripcion,
-                                                    imagen=imagen)
+            producto.save()
             return JsonResponse({"Estado":"Ok","Mensaje":"Se modifico el elemento correctamente"},
                 status=HTTPStatus.OK)
         except Inventario.DoesNotExist:
