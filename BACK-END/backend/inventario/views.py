@@ -14,7 +14,7 @@ class class1(APIView):
 
     def get(self,request):
         data=Inventario.objects.order_by('-id').all()
-        serializer=InventarioSerializer(data, many=True)
+        serializer=InventarioSerializer(data, many=True, context={'request': request})
         return JsonResponse ({"data":serializer.data})
     
     def post(self, request):
