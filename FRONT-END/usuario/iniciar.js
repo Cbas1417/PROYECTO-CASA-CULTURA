@@ -45,6 +45,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// Si el usuario es admin:
+localStorage.setItem("rol", "admin");
+// También marca como logueado:
+sessionStorage.setItem("usuarioLogueado", "true");
+
 
     // const correosAdmin = ['admin@cultura.com', 'admin@caldas.gov.co'];
 

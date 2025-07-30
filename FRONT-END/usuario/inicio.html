@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio | Casa de la Cultura Caldas</title>
-    <link rel="stylesheet" href="start.css">
     <link rel="stylesheet" href="inicio.css">
     <link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png" style="width: 16px; height: 16px;">
 </head>
@@ -27,6 +26,13 @@
             </a>
         </figure>
         </nav>
+        <div class="header-actions">
+  <a href="dashboard.html" class="header-button admin-only">Administrador</a>
+  <a href="estadistica.html" class="header-button admin-only">Estadísticas</a>
+  <a href="inventario.html" class="header-button admin-only">Inventario</a>
+  <a href="doc_admin.html" class="header-button admin-only">Usuarios</a>
+</div>
+
         <div id="user-actions">
   <a href="registrar.html" id="btn-iniciar">Registrarse</a>
   <a href="iniciar.html" id="btn-registrar" onclick="guardarPaginaActual()">Iniciar Sesión</a>
@@ -270,6 +276,24 @@ document.addEventListener('DOMContentLoaded', () => {
       observer.observe(el);
     });
   });
+
+  //parte admin
+document.addEventListener("DOMContentLoaded", () => {
+    const rol = localStorage.getItem("rol"); // Obtenemos el rol guardado
+
+    const adminBotones = document.querySelectorAll(".admin-only");
+
+    if (rol !== "admin") {
+      // Si no es admin, ocultamos los botones
+      adminBotones.forEach(boton => {
+        boton.style.display = "none";
+      });
+    }
+  });
+
+
+//ni se
+
 </script>
 
 
