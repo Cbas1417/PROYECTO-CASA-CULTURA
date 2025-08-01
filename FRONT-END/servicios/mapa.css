@@ -364,3 +364,62 @@ select:hover, select:focus {
 }
 
 
+/*resdripciones de mapa*/
+.lugar-card {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    background-color: #fdfdfd;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin: 40px auto;
+    max-width: 900px;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.lugar-card:hover {
+    transform: scale(1.01);
+}
+
+.lugar-card img {
+    width: 250px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.lugar-texto {
+    flex: 1;
+}
+
+.lugar-texto h2 {
+    margin-bottom: 10px;
+    font-size: 1.6em;
+    color: #333;
+}
+
+.lugar-texto p {
+    color: #555;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+
+@media (max-width: 600px){
+.lugar-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 16px;
+}
+
+.lugar-card img {
+    width: 100%;
+    height: auto;
+
+}
+}
+
+
