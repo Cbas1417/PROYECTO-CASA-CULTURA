@@ -24,11 +24,11 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("usuarioActivo", email);
       sessionStorage.setItem("usuarioLogueado", "true");
       //redirijir
-      const correosAdmin = ['admin@cultura.com', 'admin@caldas.gov.co'];
+      const correosAdmin = ['sj153175@gmail.com', 'admin@caldas.gov.co'];
       const params = new URLSearchParams(window.location.search);
       const paginaAnterior = params.get("from");
       if (correosAdmin.includes(email)) {
-        window.location.href = 'admin.html';
+        window.location.href = 'admin/dashboard.html';
       } else if (paginaAnterior) {
         window.location.href = decodeURIComponent(paginaAnterior);
       } else {

@@ -1,3 +1,13 @@
+//parte admin para el ingreso a sus paginas
+  document.addEventListener("DOMContentLoaded", () => {
+    const usuario = localStorage.getItem("usuarioActivo");
+    const correosAdmin = ['sj153175@gmail.com', 'admin@caldas.gov.co'];
+
+    if (!usuario || !correosAdmin.includes(usuario)) {
+      window.location.href = '../inicio.html';
+    }
+  });
+
 document.addEventListener("DOMContentLoaded", () => {
   const userIcon = document.getElementById('user-icon');
   const dropdownMenu = document.getElementById('dropdown-menu');
