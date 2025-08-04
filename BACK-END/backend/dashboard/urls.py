@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import DashboardAPIView, DashboardDetalleAPIView
+from .views import Dashboard, Detalle, estadisticas
 
 urlpatterns = [
-    path('dashboard/get_post', DashboardAPIView.as_view()),
-    path('dashboard/put_delete/<int:id>', DashboardDetalleAPIView.as_view()),
+    path('', Dashboard.as_view()),
+    path('<int:id>/', Detalle.as_view()),
+    path('estadisticas/', estadisticas.as_view()),  # <-- nuevo endpoint
 ]
