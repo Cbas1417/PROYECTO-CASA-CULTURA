@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const params = new URLSearchParams(window.location.search);
       const paginaAnterior = params.get("from");
       if (correosAdmin.includes(email)) {
-        window.location.href = 'admin/dashboard.html';
+        window.location.href = '../dashboard.html';
       } else if (paginaAnterior) {
         window.location.href = decodeURIComponent(paginaAnterior);
       } else {

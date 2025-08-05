@@ -4,7 +4,7 @@
     const correosAdmin = ['sj153175@gmail.com', 'admin@caldas.gov.co'];
 
     if (!usuario || !correosAdmin.includes(usuario)) {
-      window.location.href = '../inicio.html';
+      window.location.href = 'dashboard.html';
     }
   });
 
