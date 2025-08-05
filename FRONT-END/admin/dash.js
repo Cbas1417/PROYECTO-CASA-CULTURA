@@ -1,12 +1,16 @@
 //parte admin para el ingreso a sus paginas
-  document.addEventListener("DOMContentLoaded", () => {
-    const usuario = localStorage.getItem("usuarioActivo");
-    const correosAdmin = ['sj153175@gmail.com', 'admin@caldas.gov.co'];
+// parte admin para restringir acceso solo a administradores
+document.addEventListener("DOMContentLoaded", () => {
+  const usuario = localStorage.getItem("usuarioActivo");
+  const correosAdmin = ['sj153175@gmail.com', 'admin@caldas.gov.co'];
 
-    if (!usuario || !correosAdmin.includes(usuario)) {
-      window.location.href = 'dashboard.html';
-    }
-  });
+  if (!usuario || !correosAdmin.includes(usuario)) {
+    // Redirige al inicio si no es admin
+    window.location.href = '../usuario/inicio.html';
+
+  }
+});
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const userIcon = document.getElementById('user-icon');
