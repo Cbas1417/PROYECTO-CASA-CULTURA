@@ -2,6 +2,6 @@ from django.contrib import admin
 
 # Register your models here.
 
-from dashboard.models import DashboardVisita
+from dashboard.models import Visita
 
-admin.site.register(DashboardVisita)
+admin.site.register(Visita)

@@ -8,17 +8,17 @@ from .models import *
 from .serializers import *
 from django.core.files.storage import FileSystemStorage
 from datetime import datetime
-from seguridad import logueado
+from seguridad.decorators import logueado
 import os
 
 class class1(APIView):
-    @logueado
+    @logueado()
     def get(self, request):
         data = Programa.objects.order_by('-id').all()
         serializer = ProgramaSerializer(data, many=True)
         return JsonResponse({"data": serializer.data}, status=HTTPStatus.OK)
 
-    @logueado
+    @logueado()
     def post(self, request):
         titulo = request.data.get('titulo')
         descripcion = request.data.get('descripcion')
@@ -59,7 +59,7 @@ class class1(APIView):
 
 
 class class2(APIView):
-    @logueado
+    @logueado()
     def put(self, request, id):
         titulo = request.data.get('titulo')
         descripcion = request.data.get('descripcion')
@@ -110,7 +110,7 @@ class class2(APIView):
                 status=HTTPStatus.BAD_REQUEST,
             )
 
-    @logueado
+    @logueado()
     def delete(self, request, id):
         try:
             programa = Programa.objects.get(id=id)
