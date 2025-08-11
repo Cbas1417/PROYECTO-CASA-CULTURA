@@ -118,3 +118,33 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   });
+
+
+
+//
+const timelineItems = document.querySelectorAll('.timeline-item');
+const dateIndicator = document.getElementById('date-indicator');
+
+timelineItems.forEach(item => {
+  item.addEventListener('mouseenter', () => {
+    // Cambiar fecha en el indicador
+    dateIndicator.textContent = item.dataset.year;
+
+    // Quitar clase active de todos
+    timelineItems.forEach(i => i.classList.remove('active'));
+
+    // Activar el actual
+    item.classList.add('active');
+
+    // Centrar el elemento activo
+    item.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest"
+    });
+  });
+});
+
+// Mostrar el primero por defecto
+timelineItems[0].classList.add('active');
+dateIndicator.textContent = timelineItems[0].dataset.year;
