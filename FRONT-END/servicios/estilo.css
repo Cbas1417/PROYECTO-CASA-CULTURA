@@ -400,3 +400,139 @@ button:hover {
     min-width: 140px;
 }
 }
+
+/* Uso de una tipografía amigable para niños */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap');
+
+body {
+    font-family: 'Comic Neue', cursive;
+    font-style: normal; /* cambia a normal para mejor legibilidad */
+    background: linear-gradient(135deg, #f9f2ec 0%, #e0f7fa 100%);
+    color: #333;
+}
+
+/* Mejoras para los botones del juego (cartas) */
+button {
+    height: 80px;
+    width: 80px;
+    font-size: 36px;
+    background-color: #FFB347;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    font-family: 'Comic Neue', cursive;
+    border: none;
+    margin: 8px;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #FFA500;
+    transform: scale(1.1) rotateY(10deg);
+}
+
+/* Añadir un borde decorativo al contenedor del juego */
+.seccion1 {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 6px 15px rgba(255, 179, 71, 0.4);
+    border: 4px solid #FFB347;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+/* Estadísticas con tarjetas más visuales y colores */
+.seccion2 {
+    background-color: #fff3e0;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 320px;
+    box-shadow: 0 4px 10px rgba(255, 179, 71, 0.3);
+    color: #6d4c41;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.estadisticas {
+    background-color: #fff8e1;
+    border: 2px solid #ffb74d;
+    box-shadow: 0 2px 5px rgba(255, 183, 77, 0.3);
+    margin-top: 15px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    padding: 20px 10px;
+    border-radius: 12px;
+    user-select: none;
+}
+
+/* Mensaje de bienvenida animado */
+.seccion1 h1 {
+    font-size: 2.4rem;
+    color: #FF6F00;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 4px #f9a825;
+    animation: bounce 1.5s infinite alternate;
+}
+
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-8px); }
+}
+
+/* Layout centrado y con buen espaciado */
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 30px 20px;
+}
+
+/* Espacio mayor entre botones para no saturar */
+.seccion1 table td {
+    padding: 6px;
+}
+
+/* Botón para reiniciar visible y atractivo */
+#reiniciar-btn {
+    background-color: #ffb74d;
+    color: #4e342e;
+    border: none;
+    border-radius: 18px;
+    padding: 12px 30px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-top: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(255,183,77,0.6);
+    transition: background-color 0.3s ease;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#reiniciar-btn:hover {
+    background-color: #ffa726;
+}
+
+/* Indicador de tiempo animado */
+#t-restante {
+    position: relative;
+}
+
+#t-restante::after {
+    content: '';
+    display: block;
+    height: 6px;
+    background: linear-gradient(90deg, #ffa726, #ffb74d);
+    border-radius: 10px;
+    margin-top: 6px;
+    animation: tiempoDescenso 120s linear forwards;
+}
+
+@keyframes tiempoDescenso {
+    from { width: 100%; }
+    to { width: 0%; }
+}
