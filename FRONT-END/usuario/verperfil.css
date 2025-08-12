@@ -454,13 +454,14 @@
 
 #dropdown-menu a {
   padding: 10px 16px;
-  color: #333;
+  color: #333 !important;
   text-decoration: none;
   transition: background-color 0.2s ease;
 }
 
 #dropdown-menu a:hover {
   background-color: #f2f2f2;
+  color: #000 !important;
 }
 
 .hidden {

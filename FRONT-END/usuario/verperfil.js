@@ -2,8 +2,8 @@
 const usuarioAutenticado = true; // cambia a false si quieres ocultar el menú
 
 document.addEventListener("DOMContentLoaded", () => {
-const registroBtn = document.getElementById("registrarse");
-const loginBtn = document.getElementById("iniciar");
+const registroBtn = document.getElementById("btn-iniciar"); // antes: registrarse
+const loginBtn = document.getElementById("btn-registrar"); // antes: iniciar
 const perfilDropdown = document.getElementById("perfil-icono");
 
 if (usuarioAutenticado) {
@@ -76,17 +76,17 @@ cancelarBtn.addEventListener("click", () => {
 /*para que se le de click y no cuando se pase por encima */
 // Mostrar/ocultar el menú de perfil con clic
 const perfilImg = document.getElementById("perfil-img");
-const dropdownMenu = document.getElementById("perfil-menu");
+const dropdownMenu = document.getElementById("dropdown-menu");
 
 perfilImg.addEventListener("click", (e) => {
   e.stopPropagation();
-  dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+  dropdownMenu.classList.toggle("hidden");
 });
 
 // Ocultar el menú si se hace clic fuera
 document.addEventListener("click", (e) => {
   if (!perfilImg.contains(e.target)) {
-    dropdownMenu.style.display = "none";
+    dropdownMenu.classList.toggle("hidden");
   }
 });
 
