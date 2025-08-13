@@ -28,12 +28,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const params = new URLSearchParams(window.location.search);
       const paginaAnterior = params.get("from");
       if (correosAdmin.includes(email)) {
-        window.location.href = '../admin/dashboard.html';
-      } else if (paginaAnterior) {
-        window.location.href = decodeURIComponent(paginaAnterior);
-      } else {
-        window.location.href = 'inicio.html';
-      }
+    localStorage.setItem("rol", "admin");
+    sessionStorage.setItem("usuarioLogueado", "true");
+    window.location.href = '../admin/dashboard.html';
+} else if (paginaAnterior) {
+    sessionStorage.setItem("usuarioLogueado", "true");
+    window.location.href = decodeURIComponent(paginaAnterior);
+} else {
+    sessionStorage.setItem("usuarioLogueado", "true");
+    window.location.href = 'inicio.html';
+}
     } catch (error){
       if (error.response){
         alert(error.response.data.mensaje || "Error en el inicio de sesión");
@@ -87,3 +91,5 @@ document.querySelectorAll(".toggle-password").forEach(icon => {
         icon.classList.toggle("fa-eye-slash");
     });
 });
+
+

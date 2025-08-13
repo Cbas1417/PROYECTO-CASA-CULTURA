@@ -109,19 +109,6 @@ form.carta {
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
 }
 
-.olvido {
-    font-size: 12px;
-    color: #000;
-    text-align: right;
-    margin-top: -16px;
-    margin-bottom: 16px;
-    display: block;
-}
-
-.olvido a{
-  color: #FF9015;
-}
-
 form.carta h1 {
     font-size: 48px;
     font-weight: 700;
@@ -173,6 +160,21 @@ p.problema a {
     text-decoration: underline;
     color: #FF9015;
 }
+
+.link-olvide {
+  display: block;
+  margin-top: -10px;
+  margin-right: -250px;
+  margin-bottom: 30px;
+  font-size: 12px;
+  color: #555;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.link-olvide:hover {
+  color: #FF9015;
+}
+
 
 /* Footer */
 #footer {
