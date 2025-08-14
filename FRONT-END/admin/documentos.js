@@ -90,3 +90,22 @@ if (menuToggle) {
         menu.classList.toggle('active');
     });
 }
+
+/*despliegue menu*/
+/* --- MENÚ PERFIL --- */
+const userIcon = document.getElementById("user-icon");
+const dropdownMenu = document.getElementById("dropdown-menu");
+
+if (userIcon) {
+  userIcon.addEventListener("click", () => {
+    dropdownMenu.classList.toggle("hidden");
+  });
+
+  // cerrar si se hace clic fuera
+  document.addEventListener("click", (e) => {
+    if (!userIcon.contains(e.target) && !dropdownMenu.contains(e.target)) {
+      dropdownMenu.classList.add("hidden");
+    }
+  });
+}
+/* --- FIN MENÚ PERFIL --- */

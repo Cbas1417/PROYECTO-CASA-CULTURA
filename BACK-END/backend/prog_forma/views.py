@@ -10,6 +10,7 @@ from django.core.files.storage import FileSystemStorage
 from datetime import datetime
 from seguridad.decorators import logueado
 import os
+from contactos.utilidades import utilidades
 
 class class1(APIView):
     @logueado()
@@ -134,3 +135,48 @@ class class2(APIView):
                 {"estado": "error", "mensaje": f"Error eliminando el registro: {str(e)}"},
                 status=HTTPStatus.BAD_REQUEST,
             )
+        
+
+
+#correo
+class class3(APIView):
+    def post(self,request):
+        correo = request.data.get("correo")
+        
+        
+        if User.objects.filter(email=correo).exists():
+            return JsonResponse({"estado":"error","mensaje":f"el correo {correo} no esta disponible"}, status=HTTPStatus.BAD_REQUEST)
+        
+        token=str(uuid.uuid4())
+        url=f"{os.getenv("BASE_URL")}api/v1/seguridad/verificacion/{token}"
+        print(url)
+        
+        u=User.objects.create_user(username=correo,
+                                    password=password,
+                                    email=correo,
+                                    first_name=nombre,
+                                    last_name="",
+                                    is_active=0)
+        UserMetadata.objects.create(token=token, user_id=u.id) 
+
+        Usuario.objects.create(
+            correo=correo,
+        )
+
+        try:
+            html= f"""
+                    <h1>Verificación de cuentas</h1>
+                    Hola {nombre} te haz registrado exitosamente. Para activar tu cuenta
+                    en el siguiente enlace:<br>
+                    <a href="{url}">{url}</a>
+                    <br>
+                    O copia o pega el siguiente enlace en tu navegador favorito:
+                    <br>
+                    {url}
+                    """
+            
+            utilidades.sendmail( html, "Verificación" , correo )
+            
+            return JsonResponse ({"estado":"ok","mensaje":"se creo exitosamente"}, status=HTTPStatus.CREATED)
+        except Exception as e:
+            return JsonResponse ({"estado":"error","mensaje":"ocurrio un error inesperado"}, status=HTTPStatus.BAD_REQUEST)
