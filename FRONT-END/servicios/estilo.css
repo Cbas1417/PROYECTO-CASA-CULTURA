@@ -405,7 +405,7 @@ button:hover {
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap');
 
 body {
-    font-family: 'Comic Neue', cursive;
+    font-style: 'oblique';
     font-style: normal; /* cambia a normal para mejor legibilidad */
     background: linear-gradient(135deg, #f9f2ec 0%, #e0f7fa 100%);
     color: #333;
@@ -420,7 +420,7 @@ button {
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     transition: transform 0.3s ease, background-color 0.3s ease;
-    font-family: 'Comic Neue', cursive;
+    font-style: 'oblique';
     border: none;
     margin: 8px;
 }
