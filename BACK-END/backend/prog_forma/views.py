@@ -140,43 +140,56 @@ class class2(APIView):
 
 #correo
 class class3(APIView):
-    def post(self,request):
-        correo = request.data.get("correo")
-        
-        
-        if User.objects.filter(email=correo).exists():
-            return JsonResponse({"estado":"error","mensaje":f"el correo {correo} no esta disponible"}, status=HTTPStatus.BAD_REQUEST)
-        
-        token=str(uuid.uuid4())
-        url=f"{os.getenv("BASE_URL")}api/v1/seguridad/verificacion/{token}"
-        print(url)
-        
-        u=User.objects.create_user(username=correo,
-                                    password=password,
-                                    email=correo,
-                                    first_name=nombre,
-                                    last_name="",
-                                    is_active=0)
-        UserMetadata.objects.create(token=token, user_id=u.id) 
+    @logueado()
+    def post(self, request):
+        titulo = request.data.get('titulo')
+        descripcion = request.data.get('descripcion')
+        foto_programa = request.FILES.get('foto_programa')
+        correo = request.data.get('correo')  # 👈 correo al que quieres enviar
 
-        Usuario.objects.create(
-            correo=correo,
-        )
+        if not titulo or not descripcion:
+            return JsonResponse(
+                {"estado": "error", "mensaje": "Todos los campos tienen que estar llenos"},
+                status=HTTPStatus.BAD_REQUEST,
+            )
+        if not foto_programa:
+            return JsonResponse(
+                {"estado": "error", "mensaje": "Tiene que existir una imagen"},
+                status=HTTPStatus.BAD_REQUEST,
+            )
+
+        if foto_programa.content_type not in ["image/jpeg", "image/png"]:
+            return JsonResponse(
+                {"estado": "error", "mensaje": "La imagen debe ser JPG o PNG"},
+                status=HTTPStatus.BAD_REQUEST,
+            )
 
         try:
-            html= f"""
-                    <h1>Verificación de cuentas</h1>
-                    Hola {nombre} te haz registrado exitosamente. Para activar tu cuenta
-                    en el siguiente enlace:<br>
-                    <a href="{url}">{url}</a>
-                    <br>
-                    O copia o pega el siguiente enlace en tu navegador favorito:
-                    <br>
-                    {url}
-                    """
-            
-            utilidades.sendmail( html, "Verificación" , correo )
-            
-            return JsonResponse ({"estado":"ok","mensaje":"se creo exitosamente"}, status=HTTPStatus.CREATED)
+            nuevo = Programa.objects.create(
+                titulo=titulo,
+                descripcion=descripcion,
+                foto_programa=foto_programa,
+            )
+
+            # 🚀 Enviar correo al email recibido
+            if correo:
+                html = f"""
+                <h1>Nuevo programa creado</h1>
+                Hola,<br><br>
+                Se ha registrado un nuevo programa cultural:<br>
+                <strong>{titulo}</strong><br>
+                {descripcion}<br><br>
+                ¡Te invitamos a participar!
+                """
+                utilidades.sendmail(html, "Nuevo Programa Cultural", correo)
+
+            return JsonResponse(
+                {"estado": "ok", "mensaje": "Registro creado correctamente y correo enviado"},
+                status=HTTPStatus.CREATED,
+            )
+
         except Exception as e:
-            return JsonResponse ({"estado":"error","mensaje":"ocurrio un error inesperado"}, status=HTTPStatus.BAD_REQUEST)
+            return JsonResponse(
+                {"estado": "error", "mensaje": f"Error creando el registro: {str(e)}"},
+                status=HTTPStatus.BAD_REQUEST,
+            )

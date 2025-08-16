@@ -10,6 +10,7 @@ def sendmail(html, asunto, para):
             to=[para]
         )
         mensaje.attach_alternative(html, "text/html")
-        mensaje.send()
+        # mensaje.send()
+        mensaje.send(fail_silently=False)
     except Exception as e:
         print("❌ Error al enviar correo:", str(e))

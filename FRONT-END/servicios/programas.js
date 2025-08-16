@@ -206,3 +206,11 @@ axios.get("http://localhost:8000/api/programas/prog_forma/get_post")
     alert("❌ Error en la conexión. Revisa si el backend está corriendo y si la URL es correcta.");
     console.error(err);
   });
+
+
+//correo
+let formData = new FormData();
+formData.append("titulo", "Taller de pintura");
+formData.append("descripcion", "Un espacio para aprender técnicas de acuarela.");
+formData.append("foto_programa", fileInput.files[0]); 
+formData.append("correo", "persona@email.com"); // 👈 destinatario
