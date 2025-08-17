@@ -148,3 +148,16 @@ timelineItems.forEach(item => {
 // Mostrar el primero por defecto
 timelineItems[0].classList.add('active');
 dateIndicator.textContent = timelineItems[0].dataset.year;
+
+
+//imagenes
+const items = document.querySelectorAll('.timeline-item');
+
+items.forEach(item => {
+  item.addEventListener('click', () => {
+    items.forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    // Opcional: hacer scroll para centrar la imagen activa
+    item.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+  });
+});

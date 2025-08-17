@@ -222,36 +222,41 @@ margin-top: 20px;
 
 .timeline {
   display: flex;
-  height: 100vh;
-  overflow: hidden;
+  align-items: center;
+  justify-content: flex-start; /* las imágenes empiezan a la izquierda */
+  overflow-x: auto;
+  height: 400px;
+  gap: 10px;
+  padding: 20px;
+  scroll-behavior: smooth;
 }
 
 .timeline-item {
-  flex: 1;
+  flex: 0 0 200px; /* tamaño por defecto de las imágenes pequeñas */
+  height: 100%;
+  transition: all 0.4s ease;
+  cursor: pointer;
   position: relative;
   background-size: cover;
   background-position: center;
-  transition: flex 0.4s ease-in-out;
-  display: flex;
-  align-items: flex-end;
-  cursor: pointer;
+  border-radius: 8px;
 }
-
-.timeline-item:hover {
-  flex: 1.5;
+.timeline-item.active {
+  flex: 0 0 500px; /* tamaño de la imagen grande */
+  z-index: 10;
 }
-
 .timeline-content {
-  background-color: #FF9015;
-  padding: 20px;
-  transition: opacity 0.4s ease;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 144, 21, 0.8);
+  padding: 10px;
+  color: black;
   opacity: 0;
-  max-height: 100%;
-  overflow-y: auto;
+  transition: opacity 0.4s ease;
 }
-
-.timeline-item.active .timeline-content,
-.timeline-item:hover .timeline-content {
+.timeline-item.active .timeline-content {
   opacity: 1;
 }
 
