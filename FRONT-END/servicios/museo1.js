@@ -93,3 +93,6 @@ axios.get("http://localhost:8000/api/exposiciones/")
     console.error("❌ Error al conectar con exposiciones:", err);
   });
 
+
+//
+

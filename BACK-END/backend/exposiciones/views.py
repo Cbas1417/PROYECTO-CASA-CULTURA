@@ -1,68 +1,45 @@
 from rest_framework.views import APIView
-from django.http import JsonResponse
+from rest_framework.response import Response
+from rest_framework import status
 from .models import Exposicion
 from .serializers import ExposicionSerializer
-from http import HTTPStatus
 from django.http import Http404
 
-class Exposicions(APIView):
-
+class ExposicionList(APIView):
     def get(self, request):
-        exposiciones = Exposicion.objects.order_by('-id').all()
-        data = ExposicionSerializer(exposiciones, many=True)
-        return JsonResponse({"data": data.data}, status=HTTPStatus.OK)
+        exposiciones = Exposicion.objects.order_by('-id')
+        serializer = ExposicionSerializer(exposiciones, many=True, context={'request': request})
+        return Response(serializer.data)
 
     def post(self, request):
-        campos = ["nombre", "descripcion", "tiempo"]
-        for campo in campos:
-            if not request.data.get(campo):
-                return JsonResponse(
-                    {"estado": "error", "mensaje": f"El campo {campo} es obligatorio"},
-                    status=HTTPStatus.BAD_REQUEST
-                )
-        
-        serializer = ExposicionSerializer(data=request.data)
+        serializer = ExposicionSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse({"estado": "ok", "mensaje": "Exposición creada correctamente"}, status=HTTPStatus.CREATED)
-        return JsonResponse(serializer.errors, status=HTTPStatus.BAD_REQUEST)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ExposicionDetalle(APIView):
 
-    def get(self, request, id):
+class ExposicionDetail(APIView):
+    def get_object(self, pk):
         try:
-            exposicion = Exposicion.objects.get(id=id)
-        except Exposicion.DoesNotExist:
-            return JsonResponse({"estado": "error", "mensaje": "No encontrada"}, status=HTTPStatus.NOT_FOUND)
-        
-        serializer = ExposicionSerializer(exposicion)
-        return JsonResponse({"data": serializer.data}, status=HTTPStatus.OK)
-
-    def put(self, request, id):
-        try:
-            exposicion = Exposicion.objects.get(id=id)
+            return Exposicion.objects.get(pk=pk)
         except Exposicion.DoesNotExist:
             raise Http404
 
-        campos = ["nombre", "descripcion", "tiempo"]
-        for campo in campos:
-            if not request.data.get(campo):
-                return JsonResponse(
-                    {"estado": "error", "mensaje": f"El campo {campo} es obligatorio"},
-                    status=HTTPStatus.BAD_REQUEST
-                )
-        
-        serializer = ExposicionSerializer(exposicion, data=request.data)
+    def get(self, request, pk):
+        exposicion = self.get_object(pk)
+        serializer = ExposicionSerializer(exposicion, context={'request': request})
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        exposicion = self.get_object(pk)
+        serializer = ExposicionSerializer(exposicion, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse({"estado": "ok", "mensaje": "Exposición actualizada"}, status=HTTPStatus.OK)
-        return JsonResponse(serializer.errors, status=HTTPStatus.BAD_REQUEST)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, id):
-        try:
-            exposicion = Exposicion.objects.get(id=id)
-        except Exposicion.DoesNotExist:
-            raise Http404
-        
+    def delete(self, request, pk):
+        exposicion = self.get_object(pk)
         exposicion.delete()
-        return JsonResponse({"estado": "ok", "mensaje": "Exposición eliminada"}, status=HTTPStatus.OK)
+        return Response(status=status.HTTP_204_NO_CONTENT)

@@ -1,8 +1,7 @@
 from django.urls import path
-from .views import Exposicions, ExposicionDetalle
+from .views import ExposicionList, ExposicionDetail
 
 urlpatterns = [
-    path('', Exposicions.as_view(), name='lista_crear_exposiciones'),
-    path('<int:id>/', ExposicionDetalle.as_view(), name='detalle_actualizar_eliminar_exposicion'),
+    path('exposiciones/', ExposicionList.as_view(), name="exposiciones-list"),
+    path('exposiciones/<int:pk>/', ExposicionDetail.as_view(), name="exposiciones-detail"),
 ]
-# ese name en si es como opcional, sirve para redireccionar

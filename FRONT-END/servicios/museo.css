@@ -201,11 +201,11 @@ body {
 
 .filters button {
   background-color: #FF9015;
-  color: white;
+  color: black;
   border: none;
   padding: 10px 20px;
   margin: 0 5px;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -554,5 +554,8 @@ body {
     min-width: 140px;
   }
 }
+
+/**/
+
 
 

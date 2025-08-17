@@ -41,6 +41,31 @@ const descripciones = {
     titulo: "Coro",
     texto: "Únete a un grupo coral donde desarrollarás tu voz, afinación y ritmo."
   },
+  baileurba:{
+    titulo: "Baile Urbano",
+    texto: "Aprende los bailes urbanos como el hip hop, break dance y muchos mas."
+  },
+  folclor:{
+    titulo: "Folclor",
+    texto: "Aprende los bailes y ritmos de diferentes culturas y países."
+  },
+  banda:{
+    titulo: "Banda",
+    texto: "Aprende a tocar instrumentos de viento y percusión con nuestra banda."
+  },
+  cuerdaan:{
+    titulo: "Cuerdas andinas",
+    texto: "Aprende a tocar instrumentos de cuerda como la quena, siku y muchos mas."
+  },
+  cuerdafro:{
+    titulo: "Cuerdas frotadas",
+    texto: "Aprende a tocar instrumentos de cuerda como la charango, bandola y muchos mas."
+  },
+  artes:{
+    titulo: "Artes visuales",
+    texto: "Aprende técnicas de pintura, dibujo, escultura y muchas más."
+  }
+
   // Agrega más entradas según tus programas...
 };
 

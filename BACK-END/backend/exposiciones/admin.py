@@ -1,11 +1,8 @@
 from django.contrib import admin
-from exposiciones.models import Exposicion
+from .models import Exposicion
 
-# Register your models here.
-
+@admin.register(Exposicion)
 class ExposicionAdmin(admin.ModelAdmin):
-    list_display=("nombre","tiempo")#para escojer que campos quiero ver en el admin
-    search_fields=("nombre",)#crear un registro de busqueda segun estos campos
-
-
-admin.site.register(Exposicion,ExposicionAdmin)
+    list_display = ("id", "titulo", "autor", "video")
+    search_fields = ("titulo", "autor")
+    list_filter = ("autor",)
