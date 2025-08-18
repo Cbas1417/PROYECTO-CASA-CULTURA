@@ -61,22 +61,33 @@
 </nav>
 
 
+<div id="buscador-lateral">
+    <input type="text" id="buscador-input" placeholder="Buscar sitio...">
+    <ul id="buscador-resultados"></ul>
+</div>
 
 <select id="select-location">
     <option value="6.0918804,-75.6357673">Monumento Ciro Mendía</option>
     <option value="6.0925,-75.6360">Parque Principal</option>
     <option value="6.0908,-75.6352">Iglesia Central</option>
 </select>
-
 <div id="map" style="height: 400px;"></div>
 
-<section class="lugar-card" id="infoCiroMendia">
-    <img src="../imagenes/Captura de pantalla 2025-05-16 150420.png" alt="Monumento Ciro Mendía">
-    <div class="lugar-texto">
-        <h2>Monumento Ciro Mendía</h2>
-        <p>Texto informativo sobre el monumento...</p>
+<!-- Modal de información -->
+<div id="infoModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modal-title" class="modal-title"></h2>
+      <span class="close-btn">&times;</span>
     </div>
-</section>
+    <div class="modal-body">
+      <div class="modal-image-container">
+        <img id="modal-image" class="modal-image" src="" alt="" style="display: none;">
+      </div>
+      <p id="modal-description" class="modal-description"></p>
+    </div>
+  </div>
+</div>
 
 <div id="map"></div>
 

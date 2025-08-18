@@ -422,4 +422,148 @@ select:hover, select:focus {
 }
 }
 
+/*buscador*/
+#buscador-lateral {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+    padding: 18px 16px 10px 16px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 30px;
+}
+#buscador-input {
+    padding: 6px 12px;
+    border-radius: 7px;
+    border: 1.5px solid #3D4543;
+    font-size: 15px;
+    width: 100%;
+}
+#buscador-resultados {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    overflow-y: auto;
+    max-height: 180px;
+}
+#buscador-resultados li {
+    padding: 4px 0;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+#buscador-resultados li:hover {
+    color: #fff;
+    background: #FF9015;
+    border-radius: 5px;
+}
+@media (max-width: 900px) {
+    #buscador-lateral {
+        position: static;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/*modal*/
+/* Modal mejorado */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  overflow-y: auto; /* Permite scroll si el contenido es muy largo */
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 5% auto; /* Reducido para mejor visualización */
+  padding: 25px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 600px; /* Ancho máximo */
+  max-height: 90vh; /* Altura máxima */
+  overflow-y: auto; /* Scroll interno si es necesario */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Contenido del modal */
+.modal-header {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-title {
+  font-size: 1.5em;
+  color: #FF9015;
+  margin: 0;
+}
+
+.modal-body {
+  margin-bottom: 15px;
+}
+
+.modal-image-container {
+  width: 100%;
+  margin: 15px 0;
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  min-height: 150px; /* Altura mínima para evitar saltos */
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 300px;
+  height: auto;
+  width: auto;
+  border-radius: 8px;
+  object-fit: contain;
+  display: block; /* Asegura que no haya espacio extra debajo */
+  margin: 0 auto; /* Doble seguridad para centrado */
+}
+
+.modal-description {
+  line-height: 1.6;
+  color: black;
+  white-space: pre-line; /* Respeta saltos de línea */
+  overflow-wrap: break-word; /* Rompe palabras largas */
+}
+
+.close-btn {
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: #ff0000;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+    margin: 10% auto;
+    padding: 15px;
+  }
+  
+  .modal-image {
+    max-height: 200px;
+  }
+}
+
+
+
 
