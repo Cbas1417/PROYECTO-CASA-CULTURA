@@ -16,7 +16,7 @@ class class1(APIView):
     @logueado()
     def get(self, request):
         data = Programa.objects.order_by('-id').all()
-        serializer = ProgramaSerializer(data, many=True)
+        serializer = ProgramaSerializer(data, many=True, context={'request': request})
         return Response(serializer.data, status=HTTPStatus.OK)
 
     @logueado()
