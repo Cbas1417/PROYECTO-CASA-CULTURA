@@ -178,64 +178,111 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-
-
-
-
-
-
-//conexion, lo mas probable, no se
-axios.get("http://localhost:8000/api/programas/prog_forma/get_post")
-  .then(res => {
-    console.log(res.data.data);  // ← 'data' viene del JsonResponse en tu view
-  });
-
-
-// POST
-const formDataPost = new FormData();
-formDataPost.append("titulo", "Título nuevo");
-formDataPost.append("descripcion", "Descripción larga");
-formDataPost.append("foto_programa", archivoInput.files[0]);
-
-axios.post("http://localhost:8000/api/programas/prog_forma/get_post", formDataPost, {
-  headers: { "Content-Type": "multipart/form-data" }
-})
-.then(res => console.log(res.data))
-.catch(err => console.error(err));
-
-// PUT
-const formDataPut = new FormData();
-formDataPut.append("titulo", "Nuevo título");
-formDataPut.append("descripcion", "Nueva descripción");
-formDataPut.append("foto_programa", archivoInput.files[0]);
-
-axios.put(`http://localhost:8000/api/programas/prog_forma/put_delete/${id}`, formDataPut, {
-  headers: { "Content-Type": "multipart/form-data" }
-})
-.then(res => console.log(res.data));
-
-
-//delete
-axios.delete(`http://localhost:8000/api/programas/prog_forma/put_delete/${id}`)
-  .then(res => console.log(res.data));
-
-
-
-//prueba
-axios.get("http://localhost:8000/api/programas/prog_forma/get_post")
-  .then(res => {
-    alert("✅ ¡El frontend está conectado al backend!");
-    console.log(res.data.data);  // Asegúrate de tener la consola del navegador abierta (F12)
-  })
-  .catch(err => {
-    alert("❌ Error en la conexión. Revisa si el backend está corriendo y si la URL es correcta.");
-    console.error(err);
-  });
-
-
 //correo
 let formData = new FormData();
 formData.append("titulo", "Taller de pintura");
 formData.append("descripcion", "Un espacio para aprender técnicas de acuarela.");
 formData.append("foto_programa", fileInput.files[0]); 
 formData.append("correo", "persona@email.com"); // 👈 destinatario
+
+ //contectos y volver arriba
+    const btnSubir = document.getElementById('btnSubir');
+
+    // Mostrar/ocultar botón de subir al hacer scroll
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 200) {
+        btnSubir.style.display = 'inline-block';
+      } else {
+        btnSubir.style.display = 'none';
+      }
+    });
+
+    // Scroll arriba
+    btnSubir.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+
+//conexion
+// ===============================
+// 🔗 CONEXIÓN FRONTEND ↔ BACKEND
+// ===============================
+
+// Base URL del backend
+const API_BASE = "http://localhost:8000/api/programas/prog_forma/";
+
+// ✅ GET: traer todos los programas
+function getProgramas() {
+  axios.get(`${API_BASE}get_post/`)
+    .then(res => {
+      console.log("📥 Programas recibidos:", res.data);
+      // aquí puedes renderizar en tu HTML los programas
+    })
+    .catch(err => {
+      console.error("❌ Error al traer programas:", err);
+      alert("Error al conectar con el servidor.");
+    });
+}
+
+// ✅ POST: crear un nuevo programa
+function createPrograma(titulo, descripcion, archivo, correo) {
+  let formData = new FormData();
+  formData.append("titulo", titulo);
+  formData.append("descripcion", descripcion);
+  if (archivo) formData.append("foto_programa", archivo);
+  formData.append("correo", correo);
+
+  axios.post(`${API_BASE}get_post/`, formData, {
+    headers: { "Content-Type": "multipart/form-data" }
+  })
+    .then(res => {
+      console.log("📤 Programa creado:", res.data);
+      alert("✅ Programa creado correctamente");
+      getProgramas(); // refresca la lista
+    })
+    .catch(err => {
+      console.error("❌ Error al crear programa:", err);
+      alert("Error al crear el programa.");
+    });
+}
+
+// ✅ PUT: actualizar un programa
+function updatePrograma(id, titulo, descripcion, archivo) {
+  let formData = new FormData();
+  formData.append("titulo", titulo);
+  formData.append("descripcion", descripcion);
+  if (archivo) formData.append("foto_programa", archivo);
+
+  axios.put(`${API_BASE}put_delete/${id}/`, formData, {
+    headers: { "Content-Type": "multipart/form-data" }
+  })
+    .then(res => {
+      console.log("✏️ Programa actualizado:", res.data);
+      alert("✅ Programa actualizado correctamente");
+      getProgramas();
+    })
+    .catch(err => {
+      console.error("❌ Error al actualizar programa:", err);
+      alert("Error al actualizar el programa.");
+    });
+}
+
+// ✅ DELETE: eliminar un programa
+function deletePrograma(id) {
+  axios.delete(`${API_BASE}put_delete/${id}/`)
+    .then(res => {
+      console.log("🗑️ Programa eliminado:", res.data);
+      alert("✅ Programa eliminado correctamente");
+      getProgramas();
+    })
+    .catch(err => {
+      console.error("❌ Error al eliminar programa:", err);
+      alert("Error al eliminar el programa.");
+    });
+}
+
+// 🚀 Prueba inicial para ver si hay conexión
+getProgramas();

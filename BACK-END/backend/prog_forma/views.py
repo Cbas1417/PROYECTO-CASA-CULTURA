@@ -141,55 +141,42 @@ class class2(APIView):
 #correo
 class class3(APIView):
     @logueado()
-    def post(self, request):
-        titulo = request.data.get('titulo')
-        descripcion = request.data.get('descripcion')
-        foto_programa = request.FILES.get('foto_programa')
-        correo = request.data.get('correo')  # 👈 correo al que quieres enviar
+    def post(self, request, id):
+        correo = request.data.get('correo')
 
-        if not titulo or not descripcion:
+        try:
+            programa = Programa.objects.get(id=id)
+        except Programa.DoesNotExist:
             return JsonResponse(
-                {"estado": "error", "mensaje": "Todos los campos tienen que estar llenos"},
-                status=HTTPStatus.BAD_REQUEST,
-            )
-        if not foto_programa:
-            return JsonResponse(
-                {"estado": "error", "mensaje": "Tiene que existir una imagen"},
-                status=HTTPStatus.BAD_REQUEST,
+                {"estado": "error", "mensaje": "El programa no existe"},
+                status=HTTPStatus.NOT_FOUND,
             )
 
-        if foto_programa.content_type not in ["image/jpeg", "image/png"]:
+        if not correo:
             return JsonResponse(
-                {"estado": "error", "mensaje": "La imagen debe ser JPG o PNG"},
+                {"estado": "error", "mensaje": "Debes ingresar un correo"},
                 status=HTTPStatus.BAD_REQUEST,
             )
 
         try:
-            nuevo = Programa.objects.create(
-                titulo=titulo,
-                descripcion=descripcion,
-                foto_programa=foto_programa,
-            )
-
-            # 🚀 Enviar correo al email recibido
-            if correo:
-                html = f"""
-                <h1>Nuevo programa creado</h1>
-                Hola,<br><br>
-                Se ha registrado un nuevo programa cultural:<br>
-                <strong>{titulo}</strong><br>
-                {descripcion}<br><br>
-                ¡Te invitamos a participar!
-                """
-                utilidades.sendmail(html, "Nuevo Programa Cultural", correo)
+            # 🚀 Enviar correo con info del programa
+            html = f"""
+            <h1>Inscripción a Programa Cultural</h1>
+            Hola,<br><br>
+            Te has inscrito al programa:<br>
+            <strong>{programa.titulo}</strong><br>
+            {programa.descripcion}<br><br>
+            ¡Gracias por inscribirte!
+            """
+            utilidades.sendmail(html, f"Inscripción en {programa.titulo}", correo)
 
             return JsonResponse(
-                {"estado": "ok", "mensaje": "Registro creado correctamente y correo enviado"},
-                status=HTTPStatus.CREATED,
+                {"estado": "ok", "mensaje": "Correo enviado correctamente"},
+                status=HTTPStatus.OK,
             )
 
         except Exception as e:
             return JsonResponse(
-                {"estado": "error", "mensaje": f"Error creando el registro: {str(e)}"},
+                {"estado": "error", "mensaje": f"Error enviando correo: {str(e)}"},
                 status=HTTPStatus.BAD_REQUEST,
             )
