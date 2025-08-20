@@ -17,7 +17,7 @@ class class1(APIView):
     def get(self, request):
         data = Programa.objects.order_by('-id').all()
         serializer = ProgramaSerializer(data, many=True)
-        return JsonResponse({"data": serializer.data}, status=HTTPStatus.OK)
+        return Response(serializer.data, status=HTTPStatus.OK)
 
     @logueado()
     def post(self, request):
@@ -143,6 +143,9 @@ class class3(APIView):
     @logueado()
     def post(self, request, id):
         correo = request.data.get('correo')
+        # También acepta 'contacto' como alternativa
+        if not correo:
+            correo = request.data.get('contacto')
 
         try:
             programa = Programa.objects.get(id=id)
@@ -171,12 +174,12 @@ class class3(APIView):
             utilidades.sendmail(html, f"Inscripción en {programa.titulo}", correo)
 
             return JsonResponse(
-                {"estado": "ok", "mensaje": "Correo enviado correctamente"},
+                {"success": True, "message": "Correo enviado correctamente"},  # Cambiado a formato que espera el frontend
                 status=HTTPStatus.OK,
             )
 
         except Exception as e:
             return JsonResponse(
-                {"estado": "error", "mensaje": f"Error enviando correo: {str(e)}"},
+                {"success": False, "message": f"Error enviando correo: {str(e)}"},  # Cambiado a formato que espera el frontend
                 status=HTTPStatus.BAD_REQUEST,
             )
