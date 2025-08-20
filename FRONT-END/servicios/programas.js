@@ -62,7 +62,7 @@ const descripciones = {
     texto: "Aprende a tocar instrumentos de cuerda como la charango, bandola y muchos mas."
   },
   artes:{
-    titulo: "Artes visuales",
+    titulo: "Artes plasticas",
     texto: "Aprende técnicas de pintura, dibujo, escultura y muchas más."
   }
 
@@ -108,25 +108,6 @@ programas.forEach(p => {
   // Cerrar modal
   closeBtn.addEventListener("click", () => {
     modal.style.display = "none";
-  });
-
-  // Confirmar inscripción
-  document.getElementById("btn-inscribirse").addEventListener("click", () => {
-    const contacto = document.getElementById("contacto-inscripcion").value.trim();
-    const programaId = modal.dataset.programaId;
-
-    if (!contacto) {
-      alert("Por favor, escribe tu correo o dirección de contacto.");
-      return;
-    }
-
-    console.log(`📨 Inscripción enviada`);
-    console.log(`Programa ID: ${programaId}`);
-    console.log(`Contacto del usuario: ${contacto}`);
-
-    alert("✅ ¡Te has inscrito exitosamente!");
-    modal.style.display = "none";
-    document.getElementById("contacto-inscripcion").value = "";
   });
 //no me acuerdo
 document.addEventListener("DOMContentLoaded", () => {
@@ -177,14 +158,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   });
-
-//correo
-let formData = new FormData();
-formData.append("titulo", "Taller de pintura");
-formData.append("descripcion", "Un espacio para aprender técnicas de acuarela.");
-formData.append("foto_programa", fileInput.files[0]); 
-formData.append("correo", "persona@email.com"); // 👈 destinatario
-
  //contectos y volver arriba
     const btnSubir = document.getElementById('btnSubir');
 
@@ -205,11 +178,6 @@ formData.append("correo", "persona@email.com"); // 👈 destinatario
       });
     });
 
-
-//conexion
-// ===============================
-// 🔗 CONEXIÓN FRONTEND ↔ BACKEND
-// ===============================
 
 // Base URL del backend
 const API_BASE = "http://localhost:8000/api/programas/prog_forma/";
@@ -286,3 +254,26 @@ function deletePrograma(id) {
 
 // 🚀 Prueba inicial para ver si hay conexión
 getProgramas();
+
+
+//correo
+function inscribirse(programaId, programaTitulo) {
+  const correo = prompt("✉️ Ingresa tu correo para inscribirte en " + programaTitulo);
+
+  if (!correo) {
+    alert("Debes ingresar un correo válido.");
+    return;
+  }
+
+  axios.post(`http://localhost:8000/api/programas/inscribirse/${programaId}/`, {
+    correo: correo
+  })
+  .then(res => {
+    alert("✅ Te has inscrito a " + programaTitulo + ". Revisa tu correo.");
+  })
+  .catch(err => {
+    console.error(err);
+    alert("❌ Hubo un error al inscribirte.");
+  });
+}
+
