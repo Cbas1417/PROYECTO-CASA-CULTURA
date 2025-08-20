@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <title>Usuarios | Casa de la Cultura Caldas</title>
   <link rel="stylesheet" href="documentos.css" />
 </head>
@@ -62,6 +63,14 @@
     <div class="panel-agregar">
       <h3>Añadir usuario</h3>
       <form id="form-usuario">
+        <select id="tipo_d" required>
+          <option value="">Seleccionar tipo de documento</option>
+          <option value="cc">Cedula de ciudadania</option>
+          <option value="ti">Tarjeta de identidad</option>
+          <option value="ce">Cedula de extranjeria</option>
+          <option value="pas">Pasaporte</option>
+          <option value="nit">NIT</option>
+        </select>
         <input type="text" id="documento" placeholder="Documento" required />
         <input type="text" id="nombre" placeholder="Nombre completo" required />
         <input type="date" id="nacimiento" required />

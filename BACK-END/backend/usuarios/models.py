@@ -1,5 +1,6 @@
 from django.db import models
 from autoslug import AutoSlugField
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -13,7 +14,7 @@ class Usuario(models.Model):
         ('pas', 'Pasaporte'),
         ('nit', 'NIT'),
     ]
-
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="perfil", null=True, blank=True)
     tipo_documento = models.CharField(max_length=3,choices=tipos_documento,default='cc', blank=False, null=False)
     numero_documento= models.CharField(max_length=100, blank=False, null=False,verbose_name="Numero de documento")
     nombre= models.CharField(max_length=50, blank=False, null=False, verbose_name="Nombre de usuario")

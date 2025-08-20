@@ -8,6 +8,8 @@ from .models import *
 from .serializers import *
 from django.core.files.storage import FileSystemStorage
 from datetime import datetime
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 
 # Create your views here.
 
@@ -31,15 +33,25 @@ class class1(APIView):
             return JsonResponse({"Estado": "Error", "Mensaje": "Todos los campos tiene  que estar llenos"}, status=HTTPStatus.BAD_REQUEST)
 
         try:
-            nuevo = Usuario.objects.create(
-                                                tipo_documento=tipo_documento,
-                                                numero_documento=numero_documento,
-                                                nombre=nombre,
-                                                fecha_nacimiento=fecha_nacimiento,
-                                                correo=correo,
-                                                telefono=telefono,
-                                                contraseña=contraseña
+            user = User.objects.create_user(
+                username=correo,
+                email=correo,
+                first_name=nombre,
+                password=contraseña,
+                is_active=True  
             )
+
+            Usuario.objects.create(
+                user=user,
+                tipo_documento=tipo_documento,
+                numero_documento=numero_documento,
+                nombre=nombre,
+                fecha_nacimiento=fecha_nacimiento,
+                correo=correo,
+                telefono=telefono,
+                contraseña=make_password(contraseña)
+            )
+            
             return JsonResponse({"Estado": "Ok", "Mensaje": "Registro creado correctamente"})
         
         except Exception as e:
