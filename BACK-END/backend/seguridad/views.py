@@ -135,3 +135,10 @@ class class3(APIView):
                 return JsonResponse({"estado":"error","mensaje":"ocurrio un error inesperado"},status=HTTPStatus.BAD_REQUEST)
         else:
             return JsonResponse({"estado":"error","mensaje":"las credenciales ingresadas no son correctas"},status=HTTPStatus.BAD_REQUEST)
+
+class class4(APIView):
+    def put(self,request):
+
+        correo=request.data.get("correo")
+        password = request.data.get("password")
+
