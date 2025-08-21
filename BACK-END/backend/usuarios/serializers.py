@@ -9,4 +9,21 @@ import os
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
-        fields = ['tipo_documento','numero_documento','nombre','fecha_nacimiento','correo','telefono','contraseña']
+        fields = ['id','tipo_documento','numero_documento','nombre','fecha_nacimiento','correo','telefono','contraseña']
+    
+    def create(self, validated_data):
+        password = validated_data.pop('contraseña')
+        correo = validated_data['correo']
+        nombre = validated_data['nombre']
+
+        user = User.objects.create_user(
+            username=correo,
+            email=correo,
+            first_name=nombre,
+            password=password,
+            is_active=True
+        )
+        
+        usuario = Usuario.objects.create(user=user, **validated_data)
+
+        return usuario

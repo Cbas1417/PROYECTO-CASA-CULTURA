@@ -9,181 +9,119 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnCancelar = document.getElementById("btn-cancelar-eliminar");
 
     let usuarios = [];
-    let indexEliminar = null;
+    let idEliminar = null;
 
-    // ======================================
-    // Cargar usuarios existentes desde el backend
-    // ======================================
-async function cargarUsuarios() {
-    try {
-        const response = await axios.get("http://127.0.0.1:8000/api/v1/usuarios/get_post");
-        console.log("Datos crudos de usuarios:", response.data);
+    const API_URL = "http://127.0.0.1:8000/api/v1"; // Ajusta según tu server
 
-        // Ahora usamos response.data.data, que es el array real
-        const dataArray = Array.isArray(response.data.data) ? response.data.data : [];
-
-        usuarios = dataArray.map(u => ({
-            documento: u.numero_documento,
-            nombre: u.nombre,
-            nacimiento: u.fecha_nacimiento,
-            correo: u.correo,
-            telefono: u.telefono,
-            rol: u.rol
-        }));
-
-        renderizarUsuarios();
-    } catch (error) {
-        console.error("Error al cargar usuarios:", error);
-        alert("No se pudieron cargar los usuarios existentes.");
-    }
-}
-
-    // ======================================
-    // Renderizar tabla de usuarios
-    // ======================================
-    function renderizarUsuarios() {
-        tabla.innerHTML = "";
-        const filtro = buscador.value.toLowerCase();
-
-        usuarios
-        .filter(u => 
-            u.nombre.toLowerCase().includes(filtro) || 
-            u.documento.toLowerCase().includes(filtro)
-        )
-        .slice(0, 15)
-        .forEach((u, index) => {
-            const fila = document.createElement("div");
-            fila.classList.add("fila");
-
-            fila.innerHTML = `
-            <span>${u.nombre} - ${u.documento}</span>
-            <span>Correo: ${u.correo}</span>
-            <span>Tel: ${u.telefono}</span>
-            <span>Rol: ${u.rol}</span>
-            <span>Fecha nacimiento: ${u.nacimiento}</span>
-            <button onclick="mostrarEliminar(${index})">🗑</button>
-            `;
-
-            tabla.appendChild(fila);
-        });
-    }
-
-    // ======================================
-    // Modal eliminar usuario
-    // ======================================
-    window.mostrarEliminar = (index) => {
-        indexEliminar = index;
-        modalTexto.textContent = `¿Eliminar a ${usuarios[index].nombre}?`;
-        modal.classList.add("visible");
+    // ✅ Cargar usuarios existentes
+    const cargarUsuarios = async () => {
+        try {
+            const res = await axios.get(`${API_URL}/usuarios/get_post`);
+            console.log(res.data);
+            usuarios = res.data.data;
+            renderTabla(usuarios);
+        } catch (err) {
+            console.error(err);
+            alert("Error al cargar usuarios");
+        }
     };
 
-    btnCancelar.addEventListener("click", () => {
-        modal.classList.remove("visible");
-        indexEliminar = null;
-    });
-<<<<<<< HEAD
-}
+    // ✅ Renderizar tabla
+    const renderTabla = (data) => {
+        tabla.innerHTML = `
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Documento</th>
+                  <th>Nombre</th>
+                  <th>Correo</th>
+                  <th>Teléfono</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.map(u => `
+                  <tr>
+                    <td>${u.id}</td>
+                    <td>${u.tipo_documento} ${u.numero_documento}</td>
+                    <td>${u.nombre}</td>
+                    <td>${u.correo}</td>
+                    <td>${u.telefono}</td>
+                    <td>
+                      <button class="btn-eliminar" data-id="${u.id}">❌ Eliminar</button>
+                    </td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+        `;
 
-/*despliegue menu*/
-/* --- MENÚ PERFIL --- */
-const userIcon = document.getElementById("user-icon");
-const dropdownMenu = document.getElementById("dropdown-menu");
+        // Bind botones eliminar
+        document.querySelectorAll(".btn-eliminar").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                idEliminar = e.target.dataset.id;
+                modalTexto.textContent = `¿Seguro que deseas eliminar al usuario con ID ${idEliminar}?`;
+                modal.style.display = "block";
+            });
+        });
+    };
 
-if (userIcon) {
-  userIcon.addEventListener("click", () => {
-    dropdownMenu.classList.toggle("hidden");
-  });
+    // ✅ Agregar usuario
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-  // cerrar si se hace clic fuera
-  document.addEventListener("click", (e) => {
-    if (!userIcon.contains(e.target) && !dropdownMenu.contains(e.target)) {
-      dropdownMenu.classList.add("hidden");
-    }
-  });
-}
-/* --- FIN MENÚ PERFIL --- */
-=======
+        const data = {
+            tipo_documento: document.getElementById("tipo_d").value,
+            numero_documento: document.getElementById("documento").value,
+            nombre: document.getElementById("nombre").value,
+            fecha_nacimiento: document.getElementById("nacimiento").value,
+            correo: document.getElementById("correo").value,
+            telefono: document.getElementById("telefono").value,
+            password: document.getElementById("contrasena").value
+        };
 
-    btnConfirmar.addEventListener("click", () => {
-        if (indexEliminar !== null) {
-            usuarios.splice(indexEliminar, 1);
-            renderizarUsuarios();
-            modal.classList.remove("visible");
-            indexEliminar = null;
+        try {
+            await axios.post(`${API_URL}/seguridad/registro`, data);
+            alert("Usuario registrado correctamente. Revisa tu correo para activación.");
+            form.reset();
+            cargarUsuarios();
+        } catch (err) {
+            console.error(err.response?.data || err);
+            alert("Error al registrar usuario");
         }
     });
 
-    // ======================================
-    // Crear usuario desde formulario
-    // ======================================
-    form.addEventListener("submit", (e) => {
-        e.preventDefault();
-
-        const nuevo = {
-            documento: form.documento.value.trim(),
-            nombre: form.nombre.value.trim(),
-            nacimiento: form.nacimiento.value,
-            correo: form.correo.value.trim(),
-            telefono: form.telefono.value.trim(),
-            rol: form.rol.value,
-            contrasena: form.contrasena.value
-        };
-
-        usuarios.push(nuevo);
-        form.reset();
-        renderizarUsuarios();
+    // ✅ Confirmar eliminación
+    btnConfirmar.addEventListener("click", async () => {
+        if (idEliminar) {
+            try {
+                await axios.delete(`${API_URL}/usuarios/put_delete/${idEliminar}`);
+                alert("Usuario eliminado correctamente");
+                modal.style.display = "none";
+                cargarUsuarios();
+            } catch (err) {
+                console.error(err.response?.data || err);
+                alert("Error al eliminar usuario");
+            }
+        }
     });
 
-    // ======================================
-    // Buscador en vivo
-    // ======================================
-    buscador.addEventListener("input", renderizarUsuarios);
-
-    // ======================================
-    // Menu adaptable
-    // ======================================
-    const menuToggle = document.getElementById('menu-toggle');
-    const menu = document.getElementById('menu');
-    if (menuToggle) {
-        menuToggle.addEventListener('click', () => {
-            menu.classList.toggle('active');
-        });
-    }
-
-    // ======================================
-    // Crear usuario en backend
-    // ======================================
-    document.getElementById("form-usuario").addEventListener("submit", function(e) {
-        e.preventDefault(); 
-
-        const nuevoUsuario = {
-            tipo_documento: document.getElementById("tipo_d").value,
-            numero_documento: document.getElementById("documento").value.trim(),
-            nombre: document.getElementById("nombre").value.trim(),
-            fecha_nacimiento: document.getElementById("nacimiento").value,
-            correo: document.getElementById("correo").value.trim(),
-            telefono: document.getElementById("telefono").value.trim(),
-            rol: document.getElementById("rol").value,
-            contraseña: document.getElementById("contrasena").value
-        };
-
-        axios.post("http://127.0.0.1:8000/api/v1/usuarios/get_post", nuevoUsuario, {
-            headers: { "Content-Type": "application/json" }
-        })
-        .then(function(response) {
-            console.log("Usuario creado correctamente:", response.data);
-            alert("Usuario creado con éxito");
-            e.target.reset();
-        })
-        .catch(function(error) {
-            console.error("Error al enviar usuario:", error);
-            alert("Error: " + (error.response?.data?.mensaje || "No se pudo crear el usuario"));
-        });
+    btnCancelar.addEventListener("click", () => {
+        modal.style.display = "none";
+        idEliminar = null;
     });
 
-    // ======================================
-    // Cargar usuarios al iniciar
-    // ======================================
+    // ✅ Buscador
+    buscador.addEventListener("input", (e) => {
+        const q = e.target.value.toLowerCase();
+        const filtrados = usuarios.filter(u =>
+            u.nombre.toLowerCase().includes(q) ||
+            u.numero_documento.includes(q)
+        );
+        renderTabla(filtrados);
+    });
+
+    // 🚀 Cargar al inicio
     cargarUsuarios();
 });
->>>>>>> 5b6b709 (reload)
