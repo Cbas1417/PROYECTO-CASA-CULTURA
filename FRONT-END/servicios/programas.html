@@ -4,68 +4,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="programas.css">
-    <link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png">
+    
+    <link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png" style="width: 16px; height: 16px;">
     <title>Programas de formacion | Casa de la Cultura Caldas</title>
 </head>
 <body id="contenedor">
     <header id="cabeza">
-        <nav id="social-icons">
-            <figure class="icono">
-                <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
-                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" width="39" height="39">
-                </a>
-            </figure>
-            <figure class="icono">
-                <a href="https://www.instagram.com/caldascultura/related_profiles/?hl=es-la" target="_blank" rel="noopener">
-                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" width="39" height="39">
-                </a>
-            </figure>
-            <figure class="icono">
-                <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
-                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="Twitter/X" width="39" height="39">
-                </a>
-            </figure>
-        </nav>
-        <div id="user-actions">
-            <a id="btn-iniciar" href="../usuario/registrar.html">Registrarse</a>
-            <a id="btn-registrar" href="../usuario/iniciar.html">Iniciar Sesión</a>
-            <div class="perfil-dropdown" id="perfil-icono" style="display: none;">
-                <img id="perfil-img" src="../imagenes/perfill.png" alt="Usuario">
-                <div id="dropdown-menu" class="hidden">
-                    <a href="../usuario/verperfil.html">Ver perfil</a>
-                    <a href="#" id="cerrar-sesion">Cerrar sesión</a>
-                </div>
-            </div>
+    <nav id="social-icons">
+        <figure class="icono">
+            <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" width="39" height="39">
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://www.instagram.com/caldascultura/related_profiles/?hl=es-la" target="_blank" rel="noopener">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" width="39" height="39">
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="Twitter/X" width="39" height="39">
+            </a>
+        </figure>
+    </nav>
+    <div id="user-actions">
+    <a id="btn-iniciar" href="../usuario/registrar.html">Registrarse</a>
+    <a id="btn-registrar" href="../usuario/iniciar.html">Iniciar Sesión</a>
+
+    <div class="perfil-dropdown" id="perfil-icono" style="display: none;">
+        <img id="perfil-img" src="../imagenes/perfill.png" alt="Usuario">
+        <div id="dropdown-menu" class="hidden">
+            <a href="../usuario/verperfil.html">Ver perfil</a>
+            <a href="#" id="cerrar-sesion">Cerrar sesión</a>
         </div>
-    </header>
+    </div>
+</div>
+
+</header>
 
     <nav id="nav">
-        <img id="logo" src="../imagenes/logo1.png" alt="" width="50px" height="102px">
-        <button id="menu-toggle" aria-label="Abrir menú">&#9776;</button>
-        <div id="menu">
-            <ul>
-                <li><a href="../usuario/inicio.html">Inicio</a></li>
-                <li><a href="nuestra.html">Nuestra casa</a></li>
-                <li><a href="programas.html">Programas de formación</a></li>
-                <li><a href="museo1.html">Museo</a></li>
-                <li><a href="mapa.html">Mapa</a></li>
-                <li><a href="index.html">Infantil</a></li>
-            </ul>
-        </div>
-    </nav>
-    
+    <img id="logo" src="../imagenes/logo1.png" alt="" width="50px" height="102px">
+    <button id="menu-toggle" aria-label="Abrir menú">&#9776;</button>
+    <div id="menu">
+        <ul>
+            <li><a href="../usuario/inicio.html">Inicio</a></li>
+            <li><a href="nuestra.html">Nuestra casa</a></li>
+            <li><a href="programas.html">Programas de formación</a></li>
+            <li><a href="museo1.html">Museo</a></li>
+            <li><a href="mapa.html">Mapa</a></li>
+            <li><a href="index.html">Infantil</a></li>
+        </ul>
+    </div>
+</nav>
     <h2>Elije lo que más te guste y diviértete</h2>
-    <div class="filters">
+<div class="filters">
         <button data-filter="all" class="active">Todo</button>
-        <button data-filter="ece">Artes escénicas</button>
+        <button data-filter="ece">Artes ecenicas</button>
         <button data-filter="visu">Artes visuales</button>
     </div>
+</div>
 
-    <div id="centro">
-        <!-- Los programas se cargarán dinámicamente desde el backend -->
-        <div id="programas-container" class="programas-grid"></div>
-        
-        <div class="burbujas">
+
+<div id="centro">
+    <div class="programa" data-id="1" data-category="ece">
+        <img src="../imagenes/images (1).jpg" id="imagen">
+        <h3 id="ti">Baile de salon</h3>
+        <a href="#" class="botonn"  onclick="inscribirse(1,'Baile de salón')" >Ver más</a>
+    </div>
+
+    <div class="programa" data-id="2" data-category="ece">
+        <img src="../imagenes/ballet.jpg" id="imagen">
+        <h3 id="ti">Ballet</h3>
+        <a href="#" class="botonn"  onclick="inscribirse(2,'Ballet')">Ver más</a>
+    </div>
+
+    <div class="programa" data-id="3" data-category="ece">
+    <img src="../imagenes/Captura de pantalla 2025-05-16 150620.png" id="imagen">
+    <h3 id="ti">Teatro</h3>
+    <a href="#" class="botonn"  onclick="inscribirse(3,'Teatro')">Ver más</a>
+    </div>
+
+    <div class="programa" data-id="4" data-category="ece">
+    <img src="../imagenes/bailemo.jpg" id="imagen">
+    <h3 id="ti">Baile urbano y moderno</h3>
+    <a href="#" class="botonn"  onclick="inscribirse(4,'Baile urbano y moderno')">Ver más</a>
+    </div>
+
+    <div class="programa" data-id="5" data-category="ece">
+    <img src="../imagenes/folclor.jpg" id="imagen">
+    <h3 id="ti">Folclor</h3>
+    <a href="#" class="botonn"  onclick="inscribirse(5,'Folclor')">Ver más</a>
+    </div>
+
+    <div class="programa" data-id="6" data-category="ece">
+    <img src="../imagenes/banda.jpg" id="imagen">
+    <h3 id="ti">Banda</h3>
+    <a href="#" class="botonn"  onclick="inscribirse(6,'Banda')">Ver más</a>
+    </div>
+
+    <div class="programa" data-id="7" data-category="ece">
+    <img src="../imagenes/coro.jpg" id="imagen">
+    <h3 id="ti">Coro</h3>
+    <a href="#" class="botonn"  onclick="inscribirse(7,'Coro')">Ver más</a>
+    </div>
+
+    <div class="programa" data-id="8" data-category="visu">
+    <img src="../imagenes/cuerdas.jpg" id="imagen">
+    <h3 id="ti">Cuerdas Andinas</h3>
+    <a href="#" class="botonn"  onclick="inscribirse(8,'Cuerdas Andinas')">Ver más</a>
+    </div>
+
+    <div class="programa" data-id="9" data-category="visu">
+    <img src="../imagenes/frotadas.jpg" id="imagen">
+    <h3 id="ti">Cuerdas frotadas</h3>
+    <a href="#" class="botonn"  onclick="inscribirse(9,'Cuerdas frotadas')">Ver más</a>
+    </div>
+
+    <div class="programa" data-id="10" data-category="visu">
+    <img src="../imagenes/plasticas.jpg " id="imagen">
+    <h3 id="ti">Artes plasticas</h3>
+    <a href="#" class="botonn" onclick="inscribirse(10,'Artes plasticas')">Ver más</a>
+    </div>
+    <div class="burbujas">
             <div class="burbuja"></div>
             <div class="burbuja"></div>
             <div class="burbuja"></div>
@@ -77,44 +137,52 @@
             <div class="burbuja"></div>
             <div class="burbuja"></div>
         </div>
+</div>
+</div>
+
+<!-- Modal de información del programa -->
+<div class="modal" id="modal">
+<div class="modal-content">
+    <span class="close" id="close">&times;</span>
+    <h2 id="titulo-modal"></h2>
+    <p id="descripcion-modal"></p>
+
+    <!-- Formulario para usuarios logueados -->
+    <div id="form-inscripcion" style="display: none;">
+        <label for="contacto-inscripcion">¿Dónde deseas recibir la información del programa?</label>
+        <input type="text" id="contacto-inscripcion" placeholder="Correo electrónico o dirección">
+        <button id="btn-inscribirse" class="btn-primary">Confirmar inscripción</button>
     </div>
 
-    <!-- Modal de información del programa -->
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <span class="close" id="close">&times;</span>
-            <h2 id="titulo-modal"></h2>
-            <p id="descripcion-modal"></p>
-            <div id="form-inscripcion" style="display: none;">
-                <label for="contacto-inscripcion">¿Dónde deseas recibir la información del programa?</label>
-                <input type="text" id="contacto-inscripcion" placeholder="Correo electrónico o dirección">
-                <button id="btn-inscribirse" class="btn-primary">Confirmar inscripción</button>
-            </div>
-            <a href="../usuario/iniciar.html" id="btn-ir-iniciar" class="btn-primary" style="display: none;">Iniciar sesión</a>
-        </div>
+    <!-- Botón para usuarios no logueados -->
+    <a href="../usuario/iniciar.html" id="btn-ir-iniciar" class="btn-primary" style="display: none;">Iniciar sesión</a>
+</div>
+</div>
+
+
+
+ <!-- Botón -->
+  <div class="botones-flotantes">
+    <button id="btnSubir" class="btn-subir" title="Subir">⭡</button>
+  </div>
+</div>
+
+
+<footer id="footer">
+<div id="footer-container">
+    <div id="footer-logo">
+    <img src="../imagenes/logo2.png" alt="Logo Casa de la Cultura" />
     </div>
-
-    <!-- Botón flotante -->
-    <div class="botones-flotantes">
-        <button id="btnSubir" class="btn-subir" title="Subir">⭡</button>
+    <div id="footer-divider"></div>
+    <div id="footer-info">
+    <p><strong>Instagram:</strong> @caldascultura</p>
+    <p><strong>Facebook:</strong> Casa de la Cultura Caldas Antioquia</p>
+    <p><strong>X:</strong> @culturacaldas</p>
     </div>
+</div>
+</footer>
+<script src="programas.js"></script>
+<script src="../usuario/global.js"></script>
 
-    <footer id="footer">
-        <div id="footer-container">
-            <div id="footer-logo">
-                <img src="../imagenes/logo2.png" alt="Logo Casa de la Cultura" />
-            </div>
-            <div id="footer-divider"></div>
-            <div id="footer-info">
-                <p><strong>Instagram:</strong> @caldascultura</p>
-                <p><strong>Facebook:</strong> Casa de la Cultura Caldas Antioquia</p>
-                <p><strong>X:</strong> @culturacaldas</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="programas.js"></script>
-    <script src="../usuario/global.js"></script>
 </body>
 </html>
