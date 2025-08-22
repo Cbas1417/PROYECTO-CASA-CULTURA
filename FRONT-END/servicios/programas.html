@@ -64,7 +64,26 @@
     </div>
 </div>
 
-
+<!-- Sección de Mis Inscripciones (solo visible para usuarios logueados) -->
+<div id="mis-inscripciones-section" style="display: none;">
+    <h2>Mis Inscripciones</h2>
+    <div id="lista-inscripciones">
+        <table id="tabla-inscripciones">
+            <thead>
+                <tr>
+                    <th>Programa</th>
+                    <th>Contacto</th>
+                    <th>Fecha de inscripción</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="inscripciones-body">
+                <!-- Las inscripciones se cargarán aquí con JavaScript -->
+            </tbody>
+        </table>
+        <p id="mensaje-vacio" class="vacio" style="display: none;">No tienes inscripciones aún</p>
+    </div>
+</div>
 <div id="centro">
     <div class="programa" data-id="baile" data-category="ece">
         <img src="../imagenes/images (1).jpg" id="imagen">

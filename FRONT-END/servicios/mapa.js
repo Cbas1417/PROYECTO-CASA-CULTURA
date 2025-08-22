@@ -261,3 +261,24 @@ document.addEventListener('click', (e) => {
     buscadorResultados.innerHTML = '';
   }
 });
+
+
+
+// Botón para subir
+const btnSubir = document.getElementById('btnSubir');
+if (btnSubir) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 200) {
+            btnSubir.style.display = 'inline-block';
+        } else {
+            btnSubir.style.display = 'none';
+        }
+    });
+
+    btnSubir.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
