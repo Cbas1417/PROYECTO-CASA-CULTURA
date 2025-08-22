@@ -209,3 +209,33 @@ if (menuToggle) {
     });
 }
 
+// SIMULACIÓN DE SESIÓN ACTIVA
+const usuarioAutenticado = true; // ponlo en false si quieres probar sin sesión
+
+document.addEventListener("DOMContentLoaded", () => {
+  const perfilDropdown = document.getElementById("perfil-icono");
+
+  if (usuarioAutenticado) {
+    perfilDropdown.style.display = "inline-block"; // 👈 se muestra el menú
+  } else {
+    perfilDropdown.style.display = "none";
+  }
+
+  // Mostrar/ocultar el menú con clic
+  const perfilImg = document.getElementById("perfil-img");
+  const dropdownMenu = document.getElementById("dropdown-menu");
+
+  if (perfilImg) {
+    perfilImg.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!perfilImg.contains(e.target)) {
+        dropdownMenu.classList.add("hidden");
+      }
+    });
+  }
+});
+

@@ -1,35 +1,17 @@
-//parte admin para el ingreso a sus paginas
-// parte admin para restringir acceso solo a administradores
+// --- Parte admin para restringir acceso solo a administradores ---
 document.addEventListener("DOMContentLoaded", () => {
   const usuario = localStorage.getItem("usuarioActivo");
   const correosAdmin = ['sj153175@gmail.com', 'admin@caldas.gov.co'];
 
   if (!usuario || !correosAdmin.includes(usuario)) {
-    // Redirige al inicio si no es admin
     window.location.href = '../usuario/inicio.html';
-
   }
 });
 
-
+// --- Cargar estadísticas ---
 document.addEventListener("DOMContentLoaded", () => {
-  const userIcon = document.getElementById('user-icon');
-  const dropdownMenu = document.getElementById('dropdown-menu');
-
-  userIcon.addEventListener('click', (e) => {
-    e.stopPropagation();
-    dropdownMenu.classList.toggle('hidden');
-  });
-
-  document.addEventListener('click', function (e) {
-    if (!userIcon.contains(e.target)) {
-      dropdownMenu.classList.add('hidden');
-    }
-  });
-
   const statsContainer = document.getElementById("stats-container");
 
-  // Petición con Axios al backend
   axios.get("http://localhost:8000/api/dashboard/")
     .then(response => {
       const visitas = response.data.data;
@@ -59,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// Menú adaptable
+// --- Menú adaptable ---
 const menuToggle = document.getElementById('menu-toggle');
 const menu = document.getElementById('menu');
 if (menuToggle) {
@@ -67,3 +49,32 @@ if (menuToggle) {
     menu.classList.toggle('active');
   });
 }
+
+// --- Menú usuario con sesión ---
+const usuarioAutenticado = true; // ponlo en false si quieres probar sin sesión
+
+document.addEventListener("DOMContentLoaded", () => {
+  const perfilDropdown = document.getElementById("perfil-icono");
+
+  if (usuarioAutenticado) {
+    perfilDropdown.style.display = "inline-block";
+  } else {
+    perfilDropdown.style.display = "none";
+  }
+
+  const perfilImg = document.getElementById("perfil-img");
+  const dropdownMenu = document.getElementById("dropdown-menu");
+
+  if (perfilImg) {
+    perfilImg.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!perfilImg.contains(e.target)) {
+        dropdownMenu.classList.add("hidden");
+      }
+    });
+  }
+});
