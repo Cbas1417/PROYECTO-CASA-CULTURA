@@ -257,23 +257,30 @@ getProgramas();
 
 
 //correo
-function inscribirse(programaId, programaTitulo) {
-  const correo = prompt("✉️ Ingresa tu correo para inscribirte en " + programaTitulo);
+programas.forEach(p => {
+  p.querySelector('.botonn').addEventListener('click', e => {
+    e.preventDefault();
+    const id = p.dataset.id;
 
-  if (!correo) {
-    alert("Debes ingresar un correo válido.");
-    return;
-  }
+    // ✅ Ahora sí coincide con "baile", "ballet", etc.
+    if (descripciones[id]) {
+      titulo.textContent = descripciones[id].titulo;
+      descripcion.textContent = descripciones[id].texto;
+      modal.style.display = "flex";
 
-  axios.post(`http://localhost:8000/api/programas/inscribirse/${programaId}/`, {
-    correo: correo
-  })
-  .then(res => {
-    alert("✅ Te has inscrito a " + programaTitulo + ". Revisa tu correo.");
-  })
-  .catch(err => {
-    console.error(err);
-    alert("❌ Hubo un error al inscribirte.");
+      modal.dataset.programaId = id;
+
+      if (usuarioAutenticado) {
+        // Si hay sesión -> muestra formulario
+        formInscripcion.style.display = "block";
+        btnIrIniciar.style.display = "none";
+      } else {
+        // Si NO hay sesión -> muestra botón para iniciar
+        formInscripcion.style.display = "none";
+        btnIrIniciar.style.display = "inline-block";
+      }
+    }
   });
-}
+});
+
 
