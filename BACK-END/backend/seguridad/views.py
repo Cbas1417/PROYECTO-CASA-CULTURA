@@ -16,6 +16,8 @@ from datetime import datetime, timedelta
 import time
 from usuarios.models import Usuario
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
+
 # Create your views here.
 
 class class1(APIView):
@@ -62,13 +64,13 @@ class class1(APIView):
         UserMetadata.objects.create(token=token, user_id=u.id) 
 
         Usuario.objects.create(
-            tipo_documento=tipo_documento,
-            numero_documento=documento,
-            nombre=nombre,
-            fecha_nacimiento=fecha,
-            telefono=telefono,
-            correo=correo,
-            contraseña=make_password(password)
+                user=u,
+                tipo_documento=tipo_documento,
+                numero_documento=documento,
+                nombre=nombre,
+                fecha_nacimiento=fecha,
+                correo=correo,
+                telefono=telefono,
         )
 
         try:
