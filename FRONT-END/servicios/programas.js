@@ -157,26 +157,12 @@ function cargarInscripciones() {
                     <td>${insc.programaNombre}</td>
                     <td>${insc.contacto}</td>
                     <td>${insc.fecha}</td>
-                    <td>
-                        <button class="btn-eliminar" onclick="eliminarInscripcion(${insc.id})">
-                            Eliminar
-                        </button>
-                    </td>
                 </tr>
             `).join('');
         }
     }
 }
 
-// Función para eliminar una inscripción
-function eliminarInscripcion(id) {
-    if (confirm('¿Estás seguro de que quieres eliminar esta inscripción?')) {
-        let inscripciones = JSON.parse(localStorage.getItem('inscripciones')) || [];
-        inscripciones = inscripciones.filter(insc => insc.id !== id);
-        localStorage.setItem('inscripciones', JSON.stringify(inscripciones));
-        cargarInscripciones(); // Recargar la tabla
-    }
-}
 
 // Función para simular la inscripción (modificada para recargar la tabla después de inscribirse)
 function simularInscripcion(programaId, programaNombre, contacto) {
