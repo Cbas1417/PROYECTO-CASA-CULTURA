@@ -243,17 +243,17 @@ function mostrarMensajeFin(victoria) {
 }
 
 // Botón para subir
-const btnSubir = document.getElementById('btnSubir');
-if (btnSubir) {
+const btnSubire = document.getElementById('btnSubire');
+if (btnSubire) {
     window.addEventListener('scroll', () => {
         if (window.scrollY > 200) {
-            btnSubir.style.display = 'inline-block';
+            btnSubire.style.display = 'inline-block';
         } else {
-            btnSubir.style.display = 'none';
+            btnSubire.style.display = 'none';
         }
     });
 
-    btnSubir.addEventListener('click', () => {
+    btnSubire.addEventListener('click', () => {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'

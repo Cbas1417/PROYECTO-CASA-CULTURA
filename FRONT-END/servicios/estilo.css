@@ -406,7 +406,7 @@ button:hover {
 
 body {
     font-style: 'oblique';
-    font-style: normal; /* cambia a normal para mejor legibilidad */
+ /* cambia a normal para mejor legibilidad */
     background: linear-gradient(135deg, #f9f2ec 0%, #e0f7fa 100%);
     color: #333;
 }
@@ -539,7 +539,7 @@ main {
 
 
 /*contacto y volver arriba*/
-    .botones-flotantes {
+    .botones-flotantese {
       position: fixed;
       bottom: 20px;
       right: 20px;
@@ -548,7 +548,7 @@ main {
       z-index: 1000;
     }
 
-    .btn-subir {
+    .btn-subire {
       background-color: #FF9015;
       color: white;
       border: none;
@@ -560,6 +560,6 @@ main {
       transition: background 0.3s;
       display: none; /* 👈 Oculto por defecto */
     }
- .btn-subir:hover {
+ .btn-subire:hover {
       background-color: #e27f10;
     }

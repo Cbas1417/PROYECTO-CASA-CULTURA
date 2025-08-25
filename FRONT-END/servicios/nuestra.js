@@ -5,12 +5,12 @@ item.addEventListener('click', () => {
 });
 
 
-/*menu adaptable */
-const menuToggle = document.getElementById('menu-toggle');
-const menu = document.getElementById('menu');
-menuToggle.addEventListener('click', () => {
-    menu.classList.toggle('active');
-});
+// /*menu adaptable */
+// const menuToggle = document.getElementById('menu-toggle');
+// const menu = document.getElementById('menu');
+// menuToggle.addEventListener('click', () => {
+//     menu.classList.toggle('active');
+// });
 
 document.addEventListener("DOMContentLoaded", () => {
   const registroBtn = document.getElementById("registrarse");
@@ -164,20 +164,58 @@ items.forEach(item => {
 
 
 // Botón para subir
-const btnSubir = document.getElementById('btnSubir');
-if (btnSubir) {
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 200) {
-            btnSubir.style.display = 'inline-block';
-        } else {
-            btnSubir.style.display = 'none';
-        }
-    });
+// const btnSubir = document.getElementById('btnSubir');
+// if (btnSubir) {
+//     window.addEventListener('scroll', () => {
+//         if (window.scrollY > 200) {
+//             btnSubir.style.display = 'inline-block';
+//         } else {
+//             btnSubir.style.display = 'none';
+//         }
+//     });
 
-    btnSubir.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
+//     btnSubir.addEventListener('click', () => {
+//         window.scrollTo({
+//             top: 0,
+//             behavior: 'smooth'
+//         });
+//     });
+// }
+
+// Menú hamburguesa
+const menuToggle = document.getElementById("menu-toggle");
+const menu = document.getElementById("menu");
+
+menuToggle.addEventListener("click", () => {
+  menu.classList.toggle("active");
+});
+
+// Mostrar/ocultar botón "Subir"
+const btnSubir = document.getElementById("btnSubir");
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 200) {
+    btnSubir.style.display = "block";
+  } else {
+    btnSubir.style.display = "none";
+  }
+});
+
+btnSubir.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+// Dropdown del perfil
+const perfilIcono = document.getElementById("perfil-icono");
+const dropdownMenu = document.getElementById("dropdown-menu");
+
+if (perfilIcono) {
+  perfilIcono.addEventListener("click", () => {
+    dropdownMenu.classList.toggle("hidden");
+  });
 }
+
+document.addEventListener("click", (e) => {
+  if (perfilIcono && !perfilIcono.contains(e.target)) {
+    dropdownMenu.classList.add("hidden");
+  }
+});
