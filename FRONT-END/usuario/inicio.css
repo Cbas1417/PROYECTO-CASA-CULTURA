@@ -551,32 +551,31 @@ body {
 
 
 /*contacto y volver arriba*/
-.botones-flotantes {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  gap: 10px;
-  z-index: 1000;
-}
+/*contacto y volver arriba*/
+    .botones-flotantes {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 1000;
+    }
 
-.btn-solicitar,
-.btn-subir {
-  background-color: #FF9015;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 14px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  transition: background 0.3s;
-}
-
-.btn-solicitar:hover,
-.btn-subir:hover {
-  background-color: #FF9015;
-}
+    .btn-subir {
+      background-color: #FF9015;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      transition: background 0.3s;
+      display: none; /* 👈 Oculto por defecto */
+    }
+ .btn-subir:hover {
+      background-color: #e27f10;
+    }
 
 /* Modal */
 .modal {
