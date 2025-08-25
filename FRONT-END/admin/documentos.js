@@ -125,3 +125,35 @@ document.addEventListener("DOMContentLoaded", () => {
     // 🚀 Cargar al inicio
     cargarUsuarios();
 });
+
+// Simulación de sesión (cámbialo por tu lógica real de login)
+const usuarioLogueado = true; // ponlo en false si no hay sesión
+
+const perfilIcono = document.getElementById("perfil-icono");
+if (usuarioLogueado && perfilIcono) {
+  perfilIcono.style.display = "block"; // mostrar el icono si hay sesión
+}
+
+const menuToggle = document.getElementById("menu-toggle");
+const menu = document.getElementById("menu");
+
+if (menuToggle && menu) {
+  menuToggle.addEventListener("click", () => {
+    menu.classList.toggle("active");
+  });
+}
+
+const dropdownMenu = document.getElementById("dropdown-menu");
+
+if (perfilIcono && dropdownMenu) {
+  perfilIcono.addEventListener("click", () => {
+    dropdownMenu.classList.toggle("hidden");
+  });
+
+  // Cierra el menú si hago clic fuera
+  document.addEventListener("click", (e) => {
+    if (!perfilIcono.contains(e.target)) {
+      dropdownMenu.classList.add("hidden");
+    }
+  });
+}
