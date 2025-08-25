@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch(error => {
       console.error("Error al obtener los datos del backend:", error);
-      statsContainer.innerHTML = "<p class='text-danger'>Error al cargar estadísticas.</p>";
+      // statsContainer.innerHTML = "<p class='text-danger'>Error al cargar estadísticas.</p>";
     });
 });
 
