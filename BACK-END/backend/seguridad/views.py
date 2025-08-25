@@ -136,9 +136,55 @@ class class3(APIView):
         else:
             return JsonResponse({"estado":"error","mensaje":"las credenciales ingresadas no son correctas"},status=HTTPStatus.BAD_REQUEST)
 
-class class4(APIView):
-    def put(self,request):
 
-        correo=request.data.get("correo")
-        password = request.data.get("password")
+class RecuperarPassword(APIView):
+    def post(self, request):
+        correo = request.data.get("correo")
+        if not correo:
+            return JsonResponse({"estado": "error", "mensaje": "El campo correo es obligatorio"}, status=400)
 
+        try:
+            user = User.objects.get(email=correo)
+        except User.DoesNotExist:
+            # (opcional) devolver 200 para no revelar si existe o no el correo
+            return JsonResponse({"estado": "ok", "mensaje": "Si el correo existe, se enviará un enlace"})
+
+        token = str(uuid.uuid4())
+        UserMetadata.objects.update_or_create(user=user, defaults={"token": token})
+
+        FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://localhost:5500/')  
+        url = f"{FRONTEND_URL}seguridad/reset.html?token={token}"           
+
+        html = f"""
+            <h2>Recuperación de contraseña</h2>
+            Hola {user.first_name or ''},<br>
+            Has solicitado recuperar tu contraseña.<br>
+            Da click en el siguiente enlace para restablecerla:<br>
+            <a href="{url}">{url}</a>
+        """
+        utilidades.sendmail(html, "Recuperación de contraseña", correo)
+        return JsonResponse({"estado": "ok", "mensaje": "Correo de recuperación enviado"})
+
+
+
+class ResetPassword(APIView):
+    def post(self, request, token):
+        nueva_password = request.data.get("password")
+
+        if not nueva_password:
+            return JsonResponse({"estado": "error", "mensaje": "Debe enviar la nueva contraseña"}, status=400)
+
+        try:
+            data = UserMetadata.objects.get(token=token)
+        except UserMetadata.DoesNotExist:
+            return JsonResponse({"estado": "error", "mensaje": "Token inválido o expirado"}, status=400)
+
+        user = data.user
+        user.set_password(nueva_password)
+        user.save()
+
+        # Limpio el token para que no pueda usarse otra vez
+        data.token = ""
+        data.save()
+
+        return JsonResponse({"estado": "ok", "mensaje": "Contraseña restablecida correctamente"})
