@@ -97,20 +97,28 @@ axios.get("http://localhost:8000/api/exposiciones/")
 //
 const galleryContainer = document.getElementById("gallery-container");
 
-function crearGalleryItem({ categoria, imagen, texto, enlace }) {
+// Crear tarjeta y botón para abrir modal
+function crearGalleryItem({ titulo, autor, descripcion, video, imagen }) {
   const item = document.createElement("div");
   item.classList.add("gallery-item");
-  item.dataset.category = categoria;
 
   item.innerHTML = `
     <div class="flip-card">
       <div class="flip-card-inner">
         <div class="flip-card-front">
-          <img src="${imagen}" alt="${texto}" class="imagen-carta" />
+          <img src="${imagen}" alt="${titulo}" class="imagen-carta" />
         </div>
         <div class="flip-card-back">
-          <p class="title">conoce mas sobre la antiguedad</p>
-          <a href="${enlace}" class="leer-mas">Leer más…</a>
+          <h3> Acerca de </h3>
+          <p><strong></strong></p>
+          <button class="btn-ver"
+            data-titulo="${titulo}"
+            data-autor="${autor}"
+            data-descripcion="${descripcion}"
+            data-video="${video}"
+            data-imagen="${imagen}">
+            Ver más
+          </button>
         </div>
       </div>
     </div>
@@ -124,5 +132,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
   exposiciones.forEach(expo => {
     crearGalleryItem(expo);
+  });
+
+  // === Modal ===
+  const modal = document.getElementById("modal-expo");
+  const cerrar = modal.querySelector(".cerrar");
+
+  // Abrir modal al hacer clic en cualquier "Ver más"
+  galleryContainer.addEventListener("click", (e) => {
+    if (e.target.classList.contains("btn-ver")) {
+      document.getElementById("modal-titulo").textContent = e.target.dataset.titulo;
+      document.getElementById("modal-autor").textContent = e.target.dataset.autor;
+      document.getElementById("modal-descripcion").textContent = e.target.dataset.descripcion;
+
+      // Si hay video, poner el enlace
+      const enlace = document.getElementById("modal-enlace");
+      if (e.target.dataset.video) {
+        enlace.href = e.target.dataset.video;
+        enlace.style.display = "inline-block";
+      } else {
+        enlace.style.display = "none";
+      }
+
+      // Imagen en modal
+      const imgModal = document.getElementById("modal-imagen");
+      imgModal.src = e.target.dataset.imagen || "";
+      imgModal.style.display = e.target.dataset.imagen ? "block" : "none";
+
+      modal.style.display = "flex";
+    }
+  });
+
+  // Cerrar modal
+  cerrar.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) modal.style.display = "none";
   });
 });
