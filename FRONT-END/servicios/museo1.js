@@ -95,4 +95,34 @@ axios.get("http://localhost:8000/api/exposiciones/")
 
 
 //
+const galleryContainer = document.getElementById("gallery-container");
 
+function crearGalleryItem({ categoria, imagen, texto, enlace }) {
+  const item = document.createElement("div");
+  item.classList.add("gallery-item");
+  item.dataset.category = categoria;
+
+  item.innerHTML = `
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <img src="${imagen}" alt="${texto}" class="imagen-carta" />
+        </div>
+        <div class="flip-card-back">
+          <p class="title">conoce mas sobre la antiguedad</p>
+          <a href="${enlace}" class="leer-mas">Leer más…</a>
+        </div>
+      </div>
+    </div>
+  `;
+
+  galleryContainer.appendChild(item);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const exposiciones = JSON.parse(localStorage.getItem("exposiciones")) || [];
+
+  exposiciones.forEach(expo => {
+    crearGalleryItem(expo);
+  });
+});
