@@ -198,8 +198,22 @@ function simularInscripcion(programaId, programaNombre, contacto) {
 
 // Función para mostrar mensaje de confirmación
 function mostrarConfirmacion(programaNombre) {
-    alert(`¡Inscripción exitosa!\nTe has inscrito en: ${programaNombre}\nRecibirás la información en el contacto proporcionado.`);
+    document.getElementById("modalYaInscrito").style.display = "block";
 }
+// Modal de "ya inscrito"
+const modalYaInscrito = document.getElementById("modalYaInscrito");
+const closeYaInscrito = document.getElementById("closeYaInscrito");
+
+closeYaInscrito.onclick = function() {
+  modalYaInscrito.style.display = "none";
+}
+
+window.onclick = function(event) {
+  if (event.target === modalYaInscrito) {
+    modalYaInscrito.style.display = "none";
+  }
+}
+
 
 // Configurar evento para el botón de inscripción
 if (btnInscribirse) {

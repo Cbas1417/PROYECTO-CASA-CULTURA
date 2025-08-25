@@ -600,6 +600,56 @@ h2 {
   opacity: 0.7;
 }
 
+/* Modal de ya inscrito */
+#modalYaInscrito {
+  display: none; 
+  position: fixed; 
+  z-index: 1001; 
+  left: 0; 
+  top: 0; 
+  width: 100%; 
+  height: 100%; 
+  background-color: rgba(0,0,0,0.5); 
+}
+
+#modalYaInscrito .modal-content {
+  background: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 12px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  animation: aparecer 0.3s ease;
+}
+
+#modalYaInscrito h2 {
+  margin-bottom: 10px;
+  color: #e27f10;
+}
+
+#modalYaInscrito p {
+  margin: 0;
+  color: #555;
+}
+
+#closeYaInscrito {
+  float: right;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #999;
+}
+
+#closeYaInscrito:hover {
+  color: #000;
+}
+
+@keyframes aparecer {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
 
 
 
