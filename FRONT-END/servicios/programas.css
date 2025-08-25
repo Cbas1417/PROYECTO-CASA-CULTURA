@@ -587,6 +587,21 @@ h2 {
     background-color: #ff1a1a;
 }
 
+.botonn.inscrito {
+  background-color: gray;
+  color: white;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: .8;
+}
+.programa a.inscrito {
+  background-color: gray !important;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+
+
 
 
 
