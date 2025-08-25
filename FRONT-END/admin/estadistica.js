@@ -5,19 +5,6 @@ toggle.addEventListener('click', () => {
   menu.classList.toggle('active');
 });
 
-// --- Menú usuario ---
-const userIcon = document.getElementById("user-icon");
-const dropdown = document.getElementById("dropdown-menu");
-
-userIcon.addEventListener("click", () => {
-  dropdown.classList.toggle("hidden");
-});
-document.addEventListener("click", function(e) {
-  if (!userIcon.contains(e.target) && !dropdown.contains(e.target)) {
-    dropdown.classList.add("hidden");
-  }
-});
-
 // --- Elementos del DOM ---
 const tablaExposiciones = document.getElementById("exposicionesTableBody");
 const buscador = document.getElementById("buscarExposicion");
@@ -71,3 +58,32 @@ async function cargarExposiciones() {
 // Inicializar
 // ==========================
 cargarExposiciones();
+// SIMULACIÓN DE SESIÓN ACTIVA
+const usuarioAutenticado = true; // ponlo en false si quieres probar sin sesión
+
+document.addEventListener("DOMContentLoaded", () => {
+  const perfilDropdown = document.getElementById("perfil-icono");
+
+  if (usuarioAutenticado) {
+    perfilDropdown.style.display = "inline-block"; // 👈 se muestra el menú
+  } else {
+    perfilDropdown.style.display = "none";
+  }
+
+  // Mostrar/ocultar el menú con clic
+  const perfilImg = document.getElementById("perfil-img");
+  const dropdownMenu = document.getElementById("dropdown-menu");
+
+  if (perfilImg) {
+    perfilImg.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!perfilImg.contains(e.target)) {
+        dropdownMenu.classList.add("hidden");
+      }
+    });
+  }
+});

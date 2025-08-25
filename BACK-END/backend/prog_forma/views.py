@@ -16,8 +16,8 @@ class class1(APIView):
     @logueado()
     def get(self, request):
         data = Programa.objects.order_by('-id').all()
-        serializer = ProgramaSerializer(data, many=True, context={'request': request})
-        return Response(serializer.data, status=HTTPStatus.OK)
+        serializer = ProgramaSerializer(data, many=True)
+        return JsonResponse({"data": serializer.data}, status=HTTPStatus.OK)
 
     @logueado()
     def post(self, request):
@@ -141,45 +141,55 @@ class class2(APIView):
 #correo
 class class3(APIView):
     @logueado()
-    def post(self, request, id):
-        correo = request.data.get('correo')
-        # También acepta 'contacto' como alternativa
-        if not correo:
-            correo = request.data.get('contacto')
+    def post(self, request):
+        titulo = request.data.get('titulo')
+        descripcion = request.data.get('descripcion')
+        foto_programa = request.FILES.get('foto_programa')
+        correo = request.data.get('correo')  # 👈 correo al que quieres enviar
 
-        try:
-            programa = Programa.objects.get(id=id)
-        except Programa.DoesNotExist:
+        if not titulo or not descripcion:
             return JsonResponse(
-                {"estado": "error", "mensaje": "El programa no existe"},
-                status=HTTPStatus.NOT_FOUND,
+                {"estado": "error", "mensaje": "Todos los campos tienen que estar llenos"},
+                status=HTTPStatus.BAD_REQUEST,
+            )
+        if not foto_programa:
+            return JsonResponse(
+                {"estado": "error", "mensaje": "Tiene que existir una imagen"},
+                status=HTTPStatus.BAD_REQUEST,
             )
 
-        if not correo:
+        if foto_programa.content_type not in ["image/jpeg", "image/png"]:
             return JsonResponse(
-                {"estado": "error", "mensaje": "Debes ingresar un correo"},
+                {"estado": "error", "mensaje": "La imagen debe ser JPG o PNG"},
                 status=HTTPStatus.BAD_REQUEST,
             )
 
         try:
-            # 🚀 Enviar correo con info del programa
-            html = f"""
-            <h1>Inscripción a Programa Cultural</h1>
-            Hola,<br><br>
-            Te has inscrito al programa:<br>
-            <strong>{programa.titulo}</strong><br>
-            {programa.descripcion}<br><br>
-            ¡Gracias por inscribirte!
-            """
-            utilidades.sendmail(html, f"Inscripción en {programa.titulo}", correo)
+            nuevo = Programa.objects.create(
+                titulo=titulo,
+                descripcion=descripcion,
+                foto_programa=foto_programa,
+            )
+
+            # 🚀 Enviar correo al email recibido
+            if correo:
+                html = f"""
+                <h1>Nuevo programa creado</h1>
+                Hola,<br><br>
+                Se ha registrado un nuevo programa cultural:<br>
+                <strong>{titulo}</strong><br>
+                {descripcion}<br><br>
+                ¡Te invitamos a participar!
+                """
+                utilidades.sendmail(html, "Nuevo Programa Cultural", correo)
 
             return JsonResponse(
-                {"success": True, "message": "Correo enviado correctamente"},  # Cambiado a formato que espera el frontend
-                status=HTTPStatus.OK,
+                {"estado": "ok", "mensaje": "Registro creado correctamente y correo enviado"},
+                status=HTTPStatus.CREATED,
             )
 
         except Exception as e:
             return JsonResponse(
-                {"success": False, "message": f"Error enviando correo: {str(e)}"},  # Cambiado a formato que espera el frontend
+                {"estado": "error", "mensaje": f"Error creando el registro: {str(e)}"},
                 status=HTTPStatus.BAD_REQUEST,
             )

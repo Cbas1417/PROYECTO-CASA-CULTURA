@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="verperfilad.css">
+<link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png" style="width: 16px; height: 16px;">
+<title>Ver perfil | Casa de la Cultura Caldas</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+<header id="cabeza">
+    <nav id="social-icons">
+        <figure class="icono">
+            <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" width="39" height="39">
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://www.instagram.com/caldascultura/related_profiles/?hl=es-la" target="_blank" rel="noopener">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" width="39" height="39">
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="Twitter/X" width="39" height="39">
+            </a>
+        </figure>
+    </nav>
+    <div id="user-actions">
+    <a id="btn-iniciar" href="../usuario/registrar.html">Registrarse</a>
+    <a id="btn-registrar" href="../usuario/iniciar.html">Iniciar Sesión</a>
+
+    <div class="perfil-dropdown" id="perfil-icono" style="display: none;">
+        <img id="perfil-img" src="../imagenes/perfill.png" alt="Usuario">
+        <div id="dropdown-menu" class="hidden">
+            <a href="verperfilad.html">Ver perfil</a>
+            <a href="../usuario/inicio.html" id="cerrar-sesion">Cerrar sesión</a>
+        </div>
+    </div>
+</div>
+
+</header>
+
+        <nav id="nav">
+            <img id="logo" src="../imagenes/logo1.png" alt="Logo">
+            <button id="menu-toggle" aria-label="Abrir menú">&#9776;</button>
+            <div id="menu">
+            <ul>
+                <li><a href="dashboard.html" class="header-button">Administrador</a></li>
+                <li><a href="estadistica.html" class="header-button">Museo</a></li>
+                <li><a href="inventario.html" class="header-button">Inventario</a></li>
+                <li><a href="doc_admin.html" class="header-button">Usuarios</a></li>
+            </ul>
+            </div>
+        </nav>
+<a href="inicio.html" class="volver" aria-label="Volver">
+    <i class="fas fa-arrow-left"></i>
+</a>
+<main class="container">
+    <form class="carta">
+        <img src="../imagenes/perfil.png" class="imagenperfil" alt="Foto de perfil" />
+
+    <label>Número documento:</label>
+    <input type="text" id="documento" value="1031940742" readonly />
+
+    <label>Nombre:</label>
+    <input type="text" id="nombre" value="Sebastian" readonly />
+
+    <label>Correo:</label>
+    <input type="email" id="correo" value="sj153175@mail.com" readonly />
+
+    <label>Fecha de nacimiento:</label>
+    <input type="text" id="nacimiento" value="" readonly />
+
+    <label>Teléfono:</label>
+    <input type="text" id="telefono" value="3028311080" readonly />
+
+    <button type="button" class="btn-primary" id="editarBtn">Editar perfil</button>
+    <button type="button" class="btn-primary" id="guardarBtn" style="display:none;">Guardar cambios</button>
+    <button type="button" class="btn-primary" id="cancelarBtn" style="display:none;">Cancelar</button>
+</form>
+
+</main>
+
+<footer id="footer">
+<div id="footer-container">
+    <div id="footer-logo">
+    <img src="../imagenes/logo2.png" alt="Logo Casa de la Cultura" />
+    </div>
+    <div id="footer-divider"></div>
+    <div id="footer-info">
+    <p><strong>Instagram:</strong> @caldascultura</p>
+    <p><strong>Facebook:</strong> Casa de la Cultura Caldas Antioquia</p>
+    <p><strong>X:</strong> @culturacaldas</p>
+    </div>
+</div>
+</footer>
+<script src="verperfilad.js"></script>
+</body>
+</html>

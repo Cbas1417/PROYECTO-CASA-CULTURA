@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
 //conectar yo creo
 axios.get("http://localhost:8000/api/exposiciones/")
   .then(res => {
-    const exposiciones = res.data.data;
+    const exposiciones = res.data;
     console.log("✅ Exposiciones cargadas:", exposiciones);
 
     const contenedor = document.getElementById("contenedor-exposiciones");
@@ -90,7 +90,7 @@ axios.get("http://localhost:8000/api/exposiciones/")
     });
   })
   .catch(err => {
-    console.error("❌ Error al conectar con exposiciones:", err);
+    console.error("❌ Error al conectar con exposiciones:", err.message);
   });
 
 

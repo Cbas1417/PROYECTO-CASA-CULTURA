@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cerrarSesion.addEventListener("click", (e) => {
         e.preventDefault();
         sessionStorage.removeItem("usuarioLogueado");
-        window.location.href = "index.html"; // recarga la misma página
+        window.location.href = "nuestra.html"; // recarga la misma página
       });
     }
 
@@ -161,3 +161,23 @@ items.forEach(item => {
     item.scrollIntoView({ behavior: 'smooth', inline: 'center' });
   });
 });
+
+
+// Botón para subir
+const btnSubir = document.getElementById('btnSubir');
+if (btnSubir) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 200) {
+            btnSubir.style.display = 'inline-block';
+        } else {
+            btnSubir.style.display = 'none';
+        }
+    });
+
+    btnSubir.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
