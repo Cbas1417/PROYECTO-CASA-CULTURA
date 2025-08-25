@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ✅ Cargar usuarios existentes
     const cargarUsuarios = async () => {
         try {
-            const res = await axios.get(`${API_URL}/usuarios/get_post`);
+            const res = await axios.get(`${API_URL}/usuarios/`);;
             console.log(res.data);
             usuarios = res.data.data;
             renderTabla(usuarios);
@@ -78,11 +78,11 @@ document.addEventListener("DOMContentLoaded", () => {
             fecha_nacimiento: document.getElementById("nacimiento").value,
             correo: document.getElementById("correo").value,
             telefono: document.getElementById("telefono").value,
-            password: document.getElementById("contrasena").value
+            password: document.getElementById("contrasena").value // 👈 corregido
         };
 
         try {
-            await axios.post(`${API_URL}/seguridad/registro`, data);
+            await axios.post(`${API_URL}/usuarios/`, data);
             alert("Usuario registrado correctamente. Revisa tu correo para activación.");
             form.reset();
             cargarUsuarios();
@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btnConfirmar.addEventListener("click", async () => {
         if (idEliminar) {
             try {
-                await axios.delete(`${API_URL}/usuarios/put_delete/${idEliminar}`);
+                await axios.delete(`${API_URL}/usuarios/${idEliminar}/`);
                 alert("Usuario eliminado correctamente");
                 modal.style.display = "none";
                 cargarUsuarios();

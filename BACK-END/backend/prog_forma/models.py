@@ -9,7 +9,6 @@ class Programa(models.Model):
     titulo=models.CharField(max_length=100,null=True)
     slug = AutoSlugField(populate_from='titulo')
     descripcion=models.TextField(null=True)
-    usuarios = models.ManyToManyField(Usuario, blank=True, related_name='programas')
     
     def __str__(self):
         return self.titulo

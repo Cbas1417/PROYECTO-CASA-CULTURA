@@ -1,9 +1,8 @@
 from django.urls import path
-from .views import *
+from .views import UsuarioView, UsuarioDetailView
 
 urlpatterns = [
-    path('usuarios/get_post',class1.as_view()),
-    path('usuarios/put_delete/<int:id>',class2.as_view()),
+    path('usuarios/', UsuarioView.as_view()),  # GET y POST
+    path('usuarios/<int:id>/', UsuarioDetailView.as_view()),  # PUT y DELETE
 ]
-
 

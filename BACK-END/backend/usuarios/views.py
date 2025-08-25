@@ -1,35 +1,27 @@
 from rest_framework.views import APIView
 from django.http import JsonResponse, Http404
-from rest_framework.response import Response
 from http import HTTPStatus
-from django.utils.text import slugify
-from .models import *
-from .serializers import *
-from django.core.files.storage import FileSystemStorage
-from datetime import datetime
+from .models import Usuario
 from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password
 
-# Create your views here.
 
-class class1(APIView):
-
+class UsuarioView(APIView):
+    # GET y POST en la misma vista
     def get(self, request):
-        # data=Usuario.objects.order_by('-id').all()
-        # serializer=UsuarioSerializer(data, many=True)
-        # return JsonResponse ({"data":serializer.data})
-        data = Usuario.objects.select_related("user").order_by('-id').all()
+        data = Usuario.objects.select_related("user").order_by("-id").all()
         lista = []
         for u in data:
             lista.append({
                 "id": u.id,
+                "tipo_documento": u.tipo_documento,
+                "numero_documento": u.numero_documento,
                 "nombre": u.nombre,
+                "fecha_nacimiento": str(u.fecha_nacimiento),
+                "correo": u.user.email if u.user else u.correo,
                 "telefono": u.telefono,
-                "correo": u.user.email,  
-                "username": u.user.username
             })
         return JsonResponse({"data": lista})
-    
+
     def post(self, request):
         tipo_documento = request.data.get('tipo_documento')
         numero_documento = request.data.get('numero_documento')
@@ -37,10 +29,13 @@ class class1(APIView):
         fecha_nacimiento = request.data.get('fecha_nacimiento')
         correo = request.data.get('correo')
         telefono = request.data.get('telefono')
-        password = request.data.get('contraseña')
+        password = request.data.get('password')  # 👈 corregido
 
-        if not tipo_documento or not numero_documento or not nombre or not fecha_nacimiento or not correo or not telefono or not password:
-            return JsonResponse({"Estado": "Error", "Mensaje": "Todos los campos tiene  que estar llenos"}, status=HTTPStatus.BAD_REQUEST)
+        if not all([tipo_documento, numero_documento, nombre, fecha_nacimiento, correo, telefono, password]):
+            return JsonResponse(
+                {"Estado": "Error", "Mensaje": "Todos los campos son obligatorios"},
+                status=HTTPStatus.BAD_REQUEST
+            )
 
         try:
             user = User.objects.create_user(
@@ -48,9 +43,8 @@ class class1(APIView):
                 email=correo,
                 first_name=nombre,
                 password=password,
-                is_active=True  
+                is_active=True
             )
-
             Usuario.objects.create(
                 user=user,
                 tipo_documento=tipo_documento,
@@ -60,36 +54,32 @@ class class1(APIView):
                 correo=correo,
                 telefono=telefono,
             )
-            
             return JsonResponse({"Estado": "Ok", "Mensaje": "Registro creado correctamente"})
-        
         except Exception as e:
-
             return JsonResponse({"Estado": "Error", "Mensaje": str(e)}, status=HTTPStatus.BAD_REQUEST)
-        
 
-class class2(APIView):
 
-    def put(self,request,id):
+class UsuarioDetailView(APIView):
+    # PUT
+    def put(self, request, id):
+        try:
+            usuario = Usuario.objects.get(id=id)
+        except Usuario.DoesNotExist:
+            return JsonResponse({"Estado": "Error", "Mensaje": "Usuario no encontrado"}, status=HTTPStatus.NOT_FOUND)
+
         tipo_documento = request.data.get('tipo_documento')
         numero_documento = request.data.get('numero_documento')
         nombre = request.data.get('nombre')
         fecha_nacimiento = request.data.get('fecha_nacimiento')
         correo = request.data.get('correo')
         telefono = request.data.get('telefono')
-        password = request.data.get('contraseña')
+        password = request.data.get('password')  # 👈 corregido
+
+        if not all([tipo_documento, numero_documento, nombre, fecha_nacimiento, correo, telefono]):
+            return JsonResponse({"Estado": "Error", "Mensaje": "Todos los campos son obligatorios"}, status=HTTPStatus.BAD_REQUEST)
+
         try:
-            usuario = Usuario.objects.get(id=id)
-        except Usuario.DoesNotExist:
-            return JsonResponse(
-                {"Estado": "Error", "Mensaje": "Usuario no encontrado"},
-                status=HTTPStatus.NOT_FOUND)
-        
-        if not tipo_documento or not numero_documento or not nombre or not fecha_nacimiento or not correo or not telefono:
-            return JsonResponse({"Estado": "Error", "Mensaje": "Todos los campos tiene  que estar llenos"}, status=HTTPStatus.BAD_REQUEST)
-        
-        try:
-            # actualizar perfil
+            # actualizar Usuario
             usuario.tipo_documento = tipo_documento
             usuario.numero_documento = numero_documento
             usuario.nombre = nombre
@@ -98,7 +88,7 @@ class class2(APIView):
             usuario.telefono = telefono
             usuario.save()
 
-            # actualizar User si cambia correo o password
+            # actualizar auth_user
             user = usuario.user
             user.first_name = nombre
             user.email = correo
@@ -107,19 +97,18 @@ class class2(APIView):
                 user.set_password(password)
             user.save()
 
-            return JsonResponse({"Estado":"Ok","Mensaje":"Se modifico el elemento correctamente"},
-                status=HTTPStatus.OK)
-        except Usuario.DoesNotExist:
-            raise Http404
+            return JsonResponse({"Estado": "Ok", "Mensaje": "Se modificó correctamente"})
+        except Exception as e:
+            return JsonResponse({"Estado": "Error", "Mensaje": str(e)}, status=HTTPStatus.BAD_REQUEST)
 
-    def delete(self,request,id):
+    # DELETE
+    def delete(self, request, id):
         try:
-            usuario=Usuario.objects.get(id=id)
-            if usuario.user_id:  # revisa si realmente hay un user enlazado
-                usuario.user.delete()  # esto también borra el Usuario por CASCADE
+            usuario = Usuario.objects.get(id=id)
+            if usuario.user_id:
+                usuario.user.delete()
             else:
-                usuario.delete()  # borra solo el perfil si no está enlazado
-            return JsonResponse({"Estado":"Ok","Mensaje":"Eliminado correctamente"},status=HTTPStatus.OK)
-        
+                usuario.delete()
+            return JsonResponse({"Estado": "Ok", "Mensaje": "Eliminado correctamente"})
         except Usuario.DoesNotExist:
-            raise Http404
+            return JsonResponse({"Estado": "Error", "Mensaje": "Usuario no encontrado"}, status=HTTPStatus.NOT_FOUND)
