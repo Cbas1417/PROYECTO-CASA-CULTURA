@@ -355,6 +355,7 @@ body {
 
 .vision-section {
   background-color: rgba(100, 100, 100, 1); /* gris claro */
+
 }
 
 /* Imagen */
@@ -380,18 +381,15 @@ body {
 }
 
 .vision-text h2 {
-  color: black;
+  color: white;
 }
 
 .section-text h2 {
   font-size: 2em;
   margin-bottom: 15px;
 }
-
-.section-text p {
-  font-size: 1em;
-  line-height: 1.6;
-  color: black;
+.visiontxt{
+  color: white;
 }
 
 /* Línea separadora */
