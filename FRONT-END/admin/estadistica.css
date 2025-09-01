@@ -476,5 +476,7 @@ button.eliminar {
 /* Hover fila */
 #tablaExposiciones tbody tr:hover {
     background: #ffe0b3;
-    transition: background 0.2s;
+    box-shadow: 0px 3px 6px rgba(0,0,0,0.1);
+    transform: scale(1.01);
+    transition: all 0.2s ease;
 }
