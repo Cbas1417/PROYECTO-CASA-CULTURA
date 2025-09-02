@@ -11,22 +11,26 @@ const buscador = document.getElementById("buscarExposicion");
 const obraForm = document.getElementById("obraForm");
 
 // ==========================
-// CRUD LOCAL
+// CONFIG API
 // ==========================
-let exposiciones = JSON.parse(localStorage.getItem("exposiciones")) || [];
+const API_URL = "http://localhost:8000/api/v1/exposiciones/"; // 👈 cambia si usas otro host o puerto
 
+let exposiciones = [];
+
+// ==========================
 // Renderizar tabla
+// ==========================
 function render(filtro = "") {
   tablaExposiciones.innerHTML = "";
 
   exposiciones
     .filter(expo => expo.titulo.toLowerCase().includes(filtro.toLowerCase()))
-    .forEach((expo, index) => {
+    .forEach((expo) => {
       const fila = document.createElement("tr");
 
       fila.innerHTML = `
         <td>
-          ${expo.imagen ? `<img src="${expo.imagen}" alt="${expo.titulo}" />` : ""}
+          ${expo.imagen ? `<img src="${expo.imagen}" alt="${expo.titulo}" width="100"/>` : ""}
         </td>
         <td>${expo.titulo}</td>
         <td>${expo.autor}</td>
@@ -35,8 +39,8 @@ function render(filtro = "") {
           ${expo.video ? `<a href="${expo.video}" target="_blank">Ver video</a>` : ""}
         </td>
         <td>
-          <button class="accion editar" onclick="editarExposicion(${index})">Editar</button>
-          <button class="accion eliminar" onclick="eliminarExposicion(${index})">Eliminar</button>
+          <button class="accion editar" onclick="editarExposicion(${expo.id})">Editar</button>
+          <button class="accion eliminar" onclick="eliminarExposicion(${expo.id})">Eliminar</button>
         </td>
       `;
 
@@ -44,13 +48,23 @@ function render(filtro = "") {
     });
 }
 
-// Guardar en localStorage
-function guardarLocal() {
-  localStorage.setItem("exposiciones", JSON.stringify(exposiciones));
+// ==========================
+// Cargar exposiciones desde API
+// ==========================
+async function cargarExposiciones() {
+  try {
+    const res = await axios.get(API_URL);
+    exposiciones = res.data.data; // tu API devuelve {"data": [...]}
+    render();
+  } catch (err) {
+    console.error("Error al cargar exposiciones:", err);
+  }
 }
 
+// ==========================
 // Crear/Actualizar Exposición
-obraForm.addEventListener("submit", (e) => {
+// ==========================
+obraForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const titulo = document.getElementById("titulo").value;
@@ -59,53 +73,66 @@ obraForm.addEventListener("submit", (e) => {
   const video = document.getElementById("video").value;
   const imagenInput = document.getElementById("imagen");
 
-  let imagen = "";
+  const formData = new FormData();
+  formData.append("titulo", titulo);
+  formData.append("autor", autor);
+  formData.append("descripcion", descripcion);
+  if (video) formData.append("video", video);
   if (imagenInput.files.length > 0) {
-    const reader = new FileReader();
-    reader.onload = function (event) {
-      imagen = event.target.result;
-      guardarObra(titulo, autor, descripcion, video, imagen);
-    };
-    reader.readAsDataURL(imagenInput.files[0]);
-  } else {
-    guardarObra(titulo, autor, descripcion, video, imagen);
+    formData.append("imagen", imagenInput.files[0]);
+  }
+
+  try {
+    if (obraForm.dataset.editId) {
+      // Editar
+      const id = obraForm.dataset.editId;
+      await axios.put(`${API_URL}${id}/`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      delete obraForm.dataset.editId;
+    } else {
+      // Crear
+      await axios.post(API_URL, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    }
+
+    obraForm.reset();
+    cargarExposiciones();
+  } catch (err) {
+    console.error("Error al guardar exposición:", err.response?.data || err);
+    alert("Error al guardar exposición");
   }
 });
 
-function guardarObra(titulo, autor, descripcion, video, imagen) {
-  if (obraForm.dataset.editIndex !== undefined) {
-    // Editar
-    const index = obraForm.dataset.editIndex;
-    exposiciones[index] = { titulo, autor, descripcion, video, imagen };
-    delete obraForm.dataset.editIndex;
-  } else {
-    // Crear
-    exposiciones.push({ titulo, autor, descripcion, video, imagen });
-  }
-
-  guardarLocal();
-  render();
-  obraForm.reset();
-}
-
+// ==========================
 // Editar
-window.editarExposicion = function (index) {
-  const expo = exposiciones[index];
+// ==========================
+window.editarExposicion = function (id) {
+  const expo = exposiciones.find((e) => e.id === id);
+  if (!expo) return;
+
   document.getElementById("titulo").value = expo.titulo;
   document.getElementById("autor").value = expo.autor;
   document.getElementById("descripcion").value = expo.descripcion;
-  document.getElementById("video").value = expo.video;
+  document.getElementById("video").value = expo.video || "";
 
-  obraForm.dataset.editIndex = index;
+  obraForm.dataset.editId = id;
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
+// ==========================
 // Eliminar
-window.eliminarExposicion = function (index) {
+// ==========================
+window.eliminarExposicion = async function (id) {
   if (confirm("¿Seguro que quieres eliminar esta exposición?")) {
-    exposiciones.splice(index, 1);
-    guardarLocal();
-    render();
+    try {
+      await axios.delete(`${API_URL}${id}/`);
+      cargarExposiciones();
+    } catch (err) {
+      console.error("Error al eliminar exposición:", err.response?.data || err);
+      alert("Error al eliminar exposición");
+    }
   }
 };
 
@@ -117,18 +144,18 @@ buscador.addEventListener("input", (e) => render(e.target.value));
 // ==========================
 // Inicializar
 // ==========================
-render();
+cargarExposiciones();
 
 // ==========================
 // SIMULACIÓN DE SESIÓN ACTIVA
 // ==========================
-const usuarioAutenticado = true; // ponlo en false si quieres probar sin sesión
+const usuarioAutenticado = true;
 
 document.addEventListener("DOMContentLoaded", () => {
   const perfilDropdown = document.getElementById("perfil-icono");
 
   if (usuarioAutenticado) {
-    perfilDropdown.style.display = "inline-block"; 
+    perfilDropdown.style.display = "inline-block";
   } else {
     perfilDropdown.style.display = "none";
   }
