@@ -13,7 +13,7 @@ const obraForm = document.getElementById("obraForm");
 // ==========================
 // CONFIG API
 // ==========================
-const API_URL = "http://localhost:8000/api/v1/exposiciones/"; // 👈 cambia si usas otro host o puerto
+const API_URL = "http://localhost:8000/api/v1/exposiciones/"; 
 
 let exposiciones = [];
 
