@@ -154,8 +154,8 @@ class RecuperarPassword(APIView):
         token = str(uuid.uuid4())
         UserMetadata.objects.update_or_create(user=user, defaults={"token": token})
 
-        FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://localhost:5500/')  
-        url = f"{FRONTEND_URL}seguridad/reset.html?token={token}"           
+        FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://127.0.0.1:5500/')
+        url = f"{FRONTEND_URL}FRONT-END/usuario/restablecercontra.html?token={token}"          
 
         html = f"""
             <h2>Recuperación de contraseña</h2>

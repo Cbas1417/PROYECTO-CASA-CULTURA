@@ -27,11 +27,11 @@
 
             <div id="alert" class="alert d-none" role="alert"></div>
 
-            <form id="form-reset">
+            <form id="reset-form">
               <div class="mb-3">
                 <label class="form-label">Nueva contraseña</label>
                 <div class="input-group">
-                  <input type="password" id="pass1" class="form-control" minlength="6" required />
+                  <input type="password" id="password" class="form-control" minlength="6" required />
                   <span class="input-group-text eye" id="toggle1">👁️</span>
                 </div>
                 <div class="form-text">Mínimo 6 caracteres.</div>
@@ -40,7 +40,7 @@
               <div class="mb-3">
                 <label class="form-label">Confirmar contraseña</label>
                 <div class="input-group">
-                  <input type="password" id="pass2" class="form-control" minlength="6" required />
+                  <input type="password" id="password_confirm" class="form-control" minlength="6" required />
                   <span class="input-group-text eye" id="toggle2">👁️</span>
                 </div>
               </div>
@@ -65,69 +65,95 @@
   <script src="config.js"></script>
 
   <script>
-    const alertBox = document.getElementById('alert');
-    const form = document.getElementById('form-reset');
-    const btn = document.getElementById('btn-guardar');
+    // const alertBox = document.getElementById('alert');
+    // const form = document.getElementById('form-reset');
+    // const btn = document.getElementById('btn-guardar');
 
-    // Leer token de ?token=...
-    const params = new URLSearchParams(location.search);
-    const token = params.get('token');
+    // // Leer token de ?token=...
+    // const params = new URLSearchParams(location.search);
+    // const token = params.get('token');
 
-    document.getElementById('token-preview').textContent = token ? '' : 'Falta el token en la URL';
+    // document.getElementById('token-preview').textContent = token ? '' : 'Falta el token en la URL';
 
-    function showAlert(msg, type = 'info') {
-      alertBox.className = 'alert alert-' + type;
-      alertBox.textContent = msg;
-      alertBox.classList.remove('d-none');
-    }
+    // function showAlert(msg, type = 'info') {
+    //   alertBox.className = 'alert alert-' + type;
+    //   alertBox.textContent = msg;
+    //   alertBox.classList.remove('d-none');
+    // }
 
-    if (!token) {
-      form.querySelectorAll('input,button').forEach(el => el.disabled = true);
-      showAlert('Token no encontrado. Repite el proceso de recuperación.', 'danger');
-    }
+    // if (!token) {
+    //   form.querySelectorAll('input,button').forEach(el => el.disabled = true);
+    //   showAlert('Token no encontrado. Repite el proceso de recuperación.', 'danger');
+    // }
 
    
-    function toggle(id) {
-      const el = document.getElementById(id);
-      el.type = el.type === 'password' ? 'text' : 'password';
-    }
-    document.getElementById('toggle1').addEventListener('click', () => toggle('pass1'));
-    document.getElementById('toggle2').addEventListener('click', () => toggle('pass2'));
+    // function toggle(id) {
+    //   const el = document.getElementById(id);
+    //   el.type = el.type === 'password' ? 'text' : 'password';
+    // }
+    // document.getElementById('toggle1').addEventListener('click', () => toggle('pass1'));
+    // document.getElementById('toggle2').addEventListener('click', () => toggle('pass2'));
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      alertBox.classList.add('d-none');
+    // form.addEventListener('submit', async (e) => {
+    //   e.preventDefault();
+    //   alertBox.classList.add('d-none');
 
-      const p1 = document.getElementById('pass1').value;
-      const p2 = document.getElementById('pass2').value;
+    //   const p1 = document.getElementById('pass1').value;
+    //   const p2 = document.getElementById('pass2').value;
 
-      if (p1.length < 6) return showAlert('La contraseña debe tener al menos 6 caracteres', 'warning');
-      if (p1 !== p2) return showAlert('Las contraseñas no coinciden', 'warning');
+    //   if (p1.length < 6) return showAlert('La contraseña debe tener al menos 6 caracteres', 'warning');
+    //   if (p1 !== p2) return showAlert('Las contraseñas no coinciden', 'warning');
 
-      btn.disabled = true;
-      btn.textContent = 'Guardando...';
+    //   btn.disabled = true;
+    //   btn.textContent = 'Guardando...';
 
-      try {
-        const res = await axios.post(
-        window.APP_CONFIG.BASE_API + 'seguridad/reset/' + encodeURIComponent(token) + '/',
-        { password: p1 }
-        );
+    //   try {
+    //     const res = await axios.post(
+    //     window.APP_CONFIG.BASE_API + 'seguridad/reset/' + encodeURIComponent(token) + '/',
+    //     { password: p1 }
+    //     );
 
 
-        showAlert(res.data.mensaje || 'Contraseña actualizada. Ahora puedes iniciar sesión.', 'success');
-        form.reset();
+    //     showAlert(res.data.mensaje || 'Contraseña actualizada. Ahora puedes iniciar sesión.', 'success');
+    //     form.reset();
       
-      } catch (err) {
-        if (err.response) {
-          showAlert(err.response.data.mensaje || 'No se pudo restablecer la contraseña', 'danger');
-        } else {
-          showAlert('Error de red. Intenta de nuevo.', 'danger');
+    //   } catch (err) {
+    //     if (err.response) {
+    //       showAlert(err.response.data.mensaje || 'No se pudo restablecer la contraseña', 'danger');
+    //     } else {
+    //       showAlert('Error de red. Intenta de nuevo.', 'danger');
+    //     }
+    //   } finally {
+    //     btn.disabled = false;
+    //     btn.textContent = 'Guardar contraseña';
+    //   }
+    // });
+    
+    const form = document.getElementById("reset-form");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const password = document.getElementById("password").value;
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get("token");  // token desde la URL
+        const p1 = document.getElementById('password').value;
+        const p2 = document.getElementById('password_confirm').value;
+
+        if (p1.length < 6) return showAlert('La contraseña debe tener al menos 6 caracteres', 'warning');
+        if (p1 !== p2) return showAlert('Las contraseñas no coinciden', 'warning');
+
+        const response = await fetch(`http://127.0.0.1:8000/api/v1/seguridad/reset-password/${token}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ password })
+        });
+
+        const data = await response.json();
+        alert(data.mensaje);
+        if (data.estado === "ok") {
+          window.location.href = "iniciar.html"; // redirige donde quieras
         }
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Guardar contraseña';
-      }
-    });
+      });
   </script>
 </body>
 </html>
