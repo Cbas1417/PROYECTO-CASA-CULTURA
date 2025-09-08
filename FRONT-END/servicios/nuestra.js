@@ -4,14 +4,6 @@ item.addEventListener('click', () => {
 });
 });
 
-
-// /*menu adaptable */
-// const menuToggle = document.getElementById('menu-toggle');
-// const menu = document.getElementById('menu');
-// menuToggle.addEventListener('click', () => {
-//     menu.classList.toggle('active');
-// });
-
 document.addEventListener("DOMContentLoaded", () => {
   const registroBtn = document.getElementById("registrarse");
   const loginBtn = document.getElementById("iniciar");
@@ -162,34 +154,6 @@ items.forEach(item => {
   });
 });
 
-
-// Botón para subir
-// const btnSubir = document.getElementById('btnSubir');
-// if (btnSubir) {
-//     window.addEventListener('scroll', () => {
-//         if (window.scrollY > 200) {
-//             btnSubir.style.display = 'inline-block';
-//         } else {
-//             btnSubir.style.display = 'none';
-//         }
-//     });
-
-//     btnSubir.addEventListener('click', () => {
-//         window.scrollTo({
-//             top: 0,
-//             behavior: 'smooth'
-//         });
-//     });
-// }
-
-// Menú hamburguesa
-const menuToggle = document.getElementById("menu-toggle");
-const menu = document.getElementById("menu");
-
-menuToggle.addEventListener("click", () => {
-  menu.classList.toggle("active");
-});
-
 // Mostrar/ocultar botón "Subir"
 const btnSubir = document.getElementById("btnSubir");
 window.addEventListener("scroll", () => {
@@ -217,5 +181,50 @@ if (perfilIcono) {
 document.addEventListener("click", (e) => {
   if (perfilIcono && !perfilIcono.contains(e.target)) {
     dropdownMenu.classList.add("hidden");
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btnIniciar = document.getElementById("btn-iniciar");
+  const btnRegistrar = document.getElementById("btn-registrar");
+  const perfilIcono = document.getElementById("perfil-icono");
+  const dropdownMenu = document.getElementById("dropdown-menu");
+  const cerrarSesion = document.getElementById("cerrar-sesion");
+
+  // Usamos siempre sessionStorage (puedes cambiarlo por localStorage si quieres)
+  const estaLogueado = sessionStorage.getItem("usuarioLogueado") === "true";
+
+  if (estaLogueado) {
+    if (btnIniciar) btnIniciar.style.display = "none";
+    if (btnRegistrar) btnRegistrar.style.display = "none";
+    if (perfilIcono) perfilIcono.style.display = "inline-block";
+  } else {
+    if (btnIniciar) btnIniciar.style.display = "inline-block";
+    if (btnRegistrar) btnRegistrar.style.display = "inline-block";
+    if (perfilIcono) perfilIcono.style.display = "none";
+  }
+
+  // Toggle del menú de perfil
+  if (perfilIcono && dropdownMenu) {
+    perfilIcono.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle("hidden");
+    });
+
+    // Ocultar si hago clic fuera
+    document.addEventListener("click", (e) => {
+      if (!perfilIcono.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        dropdownMenu.classList.add("hidden");
+      }
+    });
+  }
+
+  // Cerrar sesión
+  if (cerrarSesion) {
+    cerrarSesion.addEventListener("click", (e) => {
+      e.preventDefault();
+      sessionStorage.removeItem("usuarioLogueado");
+      window.location.href = "nuestra.html"; // redirige o recarga
+    });
   }
 });

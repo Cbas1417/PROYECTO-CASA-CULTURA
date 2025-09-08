@@ -143,7 +143,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.target.classList.contains("btn-ver")) {
       document.getElementById("modal-titulo").textContent = e.target.dataset.titulo;
       document.getElementById("modal-autor").textContent = e.target.dataset.autor;
-      document.getElementById("modal-descripcion").textContent = e.target.dataset.descripcion;
+      const descripcionFija = `"Cien años de soledad" es una novela de 1967 del escritor colombiano Gabriel García Márquez que narra la historia multigeneracional de la familia Buendía en el pueblo ficticio de Macondo, convirtiéndose en un clásico del realismo mágico y una obra cumbre de la literatura universal. La novela, escrita entre 1965 y 1966, se inspira en el realismo mágico, un estilo que fusiona la realidad con elementos fantásticos, y explora temas como la soledad, el incesto y los ciclos de repetición en la historia.`;
+
+const descripcionExtra = e.target.dataset.descripcion || "";
+
+document.getElementById("modal-descripcion").textContent = descripcionFija + "\n\n" + descripcionExtra;
+
 
       // Si hay video, poner el enlace
       const enlace = document.getElementById("modal-enlace");
