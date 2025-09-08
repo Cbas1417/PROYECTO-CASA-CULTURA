@@ -109,9 +109,10 @@
 
       try {
         const res = await axios.post(
-          window.APP_CONFIG.BASE_API + 'seguridadfront/restablecer/' + encodeURIComponent(token),
-          { password: p1 }
+        window.APP_CONFIG.BASE_API + 'seguridad/reset/' + encodeURIComponent(token) + '/',
+        { password: p1 }
         );
+
 
         showAlert(res.data.mensaje || 'Contraseña actualizada. Ahora puedes iniciar sesión.', 'success');
         form.reset();
