@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
     <link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png" style="width: 16px; height: 16px;">
     <title>Mapa | Casa de la Cultura Caldas</title>
-    <link rel="stylesheet" href="mapa.css">
+    <link rel="stylesheet" href="galeria.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin=""/>		
@@ -62,41 +62,7 @@
 </nav>
 
 
-<div id="buscador-lateral">
-    <input type="text" id="buscador-input" placeholder="Buscar sitio...">
-    <ul id="buscador-resultados"></ul>
-</div>
 
-<select id="select-location">
-    <option value="6.0918804,-75.6357673">Monumento Ciro Mendía</option>
-    <option value="6.0925,-75.6360">Parque Principal</option>
-    <option value="6.0908,-75.6352">Iglesia Central</option>
-</select>
-<div id="map" style="height: 550px;"></div>
-
-<!-- Modal de información -->
-<div id="infoModal" class="modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2 id="modal-title" class="modal-title"></h2>
-      <span class="close-btn">&times;</span>
-    </div>
-    <div class="modal-body">
-      <div class="modal-image-container">
-        <img id="modal-image" class="modal-image" src="" alt="" style="display: none;">
-      </div>
-      <p id="modal-description" class="modal-description"></p>
-    </div>
-  </div>
-</div>
-
-<div id="map"></div>
-
- <!-- Botón -->
-  <div class="botones-flotantes">
-    <button id="btnSubir" class="btn-subir" title="Subir">⭡</button>
-  </div>
-</div>
 
 
 
@@ -114,11 +80,3 @@
     </div>
 </div>
 </footer>
-
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>   		
-	
-	<script src="mapa.js"></script>
-</body>
-</html>
