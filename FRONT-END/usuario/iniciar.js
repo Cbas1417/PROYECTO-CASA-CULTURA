@@ -12,34 +12,40 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    try{
-      //envia datos al backend por xios
+    try {
+      // envia datos al backend por axios
       const response = await axios.post("http://127.0.0.1:8000/api/v1/seguridad/login", {
         correo: email,
         password: password
       });
-      const data=response.data;
-      //aqui guardamos token y usuario
+
+      const data = response.data;
+
+      // ✅ guardar token, id y datos útiles del usuario
       localStorage.setItem("token", data.Token);
+      localStorage.setItem("user_id", data.ID);           // <-- añadido
+      localStorage.setItem("nombre", data.Nombre || "");  // <-- opcional
       localStorage.setItem("usuarioActivo", email);
       sessionStorage.setItem("usuarioLogueado", "true");
-      //redirijir
+
+      // Redirigir según rol o página previa
       const correosAdmin = ['sj153175@gmail.com', 'admin@caldas.gov.co'];
       const params = new URLSearchParams(window.location.search);
       const paginaAnterior = params.get("from");
+
       if (correosAdmin.includes(email)) {
-    localStorage.setItem("rol", "admin");
-    sessionStorage.setItem("usuarioLogueado", "true");
-    window.location.href = '../admin/dashboard.html';
-} else if (paginaAnterior) {
-    sessionStorage.setItem("usuarioLogueado", "true");
-    window.location.href = decodeURIComponent(paginaAnterior);
-} else {
-    sessionStorage.setItem("usuarioLogueado", "true");
-    window.location.href = 'inicio.html';
-}
-    } catch (error){
-      if (error.response){
+        localStorage.setItem("rol", "admin");
+        sessionStorage.setItem("usuarioLogueado", "true");
+        window.location.href = '../admin/dashboard.html';
+      } else if (paginaAnterior) {
+        sessionStorage.setItem("usuarioLogueado", "true");
+        window.location.href = decodeURIComponent(paginaAnterior);
+      } else {
+        sessionStorage.setItem("usuarioLogueado", "true");
+        window.location.href = 'inicio.html';
+      }
+    } catch (error) {
+      if (error.response) {
         alert(error.response.data.mensaje || "Error en el inicio de sesión");
       } else {
         alert("Error de red o conexión con el servidor");
@@ -49,47 +55,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Si el usuario es admin:
-localStorage.setItem("rol", "admin");
-// También marca como logueado:
-sessionStorage.setItem("usuarioLogueado", "true");
-
-
-    // const correosAdmin = ['admin@cultura.com', 'admin@caldas.gov.co'];
-
-    // // Guardar sesión
-    // localStorage.setItem("usuarioActivo", email);
-
-    // // Obtener parámetro de redirección
-    // const params = new URLSearchParams(window.location.search);
-    // const paginaAnterior = params.get("from");
-
-    // // Redirección
-    // if (correosAdmin.includes(email)) {
-    //   window.location.href = 'admin.html';
-    // } else if (paginaAnterior) {
-    //   window.location.href = decodeURIComponent(paginaAnterior);
-    // } else {
-    //   window.location.href = 'inicio.html';
-    // }
-
-// Suponiendo que aquí validas el login exitoso
-// sessionStorage.setItem("usuarioLogueado", "true");
-
-// Si quieres guardar también una imagen personalizada en el futuro:
-// sessionStorage.setItem("imagenPerfil", "ruta/a/la/imagen.jpg");
-
-
-//ojito pa la contra
+// ojito pa la contra
 document.querySelectorAll(".toggle-password").forEach(icon => {
-    icon.addEventListener("click", () => {
-        const targetId = icon.getAttribute("data-target");
-        const input = document.getElementById(targetId);
-        const type = input.getAttribute("type") === "password" ? "text" : "password";
-        input.setAttribute("type", type);
-        icon.classList.toggle("fa-eye");
-        icon.classList.toggle("fa-eye-slash");
-    });
+  icon.addEventListener("click", () => {
+    const targetId = icon.getAttribute("data-target");
+    const input = document.getElementById(targetId);
+    const type = input.getAttribute("type") === "password" ? "text" : "password";
+    input.setAttribute("type", type);
+    icon.classList.toggle("fa-eye");
+    icon.classList.toggle("fa-eye-slash");
+  });
 });
-
-

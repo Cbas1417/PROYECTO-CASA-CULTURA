@@ -168,9 +168,6 @@ btnSubir.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-// Dropdown del perfil
-const perfilIcono = document.getElementById("perfil-icono");
-const dropdownMenu = document.getElementById("dropdown-menu");
 
 if (perfilIcono) {
   perfilIcono.addEventListener("click", () => {

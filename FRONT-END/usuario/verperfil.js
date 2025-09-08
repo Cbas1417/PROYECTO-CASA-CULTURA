@@ -1,62 +1,92 @@
-// SIMULACIÓN DE SESIÓN ACTIVA
-const usuarioAutenticado = true; // cambia a false si quieres ocultar el menú
+//conexion
 
-document.addEventListener("DOMContentLoaded", () => {
-const registroBtn = document.getElementById("btn-iniciar"); // antes: registrarse
-const loginBtn = document.getElementById("btn-registrar"); // antes: iniciar
-const perfilDropdown = document.getElementById("perfil-icono");
+// =============================
+// SESIÓN ACTIVA (validación)
+// =============================
+const userId = localStorage.getItem("user_id");
+const token = localStorage.getItem("token");
 
-if (usuarioAutenticado) {
-    registroBtn.style.display = "none";
-    loginBtn.style.display = "none";
-    perfilDropdown.style.display = "inline-block";
-} else {
-    registroBtn.style.display = "inline-block";
-    loginBtn.style.display = "inline-block";
-    perfilDropdown.style.display = "none";
+if (!userId || !token) {
+  alert("Debes iniciar sesión primero");
+  window.location.href = "../usuario/iniciar.html";
 }
+
+// =============================
+// CARGAR DATOS DEL PERFIL
+// =============================
+axios.get(`http://127.0.0.1:8000/api/v1/usuarios/${userId}/`, {
+  headers: { Authorization: `Bearer ${token}` }
+})
+.then(res => {
+  const usuario = res.data;
+
+  document.getElementById("documento").value = usuario.numero_documento;
+  document.getElementById("nombre").value = usuario.nombre;
+  document.getElementById("correo").value = usuario.correo;
+  document.getElementById("nacimiento").value = usuario.fecha_nacimiento;
+  document.getElementById("telefono").value = usuario.telefono;
+})
+.catch(err => {
+  console.error("❌ Error cargando perfil:", err);
+  alert("No se pudo cargar el perfil.");
 });
 
-// MENÚ HAMBURGUESA
-const menuToggle = document.getElementById('menu-toggle');
-const menu = document.getElementById('menu');
-menuToggle.addEventListener('click', () => {
-    menu.classList.toggle('active');
-});
-
-// FUNCIONALIDAD EDITAR PERFIL
+// =============================
+// EDITAR / GUARDAR / CANCELAR
+// =============================
 const editarBtn = document.getElementById("editarBtn");
 const guardarBtn = document.getElementById("guardarBtn");
 const cancelarBtn = document.getElementById("cancelarBtn");
-
 const campos = ["documento", "nombre", "correo", "nacimiento", "telefono"];
 let valoresOriginales = {};
 
 editarBtn.addEventListener("click", () => {
-campos.forEach(id => {
+  campos.forEach(id => {
     const input = document.getElementById(id);
     valoresOriginales[id] = input.value;
     input.removeAttribute("readonly");
     input.style.background = "#fff";
     input.style.border = "1px solid #888";
   });
-
   editarBtn.style.display = "none";
   guardarBtn.style.display = "inline-block";
   cancelarBtn.style.display = "inline-block";
 });
 
 guardarBtn.addEventListener("click", () => {
-  campos.forEach(id => {
-    const input = document.getElementById(id);
-    input.setAttribute("readonly", true);
-    input.style.background = "#f1f1f1";
-    input.style.border = "1px solid #ccc";
-  });
+  // 1. Tomar valores actuales
+  const data = {
+    tipo_documento: "CC",  // 👈 cámbialo si quieres usar otro input
+    numero_documento: document.getElementById("documento").value,
+    nombre: document.getElementById("nombre").value,
+    fecha_nacimiento: document.getElementById("nacimiento").value,
+    correo: document.getElementById("correo").value,
+    telefono: document.getElementById("telefono").value,
+    password: "" // opcional
+  };
 
-  editarBtn.style.display = "inline-block";
-  guardarBtn.style.display = "none";
-  cancelarBtn.style.display = "none";
+  // 2. Hacer PUT al backend
+  axios.put(`http://127.0.0.1:8000/api/v1/usuarios/${userId}/`, data, {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+  .then(res => {
+    alert("✅ Perfil actualizado correctamente");
+
+    // Bloquear inputs otra vez
+    campos.forEach(id => {
+      const input = document.getElementById(id);
+      input.setAttribute("readonly", true);
+      input.style.background = "#f1f1f1";
+      input.style.border = "1px solid #ccc";
+    });
+    editarBtn.style.display = "inline-block";
+    guardarBtn.style.display = "none";
+    cancelarBtn.style.display = "none";
+  })
+  .catch(err => {
+    console.error("❌ Error al actualizar:", err);
+    alert("No se pudo actualizar el perfil. Revisa los datos.");
+  });
 });
 
 cancelarBtn.addEventListener("click", () => {
@@ -67,26 +97,28 @@ cancelarBtn.addEventListener("click", () => {
     input.style.background = "#f1f1f1";
     input.style.border = "1px solid #ccc";
   });
-
   editarBtn.style.display = "inline-block";
   guardarBtn.style.display = "none";
   cancelarBtn.style.display = "none";
 });
 
-/*para que se le de click y no cuando se pase por encima */
-// Mostrar/ocultar el menú de perfil con clic
+// =============================
+// MENÚ PERFIL Y HAMBURGUESA
+// =============================
+const menuToggle = document.getElementById('menu-toggle');
+const menu = document.getElementById('menu');
+menuToggle.addEventListener('click', () => {
+  menu.classList.toggle('active');
+});
+
 const perfilImg = document.getElementById("perfil-img");
 const dropdownMenu = document.getElementById("dropdown-menu");
-
 perfilImg.addEventListener("click", (e) => {
   e.stopPropagation();
   dropdownMenu.classList.toggle("hidden");
 });
-
-// Ocultar el menú si se hace clic fuera
 document.addEventListener("click", (e) => {
   if (!perfilImg.contains(e.target)) {
-    dropdownMenu.classList.toggle("hidden");
+    dropdownMenu.classList.add("hidden");
   }
 });
-
