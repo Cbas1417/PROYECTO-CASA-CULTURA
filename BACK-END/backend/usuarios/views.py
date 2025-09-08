@@ -29,7 +29,7 @@ class UsuarioView(APIView):
         fecha_nacimiento = request.data.get('fecha_nacimiento')
         correo = request.data.get('correo')
         telefono = request.data.get('telefono')
-        password = request.data.get('password')  # 👈 corregido
+        password = request.data.get('password') 
 
         if not all([tipo_documento, numero_documento, nombre, fecha_nacimiento, correo, telefono, password]):
             return JsonResponse(
@@ -60,6 +60,28 @@ class UsuarioView(APIView):
 
 
 class UsuarioDetailView(APIView):
+
+    # GET (obtener un usuario por id)
+    def get(self, request, id):
+        try:
+            usuario = Usuario.objects.get(id=id)
+        except Usuario.DoesNotExist:
+            return JsonResponse(
+                {"Estado": "Error", "Mensaje": "Usuario no encontrado"},
+                status=HTTPStatus.NOT_FOUND
+            )
+
+        data = {
+            "id": usuario.id,
+            "tipo_documento": usuario.tipo_documento,
+            "numero_documento": usuario.numero_documento,
+            "nombre": usuario.nombre,
+            "fecha_nacimiento": str(usuario.fecha_nacimiento),
+            "correo": usuario.user.email if usuario.user else usuario.correo,
+            "telefono": usuario.telefono,
+        }
+        return JsonResponse(data)
+    
     # PUT
     def put(self, request, id):
         try:
