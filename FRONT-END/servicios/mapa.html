@@ -53,15 +53,14 @@
             <li><a href="../usuario/inicio.html">Inicio</a></li>
             <li><a href="nuestra.html">Nuestra casa</a></li>
             <li><a href="programas.html">Programas de formación</a></li>
-            <li><a href="galeria.html">Galeria</a></li>
             <li><a href="museo1.html">Museo</a></li>
             <li><a href="mapa.html">Mapa</a></li>
             <li><a href="index.html">Infantil</a></li>
         </ul>
     </div>
 </nav>
-
-
+<main id="contenedor">
+<aside  id="sidebar">
 <div id="buscador-lateral">
     <input type="text" id="buscador-input" placeholder="Buscar sitio...">
     <ul id="buscador-resultados"></ul>
@@ -72,8 +71,10 @@
     <option value="6.0925,-75.6360">Parque Principal</option>
     <option value="6.0908,-75.6352">Iglesia Central</option>
 </select>
-<div id="map" style="height: 550px;"></div>
+</aside>
 
+<div id="map"></div>
+</main>
 <!-- Modal de información -->
 <div id="infoModal" class="modal">
   <div class="modal-content">
@@ -90,7 +91,6 @@
   </div>
 </div>
 
-<div id="map"></div>
 
  <!-- Botón -->
   <div class="botones-flotantes">
