@@ -134,3 +134,25 @@ class UsuarioDetailView(APIView):
             return JsonResponse({"Estado": "Ok", "Mensaje": "Eliminado correctamente"})
         except Usuario.DoesNotExist:
             return JsonResponse({"Estado": "Error", "Mensaje": "Usuario no encontrado"}, status=HTTPStatus.NOT_FOUND)
+
+class UsuarioByUserView(APIView):
+    def get(self, request, user_id):
+        try:
+            usuario = Usuario.objects.get(user_id=user_id)
+        except Usuario.DoesNotExist:
+            return JsonResponse(
+                {"Estado": "Error", "Mensaje": "Usuario no encontrado"},
+                status=HTTPStatus.NOT_FOUND
+            )
+
+        data = {
+            "id": usuario.id,  # id del Usuario (pk real)
+            "tipo_documento": usuario.tipo_documento,
+            "numero_documento": usuario.numero_documento,
+            "nombre": usuario.nombre,
+            "fecha_nacimiento": str(usuario.fecha_nacimiento),
+            "correo": usuario.user.email if usuario.user else usuario.correo,
+            "telefono": usuario.telefono,
+            "user_id": usuario.user.id  # por si necesitas ambos
+        }
+        return JsonResponse(data)

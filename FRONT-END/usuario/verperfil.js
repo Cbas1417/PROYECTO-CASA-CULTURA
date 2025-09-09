@@ -1,9 +1,7 @@
-//conexion
-
 // =============================
 // SESIÓN ACTIVA (validación)
 // =============================
-const userId = localStorage.getItem("user_id");
+const userId = localStorage.getItem("user_id"); // este viene del login (User.id)
 const token = localStorage.getItem("token");
 
 if (!userId || !token) {
@@ -12,14 +10,21 @@ if (!userId || !token) {
 }
 
 // =============================
-// CARGAR DATOS DEL PERFIL
+// OBTENER usuario_id real (FK → PK Usuario)
 // =============================
-axios.get(`http://127.0.0.1:8000/api/v1/usuarios/${userId}/`, {
+let usuarioId = null;
+
+axios.get(`http://127.0.0.1:8000/api/v1/usuarios/by-user/${userId}/`, {
   headers: { Authorization: `Bearer ${token}` }
 })
 .then(res => {
   const usuario = res.data;
+  usuarioId = usuario.id; // guardamos el id real de Usuario
+  localStorage.setItem("usuario_id", usuarioId);
 
+  // =============================
+  // CARGAR DATOS DEL PERFIL
+  // =============================
   document.getElementById("documento").value = usuario.numero_documento;
   document.getElementById("nombre").value = usuario.nombre;
   document.getElementById("correo").value = usuario.correo;
@@ -27,7 +32,7 @@ axios.get(`http://127.0.0.1:8000/api/v1/usuarios/${userId}/`, {
   document.getElementById("telefono").value = usuario.telefono;
 })
 .catch(err => {
-  console.error("❌ Error cargando perfil:", err);
+  console.error("❌ Error obteniendo usuario:", err);
   alert("No se pudo cargar el perfil.");
 });
 
@@ -54,25 +59,21 @@ editarBtn.addEventListener("click", () => {
 });
 
 guardarBtn.addEventListener("click", () => {
-  // 1. Tomar valores actuales
   const data = {
-    tipo_documento: "CC",  // 👈 cámbialo si quieres usar otro input
+    tipo_documento: "CC",  
     numero_documento: document.getElementById("documento").value,
     nombre: document.getElementById("nombre").value,
     fecha_nacimiento: document.getElementById("nacimiento").value,
     correo: document.getElementById("correo").value,
     telefono: document.getElementById("telefono").value,
-    password: "" // opcional
+    password: "" 
   };
 
-  // 2. Hacer PUT al backend
-  axios.put(`http://127.0.0.1:8000/api/v1/usuarios/${userId}/`, data, {
+  axios.put(`http://127.0.0.1:8000/api/v1/usuarios/${localStorage.getItem("usuario_id")}/`, data, {
     headers: { Authorization: `Bearer ${token}` }
   })
   .then(res => {
     alert("✅ Perfil actualizado correctamente");
-
-    // Bloquear inputs otra vez
     campos.forEach(id => {
       const input = document.getElementById(id);
       input.setAttribute("readonly", true);
