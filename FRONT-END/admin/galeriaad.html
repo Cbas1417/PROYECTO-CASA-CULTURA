@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png" style="width: 16px; height: 16px;">
-    <title>Administrador | Casa de la Cultura Caldas</title>
+    <title>Galeria | Casa de la Cultura Caldas</title>
   <link rel="stylesheet" href="galeriaad.css">
 </head>
 <body>
@@ -51,4 +51,39 @@
             </ul>
             </div>
         </nav>
+
+  <main class="container">
+    <!-- Formulario para subir fotos -->
+    <section class="upload-section">
+      <h2>Subir nueva foto</h2>
+      <form id="upload-form">
+        <input type="file" id="file-input" accept="image/*" required>
+        <input type="text" id="title-input" placeholder="Título de la foto" required>
+        <button type="submit">Subir</button>
+      </form>
+    </section>
+
+    <!-- Inventario de fotos -->
+    <section class="gallery-section">
+      <h2>Inventario de Fotos</h2>
+      <div id="gallery" class="gallery"></div>
+    </section>
+  </main>
+
+
+    <footer id="footer">
+<div id="footer-container">
+    <div id="footer-logo">
+    <img src="../imagenes/logo2.png" alt="Logo Casa de la Cultura" />
+    </div>
+    <div id="footer-divider"></div>
+    <div id="footer-info">
+    <p><strong>Instagram:</strong> @caldascultura</p>
+    <p><strong>Facebook:</strong> Casa de la Cultura Caldas Antioquia</p>
+    <p><strong>X:</strong> @culturacaldas</p>
+    </div>
+</div>
+</footer>
+<script src="galeriaad.js"></script>
+</body>
 </html>

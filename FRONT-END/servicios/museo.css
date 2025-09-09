@@ -667,3 +667,22 @@ html, body {
 #footer {
   margin-top: auto; /* lo empuja hacia abajo */
 }
+
+#mini_mensaje {
+      position: absolute;
+      top: 195px;
+      right: 920px;
+      width: 410px;
+      background-color: #FF9015;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 1000;
+      font-family: oblique;
+    }
+
+    #mini_mensaje.mostrar {
+      opacity: 1;
+    }

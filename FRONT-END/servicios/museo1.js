@@ -67,6 +67,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+ // Se ejecuta al cargar completamente el DOM
+    document.addEventListener('DOMContentLoaded', () => {
+      const mensaje = document.getElementById('mini_mensaje');
+      mensaje.textContent = 'Para ver mas informacion pasar el cursor por la carpeta ';
+      mensaje.classList.add('mostrar');
+
+      // Ocultar después de 3 segundos
+      setTimeout(() => {
+        mensaje.classList.remove('mostrar');
+      }, 3000);
+    });
 
 //conectar yo creo
 axios.get("http://localhost:8000/api/exposiciones/")
@@ -143,12 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.target.classList.contains("btn-ver")) {
       document.getElementById("modal-titulo").textContent = e.target.dataset.titulo;
       document.getElementById("modal-autor").textContent = e.target.dataset.autor;
-      const descripcionFija = `"Cien años de soledad" es una novela de 1967 del escritor colombiano Gabriel García Márquez que narra la historia multigeneracional de la familia Buendía en el pueblo ficticio de Macondo, convirtiéndose en un clásico del realismo mágico y una obra cumbre de la literatura universal. La novela, escrita entre 1965 y 1966, se inspira en el realismo mágico, un estilo que fusiona la realidad con elementos fantásticos, y explora temas como la soledad, el incesto y los ciclos de repetición en la historia.`;
-
-const descripcionExtra = e.target.dataset.descripcion || "";
-
-document.getElementById("modal-descripcion").textContent = descripcionFija + "\n\n" + descripcionExtra;
-
+      document.getElementById("modal-descripcion").textContent = e.target.dataset.descripcion;
 
       // Si hay video, poner el enlace
       const enlace = document.getElementById("modal-enlace");
