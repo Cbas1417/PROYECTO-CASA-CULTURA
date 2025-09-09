@@ -5,6 +5,7 @@
   <link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png" style="width: 16px; height: 16px;">
     <title>Galeria | Casa de la Cultura Caldas</title>
   <link rel="stylesheet" href="galeriaad.css">
+
 </head>
 <body>
     <header id="cabeza">
@@ -51,24 +52,37 @@
             </ul>
             </div>
         </nav>
+  <h1>Galería de Álbumes</h1>
 
-  <main class="container">
-    <!-- Formulario para subir fotos -->
-    <section class="upload-section">
-      <h2>Subir nueva foto</h2>
-      <form id="upload-form">
-        <input type="file" id="file-input" accept="image/*" required>
-        <input type="text" id="title-input" placeholder="Título de la foto" required>
-        <button type="submit">Subir</button>
-      </form>
-    </section>
+  <button id="crear-album">➕ Crear álbum</button>
 
-    <!-- Inventario de fotos -->
-    <section class="gallery-section">
-      <h2>Inventario de Fotos</h2>
-      <div id="gallery" class="gallery"></div>
-    </section>
-  </main>
+  <div id="albums-container">
+    <div id="albums" class="albums"></div>
+  </div>
+
+  <!-- Vista de un álbum -->
+  <div id="album-view" class="hidden">
+    <h2 id="album-title"></h2>
+    <input type="file" id="add-photo" multiple accept="image/*">
+    <div id="photos" class="photos"></div>
+    <button id="volver">⬅ Volver a álbumes</button>
+  </div>
+
+  <!-- Modal genérico -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <h3 id="modal-title"></h3>
+      <p id="modal-message"></p>
+
+      <input type="text" id="modal-input" class="hidden" placeholder="Escribe aquí...">
+
+      <div class="modal-actions">
+        <button id="modal-cancel">Cancelar</button>
+        <button id="modal-confirm">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
 
 
     <footer id="footer">
@@ -84,6 +98,8 @@
     </div>
 </div>
 </footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
 <script src="galeriaad.js"></script>
+
 </body>
 </html>

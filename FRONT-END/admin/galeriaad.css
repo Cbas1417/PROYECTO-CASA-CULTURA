@@ -292,6 +292,7 @@ summary:hover{
     color: black;
     width: 100%;
     position: relative;
+    margin-top: auto; 
 }
 
 #footer-container {
@@ -363,89 +364,217 @@ summary:hover{
 }
 
 /*Galeria y añadir*/
-.container {
-  max-width: 1000px;
-  margin: 20px auto;
-  padding: 0 20px;
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
-h2 {
+button {
+  background: #3D4543;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 5px;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #FF9015;
+}
+
+/* Contenedor de álbumes: en fila horizontal con scroll */
+.albums {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 30px;               
+  overflow-x: auto;       
+  padding: 10px;
+  scrollbar-width: thin;  
+}
+
+/* Cada tarjeta de álbum */
+.album {
+  flex: 0 0 auto;      
+  width: 270px;
+  background: white;
+  padding: 14px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px #FF9015;
+  text-align: center;
+
+}
+
+
+.album-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* 🔹 centra el título */
+}
+
+.album-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 6px;
+}
+
+#album-view {
+  margin-top: 20px;
+}
+/* Centrar contenedores y controles de la galería */
+#albums-container,
+#album-view {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;            
+
+}
+
+#album-title {
+  text-align: center;
+  margin: 10px 0 6px;
+}
+
+#add-photo {
+  display: block;
+  margin: 0 auto 12px;
+}
+
+#volver {
+  display: block;
+  margin: 12px auto 0;
   margin-bottom: 10px;
 }
 
-.upload-section {
-  background: white;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+/* Centrar el contenido de las grillas */
+.albums {           
+  justify-content: center;     
+  justify-items: center;        
 }
 
-.upload-section form {
+#photos {            
+  justify-content: center;     
+  justify-items: center;     
+}
+.photo-item img {
+  width: 160px;         
+  height: 100px;        
+  object-fit: cover;   
+  object-position: center;
+  border-radius: 6px;
+  display: block;
+}
+
+/* Contenedor de fotos: en fila horizontal con scroll */
+#photos {
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;      
+  gap: 16px;              
+  overflow-x: auto;      
+  padding: 10px;
+  scrollbar-width: thin; 
 }
 
-.upload-section input, 
-.upload-section button {
+/* Estilo para cada foto */
+.photo-item {
+  flex: 0 0 auto;      
+  width: 160px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.photo-item img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+
+/* ---- MODAL ---- */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+#modal-input {
+  width: 100%;
   padding: 8px;
-  border-radius: 5px;
+  margin-top: 10px;
+  border-radius: 6px;
   border: 1px solid #ccc;
 }
 
-.upload-section button {
-  background: #3D4543;
-  color: white;
-  cursor: pointer;
-}
-
-.upload-section button:hover {
-  background: #2c3432;
-}
-
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
-  gap: 15px;
-}
-
-.gallery-item {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  overflow: hidden;
+.modal-actions {
+  margin-top: 20px;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+.photo-item {
+  position: relative;
+  display: inline-block;
 }
 
-.gallery-item img {
+.photo-item img {
   width: 100%;
-  height: 160px;
+  height: 120px;
   object-fit: cover;
+  border-radius: 6px;
 }
-
-.gallery-item .info {
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.gallery-item .info h3 {
-  font-size: 14px;
-  margin: 0;
-}
-
-.gallery-item .actions button {
-  background: none;
+.delete-photo-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: rgba(255, 0, 0, 0.85); /* rojo llamativo */
+  color: white;
   border: none;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
   cursor: pointer;
-  margin-left: 5px;
-  font-size: 14px;
-  color: #FF9015;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.gallery-item .actions button:hover {
-  color: red;
+.delete-photo-btn:hover {
+  background: #e60000; /* rojo más fuerte */
+  transform: scale(1.1); /* efecto hover */
 }
+
+.delete-photo-btn i {
+  pointer-events: none; /* evita que el click solo se registre en el ícono */
+}
+
