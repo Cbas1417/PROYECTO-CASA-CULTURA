@@ -197,6 +197,8 @@ body {
     padding: 20px 0;
     color: black;
     width: 100%;
+    position: relative;
+    margin-top: auto; 
 }
 
 #footer-container {

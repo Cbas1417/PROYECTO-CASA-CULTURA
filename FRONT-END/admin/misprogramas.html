@@ -4,557 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Inscripciones | Casa de la Cultura Caldas</title>
-    <style>
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #FF9015; color: white; }
-        .vacío { text-align: center; padding: 20px; color: #777; }
-        .btn-eliminar {
-            background-color: #FF4D4D;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .btn-eliminar:hover {
-            background-color: #cc0000;
-        }
-        * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-body{
-  font-style: oblique;
-}
-
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-}
-.acordeon_perfil summary {
-    list-style: none;
-}
-
-.acordeon_perfil summary::-webkit-details-marker {
-    display: none;
-}
-
-summary:hover{
-    cursor: pointer;
-}
-#cabeza {
-  background-color: #FF9015;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 20px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-#social-icons img.icon {
-  width: 30px;
-  height: 30px;
-  filter: brightness(0) invert(1); /* vuelve los íconos blancos */
-  transition: transform 0.2s;
-}
-
-#social-icons img.icon:hover {
-  transform: scale(1.1);
-}
-
-
-#social-icons {
-  display: flex;
-  gap: 12px;
-}
-
-#social-icons img {
-  width: 35px;
-  height: 35px;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.header-button {
-  background-color: #3D4543;
-  color: #fff;
-  padding: 6px 12px;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: transform 0.2s;
-}
-
-.header-button:hover {
-  transform: scale(1.05);
-}
-
-#user-menu {
-  position: relative;
-}
-
-#user-icon {
-  width: 42px;
-  height: 42px;
-  overflow: hidden;
-  border-radius: 50%;
-  background-color: white;
-  border: 2px solid white;
-  cursor: pointer;
-}
-
-#user-icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-/*perfil y cerrar sesion*/
-.perfil-dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-#perfil-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 48px;
-  right: 0;
-  background-color: white;
-  background: white;
-  min-width: 160px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  z-index: 2;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.dropdown-menu a {
-  color: #333;
-  padding: 10px 16px;
-  text-decoration: none;
-  display: block;
-  font-size: 14px;
-  transition: background-color 0.2s ease;
-}
-
-.dropdown-menu a:hover {
-  background-color: #f0f0f0;
-}
-
-@media (max-width: 600px) {
-  .perfil-dropdown {
-    position: absolute;
-    top: 10px;
-    right: 16px;
-    z-index: 100;
-  }
-
-  .dropdown-menu {
-    right: 0;
-    left: auto;
-    min-width: 140px;
-  }
-}
-
-/*cerrar sesion*/
-/*logueo*/
-.perfil-dropdown {
-  position: relative;
-  cursor: pointer;
-  display: inline-block;
-}
-
-.perfil-dropdown img {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-#dropdown-menu {
-  position: absolute;
-  top: 48px;
-  right: 0;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 160px;
-  z-index: 999;
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  padding: 6px 0;
-}
-
-#dropdown-menu a {
-  padding: 10px 16px;
-  color: #333 !important;
-  text-decoration: none;
-  transition: background-color 0.2s ease;
-}
-
-#dropdown-menu a:hover {
-  background-color: #f2f2f2;
-  color: #000 !important;
-}
-
-.hidden {
-  display: none !important;
-}
-
-/* Responsive ajuste */
-@media (max-width: 600px) {
-  .perfil-dropdown {
-    position: absolute;
-    top: 10px;
-    right: 16px;
-    z-index: 100;
-  }
-
-  .dropdown-menu {
-    right: 0;
-    left: auto;
-    min-width: 140px;
-  }
-}
-
-/* NAV */
-#nav {
-  background-color: #3D4543;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-#logo {
-  height: 90px;
-}
-
-#menu-toggle {
-  display: none;
-  font-size: 24px;
-  color: white;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-#menu ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-}
-
-#menu ul li a {
-  color: white;
-  text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-}
-
-#menu ul li a:hover {
-  background-color: #FF9015;
-}
-
-/* Responsive nav */
-@media (max-width: 768px) {
-  #menu-toggle {
-    display: block;
-  }
-
-  #menu {
-    display: none;
-    width: 100%;
-  }
-
-  #menu.active {
-    display: block;
-  }
-
-  #menu ul {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  #menu ul li {
-    width: 100%;
-  }
-
-  #menu ul li a {
-    display: block;
-    width: 100%;
-  }
-}
-
-/* Footer */
-#footer {
-    background: #FF9015;
-    border-top: 4px solid black;
-    padding: 20px 0;
-    color: black;
-    width: 100%;
-    position: relative;
-}
-
-#footer-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    margin: 0 auto;
-    gap: 20px;
-}
-
-#footer-logo img {
-    height: 85px;
-    width: auto;
-    display: block;
-}
-
-#footer-divider {
-    width: 2px;
-    height: 60px;
-    background: black;
-    margin: 0 24px;
-    display: block;
-}
-
-#footer-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    min-width: 180px;
-}
-
-#footer-info p {
-    margin: 0;
-    font-size: 1em;
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-#footer-container {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-}
-#footer-divider {
-    display: none;
-}
-#footer-logo img {
-    margin-bottom: 12px;
-}
-#footer-info {
-    margin-left: 0;
-    min-width: unset;
-}
-}
-
-@media (max-width: 600px) {
-#footer {
-    padding: 14px 0;
-}
-#footer-info p {
-    font-size: 0.97em;
-}
-#footer-logo img {
-    height: 65px;
-    }
-}
-
-html, body {
-  height: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-body {
-  flex: 1;
-}
-
-#lista-inscripciones {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-}
-
-#footer {
-  margin-top: auto;
-}
-
-    </style>
+    <link rel="stylesheet" href="misprogramas.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+<body>
   <header id="cabeza">
-            <nav id="social-icons">
-        <figure class="icono">
-            <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" class="icon" />
-            </a>
-        </figure>
-        <figure class="icono">
-            <a href="https://www.instagram.com/caldascultura/" target="_blank" rel="noopener">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" class="icon" />
-            </a>
-        </figure>
-        <figure class="icono">
-            <a href="https://twitter.com/culturacaldas" target="_blank" rel="noopener">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="Twitter/X" class="icon" />
-            </a>
-        </figure>
-        </nav>
+    <nav id="social-icons">
+      <figure class="icono">
+        <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" class="icon" />
+        </a>
+      </figure>
+      <figure class="icono">
+        <a href="https://www.instagram.com/caldascultura/" target="_blank" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" class="icon" />
+        </a>
+      </figure>
+      <figure class="icono">
+        <a href="https://twitter.com/culturacaldas" target="_blank" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="Twitter/X" class="icon" />
+        </a>
+      </figure>
+    </nav>
 
     <div class="perfil-dropdown" id="perfil-icono" style="display: none;">
-        <img id="perfil-img" src="../imagenes/perfill.png" alt="Usuario">
-        <div id="dropdown-menu" class="hidden">
-            <a href="verperfilad.html">Ver perfil</a>
-            <a href="../usuario/inicio.html" id="cerrar-sesion">Cerrar sesión</a>
-        </div>
+      <img id="perfil-img" src="../imagenes/perfill.png" alt="Usuario">
+      <div id="dropdown-menu" class="hidden">
+        <a href="verperfilad.html">Ver perfil</a>
+        <a href="../usuario/inicio.html" id="cerrar-sesion">Cerrar sesión</a>
+      </div>
     </div>
-</div>
-        </header>
+  </header>
 
-        <nav id="nav">
-            <img id="logo" src="../imagenes/logo1.png" alt="Logo">
-            <button id="menu-toggle" aria-label="Abrir menú">&#9776;</button>
-            <div id="menu">
-            <ul>
-                <li><a href="dashboard.html" class="header-button">Administrador</a></li>
-                <li><a href="misprogramas.html" class="header-button">Programas</a></li>
-                <li><a href="galeriaad.html" class="header-button">Galeria</a></li>
-                <li><a href="estadistica.html" class="header-button">Museo</a></li>
-                <li><a href="inventario.html" class="header-button">Inventario</a></li>
-                <li><a href="doc_admin.html" class="header-button">Usuarios</a></li>
-            </ul>
-            </div>
-        </nav>
-<body>
-    <h1>Inscripciones</h1>
+  <nav id="nav">
+    <img id="logo" src="../imagenes/logo1.png" alt="Logo">
+    <button id="menu-toggle" aria-label="Abrir menú">&#9776;</button>
+    <div id="menu">
+      <ul>
+        <li><a href="dashboard.html" class="header-button">Administrador</a></li>
+        <li><a href="misprogramas.html" class="header-button">Programas</a></li>
+        <li><a href="galeriaad.html" class="header-button">Galeria</a></li>
+        <li><a href="estadistica.html" class="header-button">Museo</a></li>
+        <li><a href="inventario.html" class="header-button">Inventario</a></li>
+        <li><a href="doc_admin.html" class="header-button">Usuarios</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal con el diseño mejorado -->
+  <div id="contenido-principal">
+    <div class="page-header">
+      <h1>Gestión de Inscripciones</h1>
+      <p class="page-description">Administra y visualiza todas las inscripciones a los programas de la Casa de la Cultura de Caldas. Puedes buscar, filtrar y gestionar las inscripciones existentes.</p>
+    </div>
+    
+    <div class="table-actions">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="buscar-inscripcion" placeholder="Buscar inscripción...">
+      </div>
+      <div class="results-count">
+        <i class="fas fa-list"></i>
+        <span id="contador-resultados">0 inscripciones</span>
+      </div>
+    </div>
     
     <div id="lista-inscripciones">
+      <div class="table-container">
         <table id="tabla-inscripciones">
-            <thead>
-                <tr>
-                    <th>Programa</th>
-                    <th>Contacto</th>
-                    <th>Fecha de inscripción</th>
-                    <th>Acciones</th> <!-- 👈 Nueva columna -->
-                </tr>
-            </thead>
-            <tbody id="inscripciones-body">
-                <!-- Las inscripciones se cargarán aquí con JavaScript -->
-            </tbody>
+          <thead>
+            <tr>
+              <th><i class="fas fa-book-open"></i> Programa</th>
+              <th><i class="fas fa-user"></i> Contacto</th>
+              <th><i class="fas fa-calendar"></i> Fecha de inscripción</th>
+              <th><i class="fas fa-cog"></i> Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="inscripciones-body">
+            <!-- Las inscripciones se cargarán aquí con JavaScript -->
+          </tbody>
         </table>
+      </div>
     </div>
+  </div>
 
-    <footer id="footer">
-<div id="footer-container">
-    <div id="footer-logo">
-    <img src="../imagenes/logo2.png" alt="Logo Casa de la Cultura" />
+  <footer id="footer">
+    <div id="footer-container">
+      <div id="footer-logo">
+        <img src="../imagenes/logo2.png" alt="Logo Casa de la Cultura" />
+      </div>
+      <div id="footer-divider"></div>
+      <div id="footer-info">
+        <p><strong>Instagram:</strong> @caldascultura</p>
+        <p><strong>Facebook:</strong> Casa de la Cultura Caldas Antioquia</p>
+        <p><strong>X:</strong> @culturacaldas</p>
+      </div>
     </div>
-    <div id="footer-divider"></div>
-    <div id="footer-info">
-    <p><strong>Instagram:</strong> @caldascultura</p>
-    <p><strong>Facebook:</strong> Casa de la Cultura Caldas Antioquia</p>
-    <p><strong>X:</strong> @culturacaldas</p>
-    </div>
-</div>
-</footer>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            cargarInscripciones();
-        });
-
-        function cargarInscripciones() {
-            const inscripciones = JSON.parse(localStorage.getItem('inscripciones')) || [];
-            const cuerpoTabla = document.getElementById('inscripciones-body');
-            
-            if (inscripciones.length === 0) {
-                cuerpoTabla.innerHTML = '<tr><td colspan="4" class="vacío">No hay inscripciones aún</td></tr>';
-            } else {
-                cuerpoTabla.innerHTML = inscripciones.map(insc => `
-                    <tr>
-                        <td>${insc.programaNombre}</td>
-                        <td>${insc.contacto}</td>
-                        <td>${insc.fecha}</td>
-                        <td><button class="btn-eliminar" onclick="eliminarInscripcion(${insc.id})">Eliminar</button></td>
-                    </tr>
-                `).join('');
-            }
-        }
-
-        function eliminarInscripcion(id) {
-            if (confirm("¿Seguro que quieres eliminar esta inscripción?")) {
-                let inscripciones = JSON.parse(localStorage.getItem('inscripciones')) || [];
-                inscripciones = inscripciones.filter(insc => insc.id !== id);
-                localStorage.setItem('inscripciones', JSON.stringify(inscripciones));
-                cargarInscripciones(); // recarga la tabla
-            }
-        }
-
-        /*menu adaptable */
-const menuToggle = document.getElementById('menu-toggle');
-const menu = document.getElementById('menu');
-if (menuToggle) {
-    menuToggle.addEventListener('click', () => {
-        menu.classList.toggle('active');
-    });
-}
-
-// SIMULACIÓN DE SESIÓN ACTIVA
-const usuarioAutenticado = true; // ponlo en false si quieres probar sin sesión
-
-document.addEventListener("DOMContentLoaded", () => {
-  const perfilDropdown = document.getElementById("perfil-icono");
-
-  if (usuarioAutenticado) {
-    perfilDropdown.style.display = "inline-block"; // 👈 se muestra el menú
-  } else {
-    perfilDropdown.style.display = "none";
-  }
-
-  // Mostrar/ocultar el menú con clic
-  const perfilImg = document.getElementById("perfil-img");
-  const dropdownMenu = document.getElementById("dropdown-menu");
-
-  if (perfilImg) {
-    perfilImg.addEventListener("click", (e) => {
-      e.stopPropagation();
-      dropdownMenu.classList.toggle("hidden");
-    });
-
-    document.addEventListener("click", (e) => {
-      if (!perfilImg.contains(e.target)) {
-        dropdownMenu.classList.add("hidden");
-      }
-    });
-  }
-});
-
-    </script>
+  </footer>
+  <script src="misprogramas.js"></script>
 </body>
 </html>
