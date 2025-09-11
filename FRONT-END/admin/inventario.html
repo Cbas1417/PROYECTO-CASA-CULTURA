@@ -50,46 +50,54 @@
             </ul>
             </div>
         </nav>
-<main id="contenido-principal">
-<main class="panel-documentos">
-    <h2>Buscar</h2>
-    <input type="text" id="buscador" placeholder="Buscar producto..."/>
-
-    <div class="botones">
-      <button id="btnagregar">Agregar</button>
-      <button id="btneditar">Editar</button>
-      <button id="btneliminar">Eliminar</button>
+  <main id="contenido-principal">
+    <div class="panel-header">
+      <h2>Gestión de Inventario</h2>
+      <p class="panel-description">Administra los productos del inventario de la Casa de la Cultura de Caldas. Puedes agregar, editar y eliminar productos.</p>
     </div>
 
-    <div id="contenedor-tabla">
-      <table id="table">
-        <thead>
-          <tr>
-            <th>Imagen</th>
-            <th>ID</th>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Detalles</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+    <div class="panel-documentos">
+      <div class="search-container">
+        <input type="text" id="buscador" placeholder="Buscar producto por nombre o ID..."/>
+        <div class="botones">
+          <button id="btnagregar"><i class="fas fa-plus"></i> Agregar</button>
+          <button id="btneditar"><i class="fas fa-edit"></i> Editar</button>
+          <button id="btneliminar"><i class="fas fa-trash-alt"></i> Eliminar</button>
+        </div>
+      </div>
 
+      <div class="table-container">
+        <table id="table">
+          <thead>
+            <tr>
+              <th><i class="fas fa-image"></i> Imagen</th>
+              <th><i class="fas fa-hashtag"></i> ID</th>
+              <th><i class="fas fa-cube"></i> Producto</th>
+              <th><i class="fas fa-boxes"></i> Cantidad</th>
+              <th><i class="fas fa-info-circle"></i> Detalles</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
   </main>
-</main>
 
   <!-- Modal Agregar -->
   <div id="modalagregar" class="modal">
     <div class="modal-content">
+      <div class="modal-header">
+        <p>Agregar Producto</p>
+      </div>
       <form id="formagregar">
-        <p id="p1">Agregar Producto</p>
-        <input type="file" id="imgagregar" accept="image/*" required><br>
-        <input type="text" id="productoagregar" placeholder="Producto" required><br>
-        <input type="number" id="cantidadagregar" placeholder="Cantidad" required><br>
-        <input type="text" id="detallesagregar" placeholder="Detalles" required><br>
-        <button type="submit">Confirmar</button>
-        <button type="button" onclick="cerrarModal('modalagregar')">Cancelar</button>
+        <input type="file" id="imgagregar" accept="image/*" required>
+        <input type="text" id="productoagregar" placeholder="Nombre del producto" required>
+        <input type="number" id="cantidadagregar" placeholder="Cantidad" required>
+        <input type="text" id="detallesagregar" placeholder="Detalles" required>
+        <div class="modal-buttons">
+          <button type="submit">Confirmar</button>
+          <button type="button" onclick="cerrarModal('modalagregar')">Cancelar</button>
+        </div>
       </form>
     </div>
   </div>
@@ -97,14 +105,18 @@
   <!-- Modal Editar -->
   <div id="modaleditar" class="modal">
     <div class="modal-content">
+      <div class="modal-header">
+        <p>Editar Producto</p>
+      </div>
       <form id="formeditar">
-        <p id="p1">Editar Producto</p>
-        <input type="file" id="imgeditar" accept="image/*"><br>
-        <input type="text" id="productoeditar" placeholder="Producto"><br>
-        <input type="number" id="cantidadeditar" placeholder="Cantidad"><br>
-        <input type="text" id="detalleseditar" placeholder="Detalles"><br>
-        <button type="submit">Guardar</button>
-        <button type="button" onclick="cerrarModal('modaleditar')">Cancelar</button>
+        <input type="file" id="imgeditar" accept="image/*">
+        <input type="text" id="productoeditar" placeholder="Nombre del producto">
+        <input type="number" id="cantidadeditar" placeholder="Cantidad">
+        <input type="text" id="detalleseditar" placeholder="Detalles">
+        <div class="modal-buttons">
+          <button type="submit">Guardar</button>
+          <button type="button" onclick="cerrarModal('modaleditar')">Cancelar</button>
+        </div>
       </form>
     </div>
   </div>
