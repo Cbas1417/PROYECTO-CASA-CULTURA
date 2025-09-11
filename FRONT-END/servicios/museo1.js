@@ -79,25 +79,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 3000);
     });
 
-//conectar yo creo
+// =============================
+// CONEXIÓN BACKEND → FRONTEND
+// =============================
 axios.get("http://localhost:8000/api/exposiciones/")
   .then(res => {
-    const exposiciones = res.data;
+    const exposiciones = res.data.data; // 👈 viene en "data"
     console.log("✅ Exposiciones cargadas:", exposiciones);
 
-    const contenedor = document.getElementById("contenedor-exposiciones");
-
     exposiciones.forEach(expo => {
-      const div = document.createElement("div");
-      div.classList.add("exposicion");
-
-      div.innerHTML = `
-        <h3>${expo.nombre}</h3>
-        <p>${expo.descripcion}</p>
-        <p><strong>Duración:</strong> ${expo.tiempo}</p>
-      `;
-
-      contenedor.appendChild(div);
+      crearGalleryItem({
+        titulo: expo.titulo,
+        autor: expo.autor,
+        descripcion: expo.descripcion,
+        video: expo.video,
+        imagen: expo.imagen ? `http://localhost:8000${expo.imagen}` : "" // 👈 arma la URL completa
+      });
     });
   })
   .catch(err => {
@@ -105,7 +102,9 @@ axios.get("http://localhost:8000/api/exposiciones/")
   });
 
 
-//
+// =============================
+// GALERÍA (tarjetas dinámicas)
+// =============================
 const galleryContainer = document.getElementById("gallery-container");
 
 // Crear tarjeta y botón para abrir modal
@@ -120,8 +119,8 @@ function crearGalleryItem({ titulo, autor, descripcion, video, imagen }) {
           <img src="${imagen}" alt="${titulo}" class="imagen-carta" />
         </div>
         <div class="flip-card-back">
-          <h3> Acerca de </h3>
-          <p><strong></strong></p>
+          <h3>${titulo}</h3>
+          <p><strong>Autor:</strong> ${autor}</p>
           <button class="btn-ver"
             data-titulo="${titulo}"
             data-autor="${autor}"
@@ -137,6 +136,7 @@ function crearGalleryItem({ titulo, autor, descripcion, video, imagen }) {
 
   galleryContainer.appendChild(item);
 }
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const exposiciones = JSON.parse(localStorage.getItem("exposiciones")) || [];
