@@ -2,23 +2,23 @@ const filterButtons = document.querySelectorAll(".filters button");
 const galleryItems  = document.querySelectorAll(".gallery-item");
 
 filterButtons.forEach(button => {
-button.addEventListener("click", () => {
+  button.addEventListener("click", () => {
     const filter = button.dataset.filter;
 
     filterButtons.forEach(b => b.classList.toggle("active", b === button));
 
     galleryItems.forEach(item => {
-    const categoryMatches = filter === "all" || item.dataset.category === filter;
-    item.style.display = categoryMatches ? "block" : "none";
+      const categoryMatches = filter === "all" || item.dataset.category === filter;
+      item.style.display = categoryMatches ? "block" : "none";
     });
-});
+  });
 });
 
 /*menu adaptable */
 const menuToggle = document.getElementById('menu-toggle');
 const menu = document.getElementById('menu');
 menuToggle.addEventListener('click', () => {
-    menu.classList.toggle('active');
+  menu.classList.toggle('active');
 });
 
 //cerrar
@@ -67,40 +67,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
- // Se ejecuta al cargar completamente el DOM
-    document.addEventListener('DOMContentLoaded', () => {
-      const mensaje = document.getElementById('mini_mensaje');
-      mensaje.textContent = 'Para ver mas informacion pasar el cursor por la carpeta ';
-      mensaje.classList.add('mostrar');
+// mensaje flotante
+document.addEventListener('DOMContentLoaded', () => {
+  const mensaje = document.getElementById('mini_mensaje');
+  mensaje.textContent = 'Para ver más información pasar el cursor por la carpeta ';
+  mensaje.classList.add('mostrar');
 
-      // Ocultar después de 3 segundos
-      setTimeout(() => {
-        mensaje.classList.remove('mostrar');
-      }, 3000);
-    });
-
-// =============================
-// CONEXIÓN BACKEND → FRONTEND
-// =============================
-axios.get("http://localhost:8000/api/exposiciones/")
-  .then(res => {
-    const exposiciones = res.data.data; // 👈 viene en "data"
-    console.log("✅ Exposiciones cargadas:", exposiciones);
-
-    exposiciones.forEach(expo => {
-      crearGalleryItem({
-        titulo: expo.titulo,
-        autor: expo.autor,
-        descripcion: expo.descripcion,
-        video: expo.video,
-        imagen: expo.imagen ? `http://localhost:8000${expo.imagen}` : "" // 👈 arma la URL completa
-      });
-    });
-  })
-  .catch(err => {
-    console.error("❌ Error al conectar con exposiciones:", err.message);
-  });
-
+  setTimeout(() => {
+    mensaje.classList.remove('mostrar');
+  }, 3000);
+});
 
 // =============================
 // GALERÍA (tarjetas dinámicas)
@@ -137,26 +113,44 @@ function crearGalleryItem({ titulo, autor, descripcion, video, imagen }) {
   galleryContainer.appendChild(item);
 }
 
+// =============================
+// CONEXIÓN BACKEND → FRONTEND
+// =============================
+axios.get("http://localhost:8000/api/exposiciones/")
+  .then(res => {
+    const exposiciones = res.data.data;
+    console.log("✅ Exposiciones cargadas:", exposiciones);
 
-document.addEventListener("DOMContentLoaded", () => {
-  const exposiciones = JSON.parse(localStorage.getItem("exposiciones")) || [];
+    exposiciones.forEach(expo => {
+      crearGalleryItem({
+        titulo: expo.titulo,
+        autor: expo.autor,
+        descripcion: expo.descripcion,
+        video: expo.video,
+        imagen: expo.imagen ? `http://localhost:8000${expo.imagen}` : ""
+      });
+    });
 
-  exposiciones.forEach(expo => {
-    crearGalleryItem(expo);
+    // Inicializar modal después de cargar las exposiciones
+    inicializarModal();
+  })
+  .catch(err => {
+    console.error("❌ Error al conectar con exposiciones:", err.message);
   });
 
-  // === Modal ===
+// =============================
+// MODAL
+// =============================
+function inicializarModal() {
   const modal = document.getElementById("modal-expo");
   const cerrar = modal.querySelector(".cerrar");
 
-  // Abrir modal al hacer clic en cualquier "Ver más"
   galleryContainer.addEventListener("click", (e) => {
     if (e.target.classList.contains("btn-ver")) {
       document.getElementById("modal-titulo").textContent = e.target.dataset.titulo;
       document.getElementById("modal-autor").textContent = e.target.dataset.autor;
       document.getElementById("modal-descripcion").textContent = e.target.dataset.descripcion;
 
-      // Si hay video, poner el enlace
       const enlace = document.getElementById("modal-enlace");
       if (e.target.dataset.video) {
         enlace.href = e.target.dataset.video;
@@ -165,7 +159,6 @@ document.addEventListener("DOMContentLoaded", () => {
         enlace.style.display = "none";
       }
 
-      // Imagen en modal
       const imgModal = document.getElementById("modal-imagen");
       imgModal.src = e.target.dataset.imagen || "";
       imgModal.style.display = e.target.dataset.imagen ? "block" : "none";
@@ -174,7 +167,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Cerrar modal
   cerrar.addEventListener("click", () => {
     modal.style.display = "none";
   });
@@ -182,4 +174,4 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("click", (e) => {
     if (e.target === modal) modal.style.display = "none";
   });
-});
+}
