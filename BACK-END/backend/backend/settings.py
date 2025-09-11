@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'usuarios',
     'seguridad',
     'contactos',
+    'albumes',
+    'fotos'
 ]
 
 MIDDLEWARE = [
