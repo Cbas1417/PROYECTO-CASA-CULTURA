@@ -1,105 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png" style="width: 16px; height: 16px;">
-    <title>Galeria | Casa de la Cultura Caldas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png">
   <link rel="stylesheet" href="galeriaad.css">
-
+  <title>Galería | Casa de la Cultura Caldas</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header id="cabeza">
-            <nav id="social-icons">
-        <figure class="icono">
-            <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" class="icon" />
-            </a>
-        </figure>
-        <figure class="icono">
-            <a href="https://www.instagram.com/caldascultura/" target="_blank" rel="noopener">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" class="icon" />
-            </a>
-        </figure>
-        <figure class="icono">
-            <a href="https://twitter.com/culturacaldas" target="_blank" rel="noopener">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="Twitter/X" class="icon" />
-            </a>
-        </figure>
-        </nav>
+  <header id="cabeza">
+    <nav id="social-icons">
+      <figure class="icono">
+        <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" class="icon" />
+        </a>
+      </figure>
+      <figure class="icono">
+        <a href="https://www.instagram.com/caldascultura/" target="_blank" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" class="icon" />
+        </a>
+      </figure>
+      <figure class="icono">
+        <a href="https://twitter.com/culturacaldas" target="_blank" rel="noopener">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="Twitter/X" class="icon" />
+        </a>
+      </figure>
+    </nav>
 
-<div class="perfil-dropdown" id="perfil-icono">
-  <img id="perfil-img" src="../imagenes/perfill.png" alt="Usuario">
-  <div class="dropdown-menu hidden" id="dropdown-menu">
-      <a href="verperfilad.html">Ver perfil</a>
-      <a href="../usuario/inicio.html" id="cerrar-sesion">Cerrar sesión</a>
-  </div>
-</div>
-
-
-        </header>
-
-        <nav id="nav">
-            <img id="logo" src="../imagenes/logo1.png" alt="Logo">
-            <button id="menu-toggle" aria-label="Abrir menú">&#9776;</button>
-            <div id="menu">
-            <ul>
-                <li><a href="dashboard.html" class="header-button">Administrador</a></li>
-                <li><a href="misprogramas.html" class="header-button">Programas</a></li>
-                <li><a href="galeriaad.html" class="header-button">Galeria</a></li>
-                <li><a href="estadistica.html" class="header-button">Museo</a></li>
-                <li><a href="inventario.html" class="header-button">Inventario</a></li>
-                <li><a href="doc_admin.html" class="header-button">Usuarios</a></li>
-            </ul>
-            </div>
-        </nav>
-  <h1>Galería de Álbumes</h1>
-
-  <button id="crear-album">➕ Crear álbum</button>
-
-  <div id="albums-container">
-    <div id="albums" class="albums"></div>
-  </div>
-
-  <!-- Vista de un álbum -->
-  <div id="album-view" class="hidden">
-    <h2 id="album-title"></h2>
-    <input type="file" id="add-photo" multiple accept="image/*">
-    <div id="photos" class="photos"></div>
-    <button id="volver">⬅ Volver a álbumes</button>
-  </div>
-
-  <!-- Modal genérico -->
-  <div id="modal" class="modal hidden">
-    <div class="modal-content">
-      <h3 id="modal-title"></h3>
-      <p id="modal-message"></p>
-
-      <input type="text" id="modal-input" class="hidden" placeholder="Escribe aquí...">
-
-      <div class="modal-actions">
-        <button id="modal-cancel">Cancelar</button>
-        <button id="modal-confirm">Aceptar</button>
+    <div class="perfil-dropdown" id="perfil-icono">
+      <img id="perfil-img" src="../imagenes/perfill.png" alt="Usuario">
+      <div class="dropdown-menu hidden" id="dropdown-menu">
+        <a href="verperfilad.html">Ver perfil</a>
+        <a href="../usuario/inicio.html" id="cerrar-sesion">Cerrar sesión</a>
       </div>
     </div>
-  </div>
+  </header>
 
-
-
-    <footer id="footer">
-<div id="footer-container">
-    <div id="footer-logo">
-    <img src="../imagenes/logo2.png" alt="Logo Casa de la Cultura" />
+  <nav id="nav">
+    <img id="logo" src="../imagenes/logo1.png" alt="Logo">
+    <button id="menu-toggle" aria-label="Abrir menú">&#9776;</button>
+    <div id="menu">
+      <ul>
+        <li><a href="dashboard.html" class="header-button">Administrador</a></li>
+        <li><a href="misprogramas.html" class="header-button">Programas</a></li>
+        <li><a href="galeriaad.html" class="header-button">Galeria</a></li>
+        <li><a href="estadistica.html" class="header-button">Museo</a></li>
+        <li><a href="inventario.html" class="header-button">Inventario</a></li>
+        <li><a href="doc_admin.html" class="header-button">Usuarios</a></li>
+      </ul>
     </div>
-    <div id="footer-divider"></div>
-    <div id="footer-info">
-    <p><strong>Instagram:</strong> @caldascultura</p>
-    <p><strong>Facebook:</strong> Casa de la Cultura Caldas Antioquia</p>
-    <p><strong>X:</strong> @culturacaldas</p>
-    </div>
-</div>
-</footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
-<script src="galeriaad.js"></script>
+  </nav>
 
+  <main id="contenido-principal">
+    <div class="gallery-header">
+      <h1>Galería de Álbumes</h1>
+      <p class="gallery-description">Administra y organiza los álbumes fotográficos de la Casa de la Cultura de Caldas. Crea álbumes, añade fotos y comparte los mejores momentos.</p>
+    </div>
+
+    <button id="crear-album"><i class="fas fa-plus"></i> Crear álbum</button>
+
+    <div id="albums-container">
+      <div id="albums" class="albums"></div>
+    </div>
+
+    <!-- Vista de un álbum -->
+    <div id="album-view" class="hidden">
+      <div class="album-view-header">
+        <h2 id="album-title"></h2>
+        <div class="album-controls">
+          <label for="add-photo" class="file-input-label">
+            <i class="fas fa-upload"></i> Añadir fotos
+          </label>
+          <input type="file" id="add-photo" multiple accept="image/*" class="hidden">
+          <button id="volver"><i class="fas fa-arrow-left"></i> Volver</button>
+        </div>
+      </div>
+      <div id="photos" class="photos"></div>
+    </div>
+
+    <!-- Modal genérico -->
+    <div id="modal" class="modal hidden">
+      <div class="modal-content">
+        <h3 id="modal-title"></h3>
+        <p id="modal-message"></p>
+        <input type="text" id="modal-input" class="hidden" placeholder="Escribe aquí...">
+        <div class="modal-actions">
+          <button id="modal-cancel">Cancelar</button>
+          <button id="modal-confirm">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="footer">
+    <div id="footer-container">
+      <div id="footer-logo">
+        <img src="../imagenes/logo2.png" alt="Logo Casa de la Cultura" />
+      </div>
+      <div id="footer-divider"></div>
+      <div id="footer-info">
+        <p><strong>Instagram:</strong> @caldascultura</p>
+        <p><strong>Facebook:</strong> Casa de la Cultura Caldas Antioquia</p>
+        <p><strong>X:</strong> @culturacaldas</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
+  <script src="galeriaad.js">
+  </script>
 </body>
 </html>
