@@ -1,61 +1,70 @@
 from rest_framework.views import APIView
-from django.http import JsonResponse, Http404
 from rest_framework.response import Response
-from http import HTTPStatus
+from rest_framework import status
 from django.http import Http404
-from django.utils.text import slugify
-from .models import *
-from .serializers import *
-from django.core.files.storage import FileSystemStorage
-from datetime import datetime
+from .models import Fotos
+from .serializers import FotosSerializer
 
-# Create your views here.
-class class1(APIView):
+class FotosListCreate(APIView):
+    """
+    GET -> lista fotos (opcional: filtra por album con ?album=ID)
+    POST -> crea nueva foto
+    """
 
-    def get(self,request):
-        data=Fotos.objects.order_by('-id').all()
-        serializer=FotosSerializer(data, many=True, context={'request': request})
-        return JsonResponse ({"data":serializer.data})
-    
+    def get(self, request):
+        album_id = request.query_params.get("album", None)  # <-- capturar query param
+        if album_id:
+            fotos = Fotos.objects.filter(album_id=album_id).order_by("-id")
+        else:
+            fotos = Fotos.objects.all().order_by("-id")
+
+        serializer = FotosSerializer(fotos, many=True, context={"request": request})
+        return Response({"data": serializer.data}, status=status.HTTP_200_OK)
+
     def post(self, request):
-        imagen = request.FILES.get('imagen')
-
-        if not imagen:
-            return JsonResponse({"Estado": "Error", "Mensaje": "Es obligatorio que haya una foto"}, status=HTTPStatus.BAD_REQUEST)
-
-        try:
-            nuevo = Fotos.objects.create(
-                                        imagen=imagen
+        serializer = FotosSerializer(data=request.data, context={"request": request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                {"Estado": "Ok", "Mensaje": "Registro creado correctamente"},
+                status=status.HTTP_201_CREATED,
             )
-            return JsonResponse({"Estado": "Ok", "Mensaje": "Registro creado correctamente"})
-        except Exception as e:
-            return JsonResponse({"Estado": "Error", "Mensaje": str(e)}, status=HTTPStatus.BAD_REQUEST)
+        return Response(
+            {"Estado": "Error", "Mensaje": serializer.errors},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
 
-class class2(APIView):
 
-    def put(self,request,id):
-        imagen = request.FILES.get('imagen')
+class FotosDetail(APIView):
+    """
+    PUT -> actualizar una foto
+    DELETE -> eliminar una foto
+    """
+
+    def get_object(self, id):
         try:
-            a = Fotos.objects.get(id=id)
-        except:
-            raise Http404("Producto no encontrado")
-        
-        if not imagen:
-            return JsonResponse({"Estado": "Error", "Mensaje": "Es obligatorio que haya una foto"}, status=HTTPStatus.BAD_REQUEST)
-        
-        a.imagen=imagen
-        
-        try:
-            a.save()
-            return JsonResponse({"Estado":"Ok","Mensaje":"Se modifico el elemento correctamente"},
-                status=HTTPStatus.OK)
+            return Fotos.objects.get(id=id)
         except Fotos.DoesNotExist:
             raise Http404
 
-    def delete(self,request,id):
-        try:
-            Fotos.objects.filter(id=id).delete()
-            return JsonResponse({"estado":"ok","mensaje":"eliminado correctamente"},status=HTTPStatus.OK)
-        
-        except Fotos.DoesNotExist:
-            raise Http404
+    def put(self, request, id):
+        foto = self.get_object(id)
+        serializer = FotosSerializer(foto, data=request.data, partial=True, context={"request": request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                {"Estado": "Ok", "Mensaje": "Se modificó el elemento correctamente"},
+                status=status.HTTP_200_OK,
+            )
+        return Response(
+            {"Estado": "Error", "Mensaje": serializer.errors},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    def delete(self, request, id):
+        foto = self.get_object(id)
+        foto.delete()
+        return Response(
+            {"Estado": "Ok", "Mensaje": "Eliminado correctamente"},
+            status=status.HTTP_200_OK,
+        )

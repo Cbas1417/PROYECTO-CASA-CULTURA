@@ -219,7 +219,7 @@ function mostrarMensajeFin(victoria) {
     const btnCerrar = document.createElement('button');
     btnCerrar.textContent = 'Cerrar';
     btnCerrar.style.marginTop = '20px';
-    btnCerrar.style.padding = '12px 30px';
+    btnCerrar.style.padding = '10px 10px';
     btnCerrar.style.border = 'none';
     btnCerrar.style.width = '150px';
     btnCerrar.style.borderRadius = '10px';
