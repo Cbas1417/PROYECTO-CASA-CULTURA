@@ -12,6 +12,8 @@ urlpatterns = [
     path('api/v1/', include('slides.urls')),
     path('api/v1/', include('usuarios.urls')),
     path('api/v1/', include('seguridad.urls')),
+    path('api/v1/', include('albumes.urls')),
+    path('api/v1/', include('fotos.urls')),
 ]
 
 if settings.DEBUG:

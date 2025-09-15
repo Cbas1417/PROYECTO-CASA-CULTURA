@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="galeriaad.css">
   <title>Galería | Casa de la Cultura Caldas</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
   <header id="cabeza">
@@ -58,26 +59,28 @@
       <p class="gallery-description">Administra y organiza los álbumes fotográficos de la Casa de la Cultura de Caldas. Crea álbumes, añade fotos y comparte los mejores momentos.</p>
     </div>
 
-    <button id="crear-album"><i class="fas fa-plus"></i> Crear álbum</button>
+    <button id="crear-album" type="button"><i class="fas fa-plus"></i> Crear álbum</button>
 
     <div id="albums-container">
       <div id="albums" class="albums"></div>
     </div>
 
-    <!-- Vista de un álbum -->
-    <div id="album-view" class="hidden">
-      <div class="album-view-header">
-        <h2 id="album-title"></h2>
-        <div class="album-controls">
+  <!-- Vista de un álbum -->
+  <div id="album-view" class="hidden">
+    <div class="album-view-header">
+      <h2 id="album-title"></h2>
+      <div class="album-controls">
+        <form id="upload-form" style="display: inline;">
           <label for="add-photo" class="file-input-label">
             <i class="fas fa-upload"></i> Añadir fotos
           </label>
           <input type="file" id="add-photo" multiple accept="image/*" class="hidden">
-          <button id="volver"><i class="fas fa-arrow-left"></i> Volver</button>
-        </div>
+        </form>
+        <button id="volver" type="button"><i class="fas fa-arrow-left"></i> Volver</button>
       </div>
-      <div id="photos" class="photos"></div>
     </div>
+    <div id="photos" class="photos"></div>
+  </div>
 
     <!-- Modal genérico -->
     <div id="modal" class="modal hidden">
@@ -86,8 +89,8 @@
         <p id="modal-message"></p>
         <input type="text" id="modal-input" class="hidden" placeholder="Escribe aquí...">
         <div class="modal-actions">
-          <button id="modal-cancel">Cancelar</button>
-          <button id="modal-confirm">Aceptar</button>
+          <button id="modal-cancel" type="button">Cancelar</button>
+          <button id="modal-confirm" type="button">Aceptar</button>
         </div>
       </div>
     </div>
