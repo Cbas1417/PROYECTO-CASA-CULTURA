@@ -1,5 +1,8 @@
+// =============================
+// FILTROS
+// =============================
 const filterButtons = document.querySelectorAll(".filters button");
-const galleryItems  = document.querySelectorAll(".gallery-item");
+const galleryContainer = document.getElementById("gallery-container");
 
 filterButtons.forEach(button => {
   button.addEventListener("click", () => {
@@ -7,6 +10,7 @@ filterButtons.forEach(button => {
 
     filterButtons.forEach(b => b.classList.toggle("active", b === button));
 
+    const galleryItems = document.querySelectorAll(".gallery-item");
     galleryItems.forEach(item => {
       const categoryMatches = filter === "all" || item.dataset.category === filter;
       item.style.display = categoryMatches ? "block" : "none";
@@ -14,14 +18,18 @@ filterButtons.forEach(button => {
   });
 });
 
-/*menu adaptable */
+// =============================
+// MENU ADAPTABLE
+// =============================
 const menuToggle = document.getElementById('menu-toggle');
 const menu = document.getElementById('menu');
 menuToggle.addEventListener('click', () => {
   menu.classList.toggle('active');
 });
 
-//cerrar
+// =============================
+// LOGIN / PERFIL
+// =============================
 document.addEventListener("DOMContentLoaded", () => {
   const btnIniciar = document.getElementById("btn-iniciar");
   const btnRegistrar = document.getElementById("btn-registrar");
@@ -67,7 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// mensaje flotante
+// =============================
+// MENSAJE FLOTANTE
+// =============================
 document.addEventListener('DOMContentLoaded', () => {
   const mensaje = document.getElementById('mini_mensaje');
   mensaje.textContent = 'Para ver más información pasar el cursor por la carpeta ';
@@ -79,11 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // =============================
-// GALERÍA (tarjetas dinámicas)
+// CREAR TARJETA DE EXPOSICIÓN
 // =============================
-const galleryContainer = document.getElementById("gallery-container");
-
-// Crear tarjeta y botón para abrir modal
 function crearGalleryItem({ titulo, autor, descripcion, video, imagen }) {
   const item = document.createElement("div");
   item.classList.add("gallery-item");
@@ -114,20 +121,18 @@ function crearGalleryItem({ titulo, autor, descripcion, video, imagen }) {
 }
 
 // =============================
-// CONEXIÓN BACKEND → FRONTEND
+// CARGAR EXPOSICIONES DESDE EL BACKEND
 // =============================
-axios.get("http://localhost:8000/api/exposiciones/")
+axios.get("http://127.0.0.1:8000/api/v1/exposiciones/")
   .then(res => {
     const exposiciones = res.data.data;
-    console.log("✅ Exposiciones cargadas:", exposiciones);
-
     exposiciones.forEach(expo => {
       crearGalleryItem({
-        titulo: expo.titulo,
-        autor: expo.autor,
-        descripcion: expo.descripcion,
-        video: expo.video,
-        imagen: expo.imagen ? `http://localhost:8000${expo.imagen}` : ""
+        titulo: expo.titulo || "",
+        autor: expo.autor || "",
+        descripcion: expo.descripcion || "",
+        video: expo.video || "",
+        imagen: expo.imagen ? `http://127.0.0.1:8000${expo.imagen}` : "../imagenes/default.png"
       });
     });
 
@@ -135,7 +140,7 @@ axios.get("http://localhost:8000/api/exposiciones/")
     inicializarModal();
   })
   .catch(err => {
-    console.error("❌ Error al conectar con exposiciones:", err.message);
+    console.error("Error al cargar exposiciones:", err);
   });
 
 // =============================
