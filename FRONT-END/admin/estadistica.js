@@ -1,178 +1,173 @@
-// --- Menú hamburguesa ---
-const toggle = document.getElementById('menu-toggle');
-const menu = document.getElementById('menu');
-toggle.addEventListener('click', () => {
-  menu.classList.toggle('active');
-});
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('menu');
+  toggle.addEventListener('click', () => menu.classList.toggle('active'));
 
-// --- Elementos del DOM ---
-const tablaExposiciones = document.getElementById("exposicionesTableBody");
-const buscador = document.getElementById("buscarExposicion");
-const obraForm = document.getElementById("obraForm");
+  const tabla = document.getElementById('exposicionesTableBody');
+  const buscador = document.getElementById('buscarExposicion');
+  const obraForm = document.getElementById('obraForm');
+  const API_URL = "http://localhost:8000/api/v1/exposiciones/";
 
-// ==========================
-// CONFIG API
-// ==========================
-const API_URL = "http://localhost:8000/api/v1/exposiciones/"; 
+  let exposiciones = [];           // <--- ahora empieza vacío
+  let currentPage = 1;
+  const itemsPerPage = 10;
 
-let exposiciones = [];
+  // Render con paginación
+  function render(filtro = "") {
+    let filtered = exposiciones.filter(e =>
+      e.titulo.toLowerCase().includes(filtro.toLowerCase())
+    );
 
-// ==========================
-// Renderizar tabla
-// ==========================
-function render(filtro = "") {
-  tablaExposiciones.innerHTML = "";
+    if (!filtered.length) {
+      tabla.innerHTML = `
+        <tr>
+          <td colspan="6">
+            <div class="empty-state">
+              <i class="fas fa-images"></i>
+              <h3>No hay exposiciones</h3>
+            </div>
+          </td>
+        </tr>`;
+      document.getElementById("pagination").innerHTML = "";
+      return;
+    }
 
-  exposiciones
-    .filter(expo => expo.titulo.toLowerCase().includes(filtro.toLowerCase()))
-    .forEach((expo) => {
-      const fila = document.createElement("tr");
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+    if (currentPage > totalPages) currentPage = totalPages;
 
-      fila.innerHTML = `
-        <td>
-          ${expo.imagen ? `<img src="${expo.imagen}" alt="${expo.titulo}" width="100"/>` : ""}
-        </td>
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginated = filtered.slice(start, end);
+
+    tabla.innerHTML = "";
+    paginated.forEach(expo => {
+      let desc = expo.descripcion.length > 100
+        ? expo.descripcion.slice(0, 100) + "..."
+        : expo.descripcion;
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${expo.imagen ? `<img src="${expo.imagen}" alt="${expo.titulo}">` : "Sin imagen"}</td>
         <td>${expo.titulo}</td>
         <td>${expo.autor}</td>
-        <td>${expo.descripcion}</td>
+        <td>${desc}</td>
+        <td>${expo.video ? `<a href="${expo.video}" target="_blank">Ver video</a>` : "No disponible"}</td>
         <td>
-          ${expo.video ? `<a href="${expo.video}" target="_blank">Ver video</a>` : ""}
-        </td>
-        <td>
-          <button class="accion editar" onclick="editarExposicion(${expo.id})">Editar</button>
-          <button class="accion eliminar" onclick="eliminarExposicion(${expo.id})">Eliminar</button>
-        </td>
-      `;
-
-      tablaExposiciones.appendChild(fila);
+          <button class="accion editar" onclick="editarExposicion(${expo.id})">
+            <i class="fas fa-edit"></i> Editar
+          </button>
+          <button class="accion eliminar" onclick="eliminarExposicion(${expo.id})">
+            <i class="fas fa-trash"></i> Eliminar
+          </button>
+        </td>`;
+      tabla.appendChild(tr);
     });
-}
 
-// ==========================
-// Cargar exposiciones desde API
-// ==========================
-async function cargarExposiciones() {
-  try {
-    const res = await axios.get(API_URL);
-    exposiciones = res.data.data; // tu API devuelve {"data": [...]}
-    render();
-  } catch (err) {
-    console.error("Error al cargar exposiciones:", err);
+    renderPagination(totalPages);
   }
-}
 
-// ==========================
-// Crear/Actualizar Exposición
-// ==========================
-obraForm.addEventListener("submit", async (e) => {
+  // ----- Paginador -----
+  function renderPagination(totalPages) {
+    const container = document.getElementById("pagination");
+    container.innerHTML = "";
+
+    if (totalPages <= 1) return;
+
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement("button");
+      btn.textContent = i;
+      btn.style.margin = "0 5px";
+      btn.className = i === currentPage ? "active" : "";
+      btn.addEventListener("click", () => {
+        currentPage = i;
+        render(buscador.value);
+      });
+      container.appendChild(btn);
+    }
+  }
+
+  async function cargarExposiciones() {
+    exposiciones = []; // inicia sin obras
+    render();
+  }
+
+obraForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const titulo = document.getElementById("titulo").value;
-  const autor = document.getElementById("autor").value;
-  const descripcion = document.getElementById("descripcion").value;
-  const video = document.getElementById("video").value;
-  const imagenInput = document.getElementById("imagen");
+  const file = document.getElementById("imagen").files[0];
+  const reader = new FileReader();
 
-  const formData = new FormData();
-  formData.append("titulo", titulo);
-  formData.append("autor", autor);
-  formData.append("descripcion", descripcion);
-  if (video) formData.append("video", video);
-  if (imagenInput.files.length > 0) {
-    formData.append("imagen", imagenInput.files[0]);
-  }
+  reader.onload = () => {
+    const nueva = {
+      id: obraForm.dataset.editId || Date.now(),
+      titulo: document.getElementById("titulo").value,
+      autor: document.getElementById("autor").value,
+      descripcion: document.getElementById("descripcion").value,
+      video: document.getElementById("video").value || "",
+      imagen: reader.result || ""   // <-- aquí queda el base64
+    };
 
-  try {
     if (obraForm.dataset.editId) {
-      // Editar
-      const id = obraForm.dataset.editId;
-      await axios.put(`${API_URL}${id}/`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const idx = exposiciones.findIndex(e => e.id == obraForm.dataset.editId);
+      exposiciones[idx] = nueva;
       delete obraForm.dataset.editId;
     } else {
-      // Crear
-      await axios.post(API_URL, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      exposiciones.push(nueva);
     }
 
     obraForm.reset();
-    cargarExposiciones();
-  } catch (err) {
-    console.error("Error al guardar exposición:", err.response?.data || err);
-    alert("Error al guardar exposición");
-  }
-});
+    render(buscador.value);
+  };
 
-// ==========================
-// Editar
-// ==========================
-window.editarExposicion = function (id) {
-  const expo = exposiciones.find((e) => e.id === id);
-  if (!expo) return;
-
-  document.getElementById("titulo").value = expo.titulo;
-  document.getElementById("autor").value = expo.autor;
-  document.getElementById("descripcion").value = expo.descripcion;
-  document.getElementById("video").value = expo.video || "";
-
-  obraForm.dataset.editId = id;
-  window.scrollTo({ top: 0, behavior: "smooth" });
-};
-
-// ==========================
-// Eliminar
-// ==========================
-window.eliminarExposicion = async function (id) {
-  if (confirm("¿Seguro que quieres eliminar esta exposición?")) {
-    try {
-      await axios.delete(`${API_URL}${id}/`);
-      cargarExposiciones();
-    } catch (err) {
-      console.error("Error al eliminar exposición:", err.response?.data || err);
-      alert("Error al eliminar exposición");
-    }
-  }
-};
-
-// ==========================
-// Buscador
-// ==========================
-buscador.addEventListener("input", (e) => render(e.target.value));
-
-// ==========================
-// Inicializar
-// ==========================
-cargarExposiciones();
-
-// ==========================
-// SIMULACIÓN DE SESIÓN ACTIVA
-// ==========================
-const usuarioAutenticado = true;
-
-document.addEventListener("DOMContentLoaded", () => {
-  const perfilDropdown = document.getElementById("perfil-icono");
-
-  if (usuarioAutenticado) {
-    perfilDropdown.style.display = "inline-block";
+  if (file) {
+    reader.readAsDataURL(file);
   } else {
-    perfilDropdown.style.display = "none";
-  }
-
-  const perfilImg = document.getElementById("perfil-img");
-  const dropdownMenu = document.getElementById("dropdown-menu");
-
-  if (perfilImg) {
-    perfilImg.addEventListener("click", (e) => {
-      e.stopPropagation();
-      dropdownMenu.classList.toggle("hidden");
-    });
-
-    document.addEventListener("click", (e) => {
-      if (!perfilImg.contains(e.target)) {
-        dropdownMenu.classList.add("hidden");
-      }
-    });
+    // Si no selecciona imagen, igual guarda sin ella
+    reader.onload();
   }
 });
+
+  window.editarExposicion = (id) => {
+    const expo = exposiciones.find(e => e.id === id);
+    if (!expo) return;
+    document.getElementById("titulo").value = expo.titulo;
+    document.getElementById("autor").value = expo.autor;
+    document.getElementById("descripcion").value = expo.descripcion;
+    document.getElementById("video").value = expo.video || "";
+    obraForm.dataset.editId = id;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  window.eliminarExposicion = (id) => {
+    if (confirm("¿Eliminar exposición?")) {
+      exposiciones = exposiciones.filter(e => e.id !== id);
+      render(buscador.value);
+    }
+  };
+
+  buscador.addEventListener("input", (e) => {
+    currentPage = 1;
+    render(e.target.value);
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    cargarExposiciones();
+
+    // Perfil
+    const perfil = document.getElementById('perfil-img');
+    const menuPerfil = document.getElementById('dropdown-menu');
+    perfil.addEventListener('click', e => {
+      e.stopPropagation();
+      menuPerfil.classList.toggle('hidden');
+    });
+    document.addEventListener('click', e => {
+      if (!perfil.contains(e.target)) menuPerfil.classList.add('hidden');
+    });
+
+    document.getElementById('cerrar-sesion').addEventListener('click', e => {
+      e.preventDefault();
+      alert("Sesión cerrada");
+      window.location.href = "../usuario/inicio.html";
+    });
+  });
+
+document.getElementById("perfil-icono").style.display = "inline-block";

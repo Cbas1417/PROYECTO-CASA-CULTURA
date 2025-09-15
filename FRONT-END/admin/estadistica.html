@@ -33,7 +33,6 @@
             <a href="../usuario/inicio.html" id="cerrar-sesion">Cerrar sesión</a>
         </div>
     </div>
-</div>
         </header>
 
         <nav id="nav">
@@ -51,57 +50,58 @@
             </div>
         </nav>
 
-        <div class="form-container">
-  <h2>Agregar Nueva Obra</h2>
-  <form id="obraForm">
-    <div class="form-group">
-      <label for="titulo">Título</label>
-      <input type="text" id="titulo" name="titulo" required>
-    </div>
+ <main>
+  <div class="page-header">
+    <h1>Gestión del Museo</h1>
+    <p class="page-description">Administra y organiza las obras y exposiciones del Museo de la Casa de la Cultura de Caldas.</p>
+  </div>
 
-    <div class="form-group">
-      <label for="autor">Autor</label>
-      <input type="text" id="autor" name="autor" required>
-    </div>
+  <div class="form-container">
+    <h2>Agregar Nueva Obra</h2>
+    <form id="obraForm">
+      <div class="form-group">
+        <label for="titulo">Título</label>
+        <input type="text" id="titulo" required>
+      </div>
+      <div class="form-group">
+        <label for="autor">Autor</label>
+        <input type="text" id="autor" required>
+      </div>
+      <div class="form-group" style="grid-column:1/-1;">
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="imagen">Imagen</label>
+        <input type="file" id="imagen" accept="image/*" required>
+      </div>
+      <div class="form-group">
+        <label for="video">Enlace a video</label>
+        <input type="url" id="video" placeholder="https://...">
+      </div>
+      <button type="submit"><i class="fas fa-plus-circle"></i> Guardar Obra</button>
+    </form>
+  </div>
 
-    <div class="form-group">
-      <label for="descripcion">Descripción</label>
-      <textarea id="descripcion" name="descripcion" required></textarea>
-    </div>
+  <div class="search-container">
+    <input type="text" id="buscarExposicion" placeholder="Buscar por título...">
+  </div>
 
-    <div class="form-group">
-      <label for="imagen">Imagen</label>
-      <input type="file" id="imagen" name="imagen" accept="image/*" required>
-    </div>
-
-    <div class="form-group">
-      <label for="video">Enlace a video</label>
-      <input type="url" id="video" name="video" placeholder="https://...">
-    </div>
-
-    <button type="submit">Guardar Obra</button>
-  </form>
-</div>
-
-  <!-- Buscador -->
-  <input type="text" id="buscarExposicion" placeholder="Buscar por título...">
-
-  <!-- Tabla -->
-  <h2>Lista de Exposiciones</h2>
-  <table border="1" id="tablaExposiciones">
-    <thead>
+  <div class="table-section">
+    <h2>Lista de Exposiciones</h2>
+    <table id="tablaExposiciones">
+      <thead>
       <tr>
-        <th>Imagen</th>
-        <th>Título</th>
-        <th>Autor</th>
-        <th>Descripción</th>
-        <th>Video</th>
-        <th>Acciones</th>
+        <th>Imagen</th><th>Título</th><th>Autor</th><th>Descripción</th><th>Video</th><th>Acciones</th>
       </tr>
-    </thead>
-    <tbody id="exposicionesTableBody"></tbody>
-  </table>
-
+      </thead>
+      <tbody id="exposicionesTableBody">
+      <tr><td colspan="6" style="text-align:center;padding:20px;">Cargando exposiciones...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+    <div id="pagination" style="text-align:center; margin-top:20px;"></div>
 <footer id="footer">
 <div id="footer-container">
     <div id="footer-logo">
