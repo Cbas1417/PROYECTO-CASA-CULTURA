@@ -1,57 +1,71 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería | Casa de la Cultura Caldas</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<meta charset="UTF-8">
+    <link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png" style="width: 16px; height: 16px;">
+    <title>Galeria | Casa de la Cultura Caldas</title>
     <link rel="stylesheet" href="galeria.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>		
+	<link rel="stylesheet" type="text/css" href="mapa.css"/>	
+
 </head>
 <body>
     <header id="cabeza">
-        <nav id="social-icons">
-            <figure class="icono">
-                <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
-                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" class="icon" />
-                </a>
-            </figure>
-            <figure class="icono">
-                <a href="https://www.instagram.com/caldascultura/" target="_blank" rel="noopener">
-                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" class="icon" />
-                </a>
-            </figure>
-            <figure class="icono">
-                <a href="https://twitter.com/culturacaldas" target="_blank" rel="noopener">
-                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="Twitter/X" class="icon" />
-                </a>
-            </figure>
-        </nav>
+    <nav id="social-icons">
+        <figure class="icono">
+            <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" width="39" height="39">
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://www.instagram.com/caldascultura/related_profiles/?hl=es-la" target="_blank" rel="noopener">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" width="39" height="39">
+            </a>
+        </figure>
+        <figure class="icono">
+            <a href="https://www.facebook.com/culturadecaldas/?locale=es_LA" target="_blank" rel="noopener">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="Twitter/X" width="39" height="39">
+            </a>
+        </figure>
+    </nav>
+    <div id="user-actions">
+    <a href="../usuario/registrar.html" id="btn-iniciar">Registrarse</a>
+    <a href="../usuario/iniciar.html" id="btn-registrar" onclick="guardarPaginaActual()">Iniciar Sesión</a>
 
-        <div class="perfil-dropdown" id="perfil-icono">
-            <img id="perfil-img" src="https://ui-avatars.com/api/?name=Usuario&background=FF9015&color=fff" alt="Usuario">
-            <div id="dropdown-menu" class="hidden">
-                <a href="verperfil.html">Ver perfil</a>
-                <a href="inicio.html" id="cerrar-sesion">Cerrar sesión</a>
-            </div>
+    <div class="perfil-dropdown" id="perfil-icono" style="display: none;">
+        <img id="perfil-img" src="../imagenes/perfill.png" alt="Usuario">
+        <div id="dropdown-menu" class="hidden">
+            <a href="../usuario/verperfil.html">Ver perfil</a>
+            <a href="#" id="cerrar-sesion">Cerrar sesión</a>
         </div>
-    </header>
+    </div>
+</div>
+
+</header>
 
     <nav id="nav">
-        <img id="logo" src="https://via.placeholder.com/150x90/3D4543/FFFFFF?text=Logo" alt="Logo">
-        <button id="menu-toggle" aria-label="Abrir menú">&#9776;</button>
-        <div id="menu">
-            <ul>
-                <li><a href="inicio.html" class="header-button">Inicio</a></li>
-                <li><a href="programas.html" class="header-button">Programas</a></li>
-                <li><a href="galeria.html" class="header-button">Galeria</a></li>
-                <li><a href="museo.html" class="header-button">Museo</a></li>
-                <li><a href="eventos.html" class="header-button">Eventos</a></li>
-                <li><a href="contacto.html" class="header-button">Contacto</a></li>
-            </ul>
-        </div>
-    </nav>
+    <img id="logo" src="../imagenes/logo1.png" alt="" width="50px" height="102px">
+    <button id="menu-toggle" aria-label="Abrir menú">&#9776;</button>
+    <div id="menu">
+        <ul>
+            <li><a href="../usuario/inicio.html">Inicio</a></li>
+            <li><a href="nuestra.html">Nuestra casa</a></li>
+            <li><a href="programas.html">Programas de formación</a></li>
+            <li><a href="galeria.html">Galeria</a></li>
+            <li><a href="museo1.html">Museo</a></li>
+            <li><a href="mapa.html">Mapa</a></li>
+            <li><a href="index.html">Infantil</a></li>
+        </ul>
+    </div>
+</nav>
 
-    <main>
+   <main>
+        <div class="gallery-header">
+            <h1>Galería de Álbumes</h1>
+            <p class="gallery-description">Explora los momentos más especiales de la Casa de la Cultura de Caldas a través de nuestra galería fotográfica.</p>
+        </div>
 
         <div id="albums-container">
             <div class="loading" id="loading">
@@ -80,19 +94,19 @@
         </div>
     </main>
 
-    <footer id="footer">
-        <div id="footer-container">
-            <div id="footer-logo">
-                <img src="https://via.placeholder.com/85x50/FF9015/000000?text=Logo" alt="Logo Casa de la Cultura" />
-            </div>
-            <div id="footer-divider"></div>
-            <div id="footer-info">
-                <p><strong>Instagram:</strong> @caldascultura</p>
-                <p><strong>Facebook:</strong> Casa de la Cultura Caldas Antioquia</p>
-                <p><strong>X:</strong> @culturacaldas</p>
-            </div>
-        </div>
-    </footer>
-    <script src="galeria.js"></script>
+<footer id="footer">
+<div id="footer-container">
+    <div id="footer-logo">
+    <img src="../imagenes/logo2.png" alt="Logo Casa de la Cultura" />
+    </div>
+    <div id="footer-divider"></div>
+    <div id="footer-info">
+    <p><strong>Instagram:</strong> @caldascultura</p>
+    <p><strong>Facebook:</strong> Casa de la Cultura Caldas Antioquia</p>
+    <p><strong>X:</strong> @culturacaldas</p>
+    </div>
+</div>
+</footer>
+<script src="galeria.js"></script>
 </body>
 </html>

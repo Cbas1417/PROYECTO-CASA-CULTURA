@@ -1,5 +1,22 @@
-// Variables del juego
-const simbolos = ['🎃', '👻', '🕷️', '🦇', '💀', '🕸️', '😱', '🧟'];
+// =============================
+// VARIABLES DEL JUEGO
+// =============================
+
+// Lista de personajes culturales
+const personajes = [
+    { simbolo: '🎃', imagen: '../imagenes/personaje1.png', descripcion: 'Este personaje representa la tradición cultural número 1.' },
+    { simbolo: '👻', imagen: '../imagenes/personaje2.png', descripcion: 'Figura cultural que simboliza la conexión con los ancestros.' },
+    { simbolo: '🕷️', imagen: '../imagenes/personaje3.png', descripcion: 'Este personaje hace referencia a la mitología popular.' },
+    { simbolo: '🦇', imagen: '../imagenes/personaje4.png', descripcion: 'Representa la fauna vinculada a las leyendas de la región.' },
+    { simbolo: '💀', imagen: '../imagenes/personaje5.png', descripcion: 'Símbolo muy usado en las festividades culturales.' },
+    { simbolo: '🕸️', imagen: '../imagenes/personaje6.png', descripcion: 'Personaje relacionado con historias de misterio.' },
+    { simbolo: '😱', imagen: '../imagenes/personaje7.png', descripcion: 'Un personaje que refleja emociones en la cultura popular.' },
+    { simbolo: '🧟', imagen: '../imagenes/personaje8.png', descripcion: 'Inspirado en relatos tradicionales de la comunidad.' }
+];
+
+// Usamos solo los símbolos para el tablero
+const simbolos = personajes.map(p => p.simbolo);
+
 let cartas = [];
 let cartasDestapadas = [];
 let aciertos = 0;
@@ -15,7 +32,9 @@ const sonidoMatch = new Audio('../imagenes/rv7w6pk4m1-game-sfx-2.mp3');
 const sonidoFail = new Audio('../sounds/rvf1r6ncd6-right-buzzer-sfx-3.mp3');
 const sonidoWin = new Audio('../imagenes/you-win-sequence-1-183948.mp3');
 
-// Inicializar el juego
+// =============================
+// INICIAR JUEGO
+// =============================
 function iniciarJuego() {
     cartas = [...simbolos, ...simbolos].sort(() => Math.random() - 0.5);
     cartasDestapadas = [];
@@ -33,7 +52,9 @@ function iniciarJuego() {
     clearInterval(temporizador);
 }
 
-// Destapar una carta
+// =============================
+// DESTAPAR CARTA
+// =============================
 function destapar(index) {
     if (bloqueo || cartasDestapadas.includes(index) || cartas[index] === null) return;
 
@@ -55,16 +76,22 @@ function destapar(index) {
     }
 }
 
-// Verificar si las cartas hacen par
+// =============================
+// VERIFICAR PAREJA
+// =============================
 function verificarPar() {
     const [primera, segunda] = cartasDestapadas;
 
     if (cartas[primera] === cartas[segunda]) {
+        const simbolo = cartas[primera];
         cartas[primera] = null;
         cartas[segunda] = null;
         aciertos++;
         actualizarAciertos();
         sonidoMatch.play();
+
+        // Mostrar modal del personaje
+        mostrarModalPersonaje(simbolo);
 
         if (aciertos === simbolos.length) {
             sonidoWin.play();
@@ -82,7 +109,9 @@ function verificarPar() {
     setTimeout(desbloquearJuego, 1000);
 }
 
-// Actualizar estadísticas
+// =============================
+// ACTUALIZAR ESTADÍSTICAS
+// =============================
 function actualizarEstadisticas() {
     actualizarAciertos();
     actualizarTemporizador();
@@ -124,7 +153,68 @@ function finDelJuego(victoria) {
 
 document.addEventListener('DOMContentLoaded', iniciarJuego);
 
-/*menu adaptable */
+// =============================
+// MODAL DE PERSONAJES
+// =============================
+function mostrarModalPersonaje(simbolo) {
+    const personaje = personajes.find(p => p.simbolo === simbolo);
+    if (!personaje) return;
+
+    // Crear modal dinámico
+    const modal = document.createElement('div');
+    modal.style.position = 'fixed';
+    modal.style.top = '0';
+    modal.style.left = '0';
+    modal.style.width = '100%';
+    modal.style.height = '100%';
+    modal.style.background = 'rgba(0,0,0,0.6)';
+    modal.style.display = 'flex';
+    modal.style.justifyContent = 'center';
+    modal.style.alignItems = 'center';
+    modal.style.zIndex = '2000';
+
+    const contenido = document.createElement('div');
+    contenido.style.background = '#fff';
+    contenido.style.padding = '20px';
+    contenido.style.borderRadius = '15px';
+    contenido.style.width = '300px';
+    contenido.style.textAlign = 'center';
+    contenido.style.boxShadow = '0 8px 16px rgba(0,0,0,0.3)';
+
+    const img = document.createElement('img');
+    img.src = personaje.imagen;
+    img.alt = 'Personaje';
+    img.style.maxWidth = '150px';
+    img.style.marginBottom = '15px';
+
+    const texto = document.createElement('p');
+    texto.textContent = personaje.descripcion;
+
+    const btnCerrar = document.createElement('button');
+    btnCerrar.textContent = 'Cerrar';
+    btnCerrar.style.marginTop = '15px';
+    btnCerrar.style.padding = '10px 20px';
+    btnCerrar.style.border = 'none';
+    btnCerrar.style.borderRadius = '10px';
+    btnCerrar.style.cursor = 'pointer';
+    btnCerrar.style.backgroundColor = '#ff7043';
+    btnCerrar.style.color = 'white';
+    btnCerrar.style.fontSize = '16px';
+
+    btnCerrar.addEventListener('click', () => {
+        document.body.removeChild(modal);
+    });
+
+    contenido.appendChild(img);
+    contenido.appendChild(texto);
+    contenido.appendChild(btnCerrar);
+    modal.appendChild(contenido);
+    document.body.appendChild(modal);
+}
+
+// =============================
+// MENÚ ADAPTABLE
+// =============================
 const menuToggle = document.getElementById('menu-toggle');
 const menu = document.getElementById('menu');
 if (menuToggle) {
@@ -133,7 +223,9 @@ if (menuToggle) {
     });
 }
 
-//logueo
+// =============================
+// LOGIN
+// =============================
 document.addEventListener("DOMContentLoaded", () => {
     const btnIniciar = document.getElementById("btn-iniciar");
     const btnRegistrar = document.getElementById("btn-registrar");
@@ -183,7 +275,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// Botón para reiniciar el juego manualmente
+// =============================
+// REINICIAR JUEGO
+// =============================
 const reiniciarBtn = document.getElementById('reiniciar-btn');
 if (reiniciarBtn) {
     reiniciarBtn.addEventListener('click', () => {
@@ -191,7 +285,9 @@ if (reiniciarBtn) {
     });
 }
 
-// Reemplazar alert con modal simple para mensajes de fin de juego
+// =============================
+// MODAL DE FIN DE JUEGO
+// =============================
 function mostrarMensajeFin(victoria) {
     const mensaje = document.createElement('div');
     mensaje.style.position = 'fixed';
@@ -228,10 +324,6 @@ function mostrarMensajeFin(victoria) {
     btnCerrar.style.fontWeight = '200';
     btnCerrar.style.color = '#4e342e';
     btnCerrar.style.fontSize = "22px";
-    btnCerrar.style.listStyle = 'none';
-    btnCerrar.style.textAlign = 'center';
-    btnCerrar.style.display = 'inline-block';
-    btnCerrar.style.lineHeight = '1.3';
 
     btnCerrar.addEventListener('click', () => {
         document.body.removeChild(mensaje);
@@ -242,7 +334,9 @@ function mostrarMensajeFin(victoria) {
     document.body.appendChild(mensaje);
 }
 
-// Botón para subir
+// =============================
+// BOTÓN SUBIR
+// =============================
 const btnSubire = document.getElementById('btnSubire');
 if (btnSubire) {
     window.addEventListener('scroll', () => {
