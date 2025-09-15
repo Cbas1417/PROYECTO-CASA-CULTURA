@@ -76,8 +76,9 @@ async function renderPhotos(albumId) {
   photosDiv.innerHTML = "<div class='loading'><i class='fas fa-spinner fa-spin'></i><p>Cargando fotos...</p></div>";
 
   try {
-    const res = await axios.get(`${API_BASE}/fotos/`);
-    const fotos = res.data.data.filter(f => f.album == albumId);
+    // 🔹 Traer solo las fotos del álbum actual
+    const res = await axios.get(`${API_BASE}/fotos/?album=${albumId}`);
+    const fotos = res.data.data || [];
 
     if (fotos.length === 0) {
       photosDiv.innerHTML = `
@@ -259,13 +260,12 @@ window.deleteAlbum = function (id) {
 
 // ---- Subir fotos ----
 document.getElementById("add-photo").addEventListener("change", async (e) => {
-  // Prevenir el comportamiento por defecto que recarga la página
   e.preventDefault();
   e.stopPropagation();
 
   const files = Array.from(e.target.files || []);
   if (files.length > 0 && currentAlbum !== null) {
-    // Mostrar indicador de carga
+    // Modal de progreso
     const progressModal = document.createElement("div");
     progressModal.className = "modal";
     progressModal.innerHTML = `
@@ -278,10 +278,10 @@ document.getElementById("add-photo").addEventListener("change", async (e) => {
       </div>
     `;
     document.body.appendChild(progressModal);
-    
+
     let uploaded = 0;
     let errors = 0;
-    
+
     for (const file of files) {
       const formData = new FormData();
       formData.append("album", currentAlbum);
@@ -293,34 +293,38 @@ document.getElementById("add-photo").addEventListener("change", async (e) => {
         });
         uploaded++;
       } catch (err) {
-        console.error("Error subiendo foto:", err);
         errors++;
+        if (err.response) {
+          console.error("❌ Error subiendo foto:", err.response.data);
+          alert("Error del servidor: " + JSON.stringify(err.response.data));
+        } else {
+          console.error("❌ Error subiendo foto:", err);
+          alert("Error desconocido al subir la foto.");
+        }
       }
-      
+
       // Actualizar progreso
       const progress = ((uploaded + errors) / files.length) * 100;
       const progressBar = document.getElementById("progress-bar");
       const message = document.querySelector("#modal-message");
-      
+
       if (progressBar) progressBar.style.width = `${progress}%`;
       if (message) message.textContent = `Procesando ${uploaded + errors} de ${files.length} imágenes...`;
     }
-    
-    // Cerrar modal de progreso
+
+    // Cerrar modal
     document.body.removeChild(progressModal);
-    
-    // Mostrar mensaje de resultado
+
+    // Resultado final
     if (errors > 0) {
       alert(`Se subieron ${uploaded} de ${files.length} imágenes. ${errors} fallaron.`);
-    } else {
-      alert(`¡Todas las ${uploaded} imágenes se subieron correctamente!`);
     }
-    
-    // Recargar las fotos
+
+    // Recargar fotos
     renderPhotos(currentAlbum);
   }
 
-  // Resetear input para permitir subir la misma foto otra vez
+  // Resetear input
   e.target.value = "";
 });
 
