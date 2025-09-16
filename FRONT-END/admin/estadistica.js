@@ -165,3 +165,34 @@ buscador.addEventListener("input", (e) => {
 document.addEventListener("DOMContentLoaded", () => {
   cargarExposiciones();
 });
+
+
+// ======================
+// Mostrar icono de perfil si hay sesión
+// ======================
+document.addEventListener("DOMContentLoaded", () => {
+  cargarExposiciones();
+
+  const perfilIcono = document.getElementById("perfil-icono");
+  const dropdownMenu = document.getElementById("dropdown-menu");
+  const cerrarSesion = document.getElementById("cerrar-sesion");
+
+  // Ejemplo: si guardas el token en localStorage
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    perfilIcono.style.display = "inline-block";
+  }
+
+  // Abrir/cerrar el menú
+  perfilIcono.addEventListener("click", () => {
+    dropdownMenu.classList.toggle("hidden");
+  });
+
+  // Cerrar sesión
+  cerrarSesion.addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    window.location.href = "../usuario/iniciar.html";
+  });
+});
