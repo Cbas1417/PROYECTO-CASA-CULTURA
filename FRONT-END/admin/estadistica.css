@@ -431,3 +431,10 @@ body {
             margin: 20px auto 0;
             line-height: 1.6;
         }
+
+.img-tabla {
+  width:80px;
+  height:80px;
+  object-fit:cover;
+  border-radius:8px;
+}
