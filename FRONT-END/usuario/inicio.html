@@ -85,38 +85,68 @@
     <span id="dot3" class="dot"></span>
   </div>
 </div>
+           <!-- Tarjetas con efecto de volteo para Misión y Visión -->
+            <section class="flip-cards-section">
+                <h2 class="section-title">Nuestra Esencia</h2>
+                <div class="flip-cards-container">
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="flip-card-icon">
+                                    <i class="fas fa-bullseye"></i>
+                                </div>
+                                <h3 class="flip-card-title">Misión</h3>
+                                <p class="flip-card-text">Haz clic para conocer nuestra misión</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="flip-card-icon">
+                                    <i class="fas fa-bullseye"></i>
+                                </div>
+                                <h3 class="flip-card-title">Misión</h3>
+                                <p class="flip-card-text">Promover los derechos culturales de los ciudadanos caldeños, y salvaguardar la identidad y el patrimonio del territorio, con un enfoque de sostenibilidad ambiental.</p>
+                            </div>
+                        </div>
+                    </div>
 
-<!-- Misión Section -->
-<section class="full-section mision-section">
-  <div class="section-content-container aparecer">
-    <div class="section-image">
-      <img src="../imagenes/Captura de pantalla 2025-05-16 150420.png" alt="Casa de la Cultura Caldas">
-    </div>
-    <div class="separator-line"></div>
-    <div class="section-text mision-text">
-      <h2>Misión</h2>
-      <p class="misiontxt">
-        Promover los derechos culturales de los ciudadanos caldeños, y salvaguardar la identidad y el patrimonio del territorio, con un enfoque de sostenibilidad ambiental, mediante la consolidación de espacios que fomenten la diversidad artística y cultural, y fortalezcan el tejido social de sus comunidades.
-      </p>
-    </div>
-  </div>
-</section>
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="flip-card-icon">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <h3 class="flip-card-title">Visión</h3>
+                                <p class="flip-card-text">Haz clic para conocer nuestra visión</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="flip-card-icon">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <h3 class="flip-card-title">Visión</h3>
+                                <p class="flip-card-text">Ser reconocida como institución líder en el Área Metropolitana en proyectos culturales que promuevan la cultura ciudadana y la protección del patrimonio.</p>
+                            </div>
+                        </div>
+                    </div>
 
-<!-- Visión Section -->
-<section class="full-section vision-section">
-  <div class="section-content-container aparecer">
-    <div class="section-text vision-text">
-      <h2>Visión</h2>
-      <p class="visiontxt">
-        La Casa Municipal de la Cultura de Caldas, Antioquia, se proyecta para 2034 como una institución reconocida por su liderazgo en el Área Metropolitana en proyectos culturales que promuevan la cultura ciudadana, la protección y conservación del patrimonio, la memoria histórica y la identidad local, la certificación de sus programas de formación, y la inclusión de las ruralidades, para democratizar el arte y la cultura, y generar valor agregado.
-      </p>
-    </div>
-    <div class="separator-line"></div>
-    <div class="section-image">
-      <img src="../imagenes/Captura de pantalla 2025-05-16 150620.png" alt="Reunión Casa de la Cultura">
-    </div>
-  </div>
-</section>
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="flip-card-icon">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <h3 class="flip-card-title">Valores</h3>
+                                <p class="flip-card-text">Haz clic para conocer nuestros valores</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="flip-card-icon">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <h3 class="flip-card-title">Valores</h3>
+                                <p class="flip-card-text">Compromiso con la comunidad, respeto por la diversidad cultural, innovación en la gestión cultural y sostenibilidad en todos nuestros proyectos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
 <!--contectenos y volver arriba-->
 <!-- <div class="botones-flotantes">
@@ -400,6 +430,15 @@ if (btnSubir) {
         });
     });
 }
+
+            // Efecto de sonido al voltear tarjetas (opcional)
+            const flipCards = document.querySelectorAll('.flip-card');
+            
+            flipCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // Podría añadirse un efecto de sonido aquí
+                });
+            });
 
 </script>
 

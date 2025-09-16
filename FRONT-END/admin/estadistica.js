@@ -48,9 +48,8 @@ function render(filtro = "") {
       ? expo.descripcion.slice(0, 100) + "..."
       : expo.descripcion;
 
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-  <td>${expo.imagen ? `<img src="http://127.0.0.1:8000${expo.imagen}" alt="${expo.titulo}" />` : "Sin imagen"}</td>
+const tr = document.createElement("tr");
+tr.innerHTML = `
   <td>${expo.imagen
         ? `<img class="img-tabla" src="http://127.0.0.1:8000${expo.imagen}" alt="${expo.titulo}">`
         : "Sin imagen"}</td>
@@ -58,10 +57,11 @@ function render(filtro = "") {
   <td>${expo.autor}</td>
   <td>${desc}</td>
   <td>${expo.video ? `<a href="${expo.video}" target="_blank">Ver video</a>` : "No disponible"}</td>
-  <td>
+  <td class="acciones">
     <button class="accion editar" onclick="editarExposicion(${expo.id})">Editar</button>
     <button class="accion eliminar" onclick="eliminarExposicion(${expo.id})">Eliminar</button>
   </td>`;
+
     tabla.appendChild(tr);
   });
 

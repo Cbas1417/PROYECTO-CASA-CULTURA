@@ -61,6 +61,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// Menú adaptable
+const menuToggle = document.getElementById('menu-toggle');
+const menu = document.getElementById('menu');
+if (menuToggle && menu) {
+    menuToggle.addEventListener('click', () => {
+        menu.classList.toggle('active');
+    });
+}
+
 
  document.addEventListener("DOMContentLoaded", () => {
     const btnIniciar = document.getElementById("btn-iniciar");

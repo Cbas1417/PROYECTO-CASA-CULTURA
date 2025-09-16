@@ -219,7 +219,6 @@ body {
 /* Footer */
 #footer {
     background: #FF9015;
-    border-top: 4px solid black;
     padding: 20px 0;
     color: black;
     width: 100%;
@@ -468,11 +467,12 @@ tbody td:nth-child(6) {
   width: 160px;
   text-align: center;
 }
-td {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+td.acciones {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
 }
+
 .table-section {
   overflow-x: auto;
 }

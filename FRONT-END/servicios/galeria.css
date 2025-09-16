@@ -193,7 +193,6 @@ body {
 /* Footer */
 #footer {
     background: #FF9015;
-    border-top: 4px solid black;
     padding: 20px 0;
     color: black;
     width: 100%;
@@ -540,124 +539,6 @@ body {
             font-size: 2rem;
             margin-bottom: 15px;
             color: #FF9015;
-        }
-        
-        /* Footer */
-        #footer {
-            background: #FF9015;
-            border-top: 4px solid black;
-            padding: 20px 0;
-            color: black;
-            width: 100%;
-            margin-top: auto;
-        }
-        
-        #footer-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            max-width: 1200px;
-            margin: 0 auto;
-            gap: 20px;
-            padding: 0 20px;
-        }
-        
-        #footer-logo img {
-            height: 85px;
-            width: auto;
-            display: block;
-        }
-        
-        #footer-divider {
-            width: 2px;
-            height: 60px;
-            background: black;
-            margin: 0 24px;
-        }
-        
-        #footer-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            min-width: 180px;
-        }
-        
-        #footer-info p {
-            margin: 0;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            #menu-toggle {
-                display: block;
-            }
-            
-            #menu {
-                display: none;
-                width: 100%;
-            }
-            
-            #menu.active {
-                display: block;
-            }
-            
-            #menu ul {
-                flex-direction: column;
-                width: 100%;
-            }
-            
-            #menu ul li {
-                width: 100%;
-            }
-            
-            #menu ul li a {
-                display: block;
-                width: 100%;
-            }
-            
-            .album-view-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .photos {
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .albums {
-                grid-template-columns: 1fr;
-            }
-            
-            .photos {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-            
-            #footer-container {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 16px;
-            }
-            
-            #footer-divider {
-                display: none;
-            }
-            
-            #footer-logo img {
-                margin-bottom: 12px;
-            }
-            
-            #footer-info {
-                margin-left: 0;
-                min-width: unset;
-            }
-            
-            .gallery-header h1 {
-                font-size: 2rem;
-            }
         }
         
         /* Animaciones */
