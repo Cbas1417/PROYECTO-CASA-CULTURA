@@ -350,11 +350,15 @@ body {
 
 /* Estilo específico de fondo para cada sección */
 .mision-section {
+  margin-top: 50px;
   background-color: rgba(255, 153, 0, 1); /* naranja claro */
 }
 
 .vision-section {
+  margin-top: 50px;
+  margin-bottom: 50px;
   background-color: rgba(100, 100, 100, 1); /* gris claro */
+
 
 }
 

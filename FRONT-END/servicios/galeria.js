@@ -99,7 +99,6 @@ function renderAlbums(albums) {
       <div class="album-info">
         <h3>${album.title}</h3>
         <p>${album.photos.length} foto(s)</p>
-        <p>Creado: ${new Date(album.createdAt).toLocaleDateString("es-ES")}</p>
       </div>`;
     el.addEventListener("click", () => openAlbum(album));
     albumsDiv.appendChild(el);
