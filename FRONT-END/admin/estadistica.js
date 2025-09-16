@@ -50,15 +50,15 @@ function render(filtro = "") {
 
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${expo.imagen ? `<img src="http://127.0.0.1:8000${expo.imagen}" alt="${expo.titulo}" width="80">` : "Sin imagen"}</td>
-      <td>${expo.titulo}</td>
-      <td>${expo.autor}</td>
-      <td>${desc}</td>
-      <td>${expo.video ? `<a href="${expo.video}" target="_blank">Ver video</a>` : "No disponible"}</td>
-      <td>
-        <button onclick="editarExposicion(${expo.id})">Editar</button>
-        <button onclick="eliminarExposicion(${expo.id})">Eliminar</button>
-      </td>`;
+  <td>${expo.imagen ? `<img src="http://127.0.0.1:8000${expo.imagen}" alt="${expo.titulo}" />` : "Sin imagen"}</td>
+  <td>${expo.titulo}</td>
+  <td>${expo.autor}</td>
+  <td>${desc}</td>
+  <td>${expo.video ? `<a href="${expo.video}" target="_blank">Ver video</a>` : "No disponible"}</td>
+  <td>
+    <button class="accion editar" onclick="editarExposicion(${expo.id})">Editar</button>
+    <button class="accion eliminar" onclick="eliminarExposicion(${expo.id})">Eliminar</button>
+  </td>`;
     tabla.appendChild(tr);
   });
 
