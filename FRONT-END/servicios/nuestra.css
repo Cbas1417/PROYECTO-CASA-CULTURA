@@ -250,12 +250,13 @@ margin-top: 20px;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(255, 144, 21, 0.8);
+  background-color: rgba(255, 144, 21, 0.50);
   padding: 10px;
   color: black;
   opacity: 0;
   transition: opacity 0.4s ease;
 }
+
 .timeline-item.active .timeline-content {
   opacity: 1;
 }
@@ -471,3 +472,69 @@ margin-top: 20px;
       background-color: #e27f10;
     }
 
+
+/* Historia de la Casa y de Caldas */
+.historia-content {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.historia-text {
+  flex: 1;
+  min-width: 300px;
+}
+
+.historia-text p {
+  margin-bottom: 20px;
+  line-height: 1.6;
+  text-align: justify;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.historia-image {
+  flex: 1;
+  min-width: 300px;
+}
+
+.historia-image img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+/* Secciones de contenido */
+.content-section {
+  padding: 60px 0;
+}
+
+.alt-section {
+  background-color: #f9f9f9;
+}
+
+.content-section h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #2c3e50;
+  position: relative;
+}
+
+.content-section h2:after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: #FF9015;
+  margin: 15px auto 0;
+}
+
+.section-description {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 40px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}

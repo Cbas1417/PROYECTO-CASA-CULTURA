@@ -3,19 +3,57 @@
 // =============================
 
 // Lista de personajes culturales
+// Personajes culturales de Caldas (Antioquia)
+// Personajes culturales de Caldas (Antioquia)
+
 const personajes = [
-    { simbolo: '🎃', imagen: '../imagenes/personaje1.png', descripcion: 'Este personaje representa la tradición cultural número 1.' },
-    { simbolo: '👻', imagen: '../imagenes/personaje2.png', descripcion: 'Figura cultural que simboliza la conexión con los ancestros.' },
-    { simbolo: '🕷️', imagen: '../imagenes/personaje3.png', descripcion: 'Este personaje hace referencia a la mitología popular.' },
-    { simbolo: '🦇', imagen: '../imagenes/personaje4.png', descripcion: 'Representa la fauna vinculada a las leyendas de la región.' },
-    { simbolo: '💀', imagen: '../imagenes/personaje5.png', descripcion: 'Símbolo muy usado en las festividades culturales.' },
-    { simbolo: '🕸️', imagen: '../imagenes/personaje6.png', descripcion: 'Personaje relacionado con historias de misterio.' },
-    { simbolo: '😱', imagen: '../imagenes/personaje7.png', descripcion: 'Un personaje que refleja emociones en la cultura popular.' },
-    { simbolo: '🧟', imagen: '../imagenes/personaje8.png', descripcion: 'Inspirado en relatos tradicionales de la comunidad.' }
+  { 
+    simbolo: '📖', 
+    imagen: '../imagenes/ciro_mendia.jpg', 
+    descripcion: 'Ciro Mendía (Carlos Edmundo Mejía Ángel, 1892). Poeta y dramaturgo caldense, autor de obras como “Caballito de siete colores” y “La Golondrina de cristal”. Considerado uno de los grandes exponentes de la poesía antioqueña.' 
+  },
+  { 
+    simbolo: '✍️', 
+    imagen: '../imagenes/marco-mejia-3.jpg', 
+    descripcion: 'Marco Antonio Mejía Torres (1956). Poeta, ensayista y realizador audiovisual caldense. Autor de “La Fragancia de la Identidad” y “Cuerno de Imagen”. Reconocido por su aporte al ensayo latinoamericano.' 
+  },
+  { 
+    simbolo: '📰', 
+    imagen: '../imagenes/Carlos mario correa soto.jpg', 
+    descripcion: 'Carlos Mario Correa Soto. Comunicador social y periodista caldense. Fue corresponsal de El Espectador en Medellín y ha trabajado en El Mundo y Caracol Radio, destacándose en periodismo investigativo.' 
+  },
+  { 
+    simbolo: '📚', 
+    imagen: '../imagenes/luis eduardo yepes.jpg', 
+    descripcion: 'Luis Eduardo Yepes. Historiador local de Caldas, dedicado a la preservación de la memoria histórica a través del Centro de Historia Tres Aguas.' 
+  },
+  { 
+    simbolo: '🎭', 
+    imagen: '../imagenes/ociel gartner.jpg', 
+    descripcion: 'Cruz Ociel Gärtner Restrepo. Poeta, escritor, educador y político nacido en Riosucio, Caldas (1940-2020). Conocido por su aporte literario y cultural al Carnaval de Riosucio.', 
+  },
+  { 
+    simbolo: '👥', 
+    imagen: '../imagenes/Alberto pino.jpg', 
+    descripcion: 'Alberto Pino Gil. Artista, muralista e ilustrador nacido en Salamina en 1918. Fundador de la Facultad de Arte de la Universidad de Caldas, dejó huella en la plástica regional.' 
+  },
+  { 
+    simbolo: '🌿', 
+    imagen: '../imagenes/blanca izasa.jpg', 
+    descripcion: 'Blanca Isaza de Jaramillo Meza. Poetisa que vivió gran parte de su vida en Manizales, vinculada a la literatura del Viejo Caldas. Reconocida editora y figura clave en la poesía regional.' 
+  },
+  { 
+    simbolo: '🎶', 
+    imagen: '../imagenes/_julian_bueno.png', 
+    descripcion: 'Julián Bueno Rodríguez. Folclorólogo e investigador caldense. Fundador de Danzas del Ingrumá en Riosucio, pionero en rescatar y difundir la danza tradicional en festivales nacionales e internacionales.' 
+  }
 ];
 
-// Usamos solo los símbolos para el tablero
+// =============================
+// Símbolos del tablero (solo usamos los íconos)
+// =============================
 const simbolos = personajes.map(p => p.simbolo);
+
 
 let cartas = [];
 let cartasDestapadas = [];
@@ -154,7 +192,7 @@ function finDelJuego(victoria) {
 document.addEventListener('DOMContentLoaded', iniciarJuego);
 
 // =============================
-// MODAL DE PERSONAJES
+// MODAL DE PERSONAJES (EPIC VERSION)
 // =============================
 function mostrarModalPersonaje(simbolo) {
     const personaje = personajes.find(p => p.simbolo === simbolo);
@@ -162,47 +200,58 @@ function mostrarModalPersonaje(simbolo) {
 
     // Crear modal dinámico
     const modal = document.createElement('div');
+    modal.classList.add('modal-epico');
     modal.style.position = 'fixed';
     modal.style.top = '0';
     modal.style.left = '0';
     modal.style.width = '100%';
     modal.style.height = '100%';
-    modal.style.background = 'rgba(0,0,0,0.6)';
     modal.style.display = 'flex';
     modal.style.justifyContent = 'center';
     modal.style.alignItems = 'center';
     modal.style.zIndex = '2000';
 
     const contenido = document.createElement('div');
+    contenido.classList.add('contenido-epico');
     contenido.style.background = '#fff';
     contenido.style.padding = '20px';
     contenido.style.borderRadius = '15px';
-    contenido.style.width = '300px';
+    contenido.style.width = '320px';
     contenido.style.textAlign = 'center';
-    contenido.style.boxShadow = '0 8px 16px rgba(0,0,0,0.3)';
+    contenido.style.boxShadow = '0 8px 30px rgba(0,0,0,0.5)';
 
     const img = document.createElement('img');
     img.src = personaje.imagen;
     img.alt = 'Personaje';
-    img.style.maxWidth = '150px';
+    img.style.maxWidth = '180px';
     img.style.marginBottom = '15px';
+    img.style.borderRadius = '12px';
+    img.style.boxShadow = '0 6px 12px rgba(0,0,0,0.2)';
 
     const texto = document.createElement('p');
     texto.textContent = personaje.descripcion;
+    texto.style.fontSize = "1.05rem";
+    texto.style.marginBottom = "15px";
 
     const btnCerrar = document.createElement('button');
     btnCerrar.textContent = 'Cerrar';
-    btnCerrar.style.marginTop = '15px';
-    btnCerrar.style.padding = '10px 20px';
+    btnCerrar.style.marginTop = '10px';
+    btnCerrar.style.padding = '12px 10px';
     btnCerrar.style.border = 'none';
     btnCerrar.style.borderRadius = '10px';
     btnCerrar.style.cursor = 'pointer';
     btnCerrar.style.backgroundColor = '#ff7043';
     btnCerrar.style.color = 'white';
     btnCerrar.style.fontSize = '16px';
+    btnCerrar.style.transition = "transform 0.2s";
+    btnCerrar.onmouseover = () => btnCerrar.style.transform = "scale(1.1)";
+    btnCerrar.onmouseout = () => btnCerrar.style.transform = "scale(1)";
 
+    // Cierre con animación
     btnCerrar.addEventListener('click', () => {
-        document.body.removeChild(modal);
+        modal.classList.remove('modal-epico');
+        modal.classList.add('modal-epico-out');
+        setTimeout(() => document.body.removeChild(modal), 400);
     });
 
     contenido.appendChild(img);
@@ -211,6 +260,7 @@ function mostrarModalPersonaje(simbolo) {
     modal.appendChild(contenido);
     document.body.appendChild(modal);
 }
+
 
 // =============================
 // MENÚ ADAPTABLE
@@ -315,7 +365,7 @@ function mostrarMensajeFin(victoria) {
     const btnCerrar = document.createElement('button');
     btnCerrar.textContent = 'Cerrar';
     btnCerrar.style.marginTop = '20px';
-    btnCerrar.style.padding = '10px 10px';
+    btnCerrar.style.padding = '12px 30px';
     btnCerrar.style.border = 'none';
     btnCerrar.style.width = '150px';
     btnCerrar.style.borderRadius = '10px';
