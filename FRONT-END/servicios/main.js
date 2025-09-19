@@ -198,7 +198,9 @@ function mostrarModalPersonaje(simbolo) {
     const personaje = personajes.find(p => p.simbolo === simbolo);
     if (!personaje) return;
 
-    // Crear modal dinámico
+    // ⏸ Pausar temporizador
+    clearInterval(temporizador);
+
     const modal = document.createElement('div');
     modal.classList.add('modal-epico');
     modal.style.position = 'fixed';
@@ -247,11 +249,16 @@ function mostrarModalPersonaje(simbolo) {
     btnCerrar.onmouseover = () => btnCerrar.style.transform = "scale(1.1)";
     btnCerrar.onmouseout = () => btnCerrar.style.transform = "scale(1)";
 
-    // Cierre con animación
+    // ▶️ Reanudar temporizador al cerrar
     btnCerrar.addEventListener('click', () => {
         modal.classList.remove('modal-epico');
         modal.classList.add('modal-epico-out');
-        setTimeout(() => document.body.removeChild(modal), 400);
+        setTimeout(() => {
+            document.body.removeChild(modal);
+
+            // Volver a iniciar el intervalo
+            temporizador = setInterval(actualizarTemporizador, 1000);
+        }, 400);
     });
 
     contenido.appendChild(img);
@@ -260,6 +267,7 @@ function mostrarModalPersonaje(simbolo) {
     modal.appendChild(contenido);
     document.body.appendChild(modal);
 }
+
 
 
 // =============================
@@ -404,3 +412,4 @@ if (btnSubire) {
         });
     });
 }
+
