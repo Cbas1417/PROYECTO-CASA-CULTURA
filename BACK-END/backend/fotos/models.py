@@ -5,7 +5,7 @@ from albumes.models import Album
 # Create your models here.
 
 class Fotos(models.Model):
-    album =  models.ForeignKey(Album, on_delete=models.CASCADE, null=False, blank=False)
+    album =  models.ForeignKey(Album, on_delete=models.CASCADE, null=False, blank=False, related_name="fotos")
     imagen = models.ImageField(upload_to='fotos_galeria/', null=False, blank=False)
 
     class Meta:
