@@ -74,6 +74,8 @@
                 <tr>
                     <th>Programa</th>
                     <th>Contacto</th>
+                    <th>Nombre</th>
+                    <th>Edad</th>
                     <th>Fecha de inscripción</th>
                 </tr>
             </thead>
@@ -170,6 +172,9 @@
     <div id="form-inscripcion" style="display: none;">
         <label for="contacto-inscripcion">¿Dónde deseas recibir la información del programa?</label>
         <input type="text" id="contacto-inscripcion" placeholder="Correo electrónico o dirección">
+        <input type="text" id="nombre-inscripcion" placeholder="Nombre del asistente">
+        <input type="text" id="edad-inscripcion" placeholder="Edad">
+
         <button id="btn-inscribirse" class="btn-primary">Confirmar inscripción</button>
     </div>
 
@@ -186,6 +191,7 @@
   </div>
 </div>
 <!-- Modal para "ya inscrito" -->
+
 <div id="modalYaInscrito" class="modal">
   <div class="modal-content">
     <span class="close" id="closeYaInscrito">&times;</span>

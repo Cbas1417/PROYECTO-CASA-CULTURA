@@ -99,11 +99,13 @@ async function renderPhotos(albumId) {
       const img = document.createElement("img");
       img.src = foto.imagen;
       img.alt = `Foto ${foto.id}`;
+      img.onclick = () => openLightbox(foto.imagen);
 
       const delBtn = document.createElement("button");
       delBtn.classList.add("delete-photo-btn");
       delBtn.innerHTML = "<i class='fas fa-times'></i>";
-      delBtn.onclick = () => {
+      delBtn.onclick = (e) => {
+        e.stopPropagation(); // Evitar que se active el lightbox
         openModal({
           title: "Eliminar foto",
           message: "¿Seguro que deseas eliminar esta foto?",
@@ -132,6 +134,50 @@ async function renderPhotos(albumId) {
         <p>Intenta nuevamente más tarde.</p>
       </div>`;
   }
+}
+
+// ---- Lightbox para ver fotos en grande ----
+function openLightbox(imageSrc) {
+  const lightbox = document.createElement("div");
+  lightbox.id = "lightbox";
+  lightbox.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    cursor: pointer;
+  `;
+  
+  const img = document.createElement("img");
+  img.src = imageSrc;
+  img.style.cssText = `
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 4px;
+  `;
+  
+  lightbox.appendChild(img);
+  document.body.appendChild(lightbox);
+  
+  // Cerrar al hacer clic
+  lightbox.addEventListener("click", () => {
+    document.body.removeChild(lightbox);
+  });
+  
+  // Cerrar con tecla Escape
+  document.addEventListener("keydown", function closeOnEscape(e) {
+    if (e.key === "Escape") {
+      document.body.removeChild(lightbox);
+      document.removeEventListener("keydown", closeOnEscape);
+    }
+  });
 }
 
 // ---- Modal genérico ----
@@ -196,18 +242,12 @@ window.openAlbum = function (id) {
   const album = albums.find(a => a.id === id);
   if (!album) return;
   
-  openModal({
-    title: "Abrir álbum",
-    message: `¿Quieres entrar al álbum <b>${album.titulo}</b>?`,
-    action: () => {
-      currentAlbum = id;
-      albumsDiv.parentElement.classList.add("hidden");
-      albumView.classList.remove("hidden");
-      document.getElementById("crear-album").classList.add("hidden");
-      albumTitle.textContent = album.titulo;
-      renderPhotos(id);
-    }
-  });
+  currentAlbum = id;
+  albumsDiv.parentElement.classList.add("hidden");
+  albumView.classList.remove("hidden");
+  document.getElementById("crear-album").classList.add("hidden");
+  albumTitle.textContent = album.titulo;
+  renderPhotos(id);
 };
 
 // ---- Volver a álbumes ----
@@ -248,8 +288,11 @@ window.deleteAlbum = function (id) {
       try {
         await axios.delete(`${API_BASE}/album/${id}/`);
         fetchAlbums();
-        albumView.classList.add("hidden");
-        albumsDiv.parentElement.classList.remove("hidden");
+        // Si estamos viendo este álbum, volver a la vista principal
+        if (currentAlbum === id) {
+          albumView.classList.add("hidden");
+          albumsDiv.parentElement.classList.remove("hidden");
+        }
       } catch (err) {
         console.error("Error eliminando álbum:", err);
         showError("No se pudo eliminar el álbum.");
@@ -275,9 +318,15 @@ document.getElementById("add-photo").addEventListener("change", async (e) => {
         <div style="background: #f0f0f0; border-radius: 8px; height: 20px; margin: 20px 0;">
           <div id="progress-bar" style="background: linear-gradient(135deg, #FF9015, #FF7020); height: 100%; width: 0%; border-radius: 8px; transition: width 0.3s ease;"></div>
         </div>
+        <button id="close-progress" style="margin-top: 15px; padding: 8px 16px; background: #3D4543; color: white; border: none; border-radius: 6px; cursor: pointer;">Cerrar</button>
       </div>
     `;
     document.body.appendChild(progressModal);
+    
+    // Botón para cerrar el modal manualmente
+    document.getElementById("close-progress").addEventListener("click", () => {
+      document.body.removeChild(progressModal);
+    });
 
     let uploaded = 0;
     let errors = 0;
@@ -294,13 +343,7 @@ document.getElementById("add-photo").addEventListener("change", async (e) => {
         uploaded++;
       } catch (err) {
         errors++;
-        if (err.response) {
-          console.error("❌ Error subiendo foto:", err.response.data);
-          alert("Error del servidor: " + JSON.stringify(err.response.data));
-        } else {
-          console.error("❌ Error subiendo foto:", err);
-          alert("Error desconocido al subir la foto.");
-        }
+        console.error("❌ Error subiendo foto:", err);
       }
 
       // Actualizar progreso
@@ -312,16 +355,25 @@ document.getElementById("add-photo").addEventListener("change", async (e) => {
       if (message) message.textContent = `Procesando ${uploaded + errors} de ${files.length} imágenes...`;
     }
 
-    // Cerrar modal
-    document.body.removeChild(progressModal);
-
-    // Resultado final
-    if (errors > 0) {
-      alert(`Se subieron ${uploaded} de ${files.length} imágenes. ${errors} fallaron.`);
+    // Actualizar mensaje final
+    const message = document.querySelector("#modal-message");
+    if (message) {
+      if (errors === 0) {
+        message.textContent = `¡Éxito! Se subieron todas las ${uploaded} imágenes.`;
+      } else {
+        message.textContent = `Se subieron ${uploaded} de ${files.length} imágenes. ${errors} fallaron.`;
+      }
     }
 
-    // Recargar fotos
-    renderPhotos(currentAlbum);
+    // Cambiar el botón a "Continuar"
+    const closeBtn = document.getElementById("close-progress");
+    closeBtn.textContent = "Continuar";
+    closeBtn.style.background = "#FF9015";
+    
+    // Recargar fotos después de subir
+    await renderPhotos(currentAlbum);
+    
+    // No cerramos automáticamente, el usuario decide cuándo continuar
   }
 
   // Resetear input
@@ -367,11 +419,27 @@ document.addEventListener("DOMContentLoaded", function () {
 // Capturar todos los errores no manejados
 window.addEventListener('error', function(e) {
   console.error('Error capturado:', e.error);
-  alert('Error: ' + e.error.message);
 });
 
 // También capturar promesas rechazadas no manejadas
 window.addEventListener('unhandledrejection', function(e) {
   console.error('Promesa rechazada:', e.reason);
-  alert('Error de promesa: ' + e.reason);
+});
+
+
+function openModal(src) {
+    console.log('Abriendo modal con', src);  // aquí SÍ existe src
+    modalImage.src = src;
+    imageModal.classList.remove("hidden");
+}
+
+
+modalClose.addEventListener("click", () => {
+    imageModal.classList.add("hidden");
+});
+
+imageModal.addEventListener("click", (e) => {
+    if (e.target === imageModal) {
+        imageModal.classList.add("hidden");
+    }
 });

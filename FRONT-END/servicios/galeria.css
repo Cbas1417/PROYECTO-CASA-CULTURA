@@ -268,21 +268,19 @@ body {
     }
 }
 
-
-        /* Main Content */
+        /* Main content */
         main {
-            flex: 1;
-            padding: 30px 20px;
             max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
+            margin: 30px auto;
+            padding: 0 20px;
+            min-height: 60vh;
         }
-        
+
         .gallery-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
-        
+
         .gallery-header h1 {
             color: #3D4543;
             font-size: 2.5rem;
@@ -290,7 +288,7 @@ body {
             position: relative;
             display: inline-block;
         }
-        
+
         .gallery-header h1:after {
             content: '';
             position: absolute;
@@ -299,10 +297,10 @@ body {
             transform: translateX(-50%);
             width: 100px;
             height: 4px;
-            background: linear-gradient(90deg, #FF9015, #FF4D4D);
+            background: #FF9015;
             border-radius: 2px;
         }
-        
+
         .gallery-description {
             color: #666;
             font-size: 1.1rem;
@@ -310,31 +308,31 @@ body {
             margin: 20px auto 0;
             line-height: 1.6;
         }
-        
+
         /* Álbumes */
         .albums {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
-            padding: 10px;
+            margin-top: 20px;
         }
-        
+
         .album {
             background: white;
-            border-radius: 16px;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
         }
-        
+
         .album:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
-        
+
         .album-thumbnail {
-            height: 180px;
+            height: 200px;
             overflow: hidden;
             position: relative;
             background: #f0f0f0;
@@ -342,46 +340,37 @@ body {
             align-items: center;
             justify-content: center;
         }
-        
-        .album-thumbnail i {
-            font-size: 3rem;
-            color: #ccc;
-        }
-        
+
         .album-thumbnail img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
         }
-        
+
         .album:hover .album-thumbnail img {
             transform: scale(1.05);
         }
-        
+
         .album-info {
             padding: 20px;
             text-align: center;
         }
-        
+
         .album-info h3 {
-            margin: 0 0 10px 0;
+            margin-bottom: 10px;
             color: #3D4543;
-            font-size: 1.2rem;
-            font-weight: 600;
         }
-        
+
         .album-info p {
             color: #666;
-            margin: 5px 0;
         }
-        
+
         /* Vista de álbum */
         #album-view {
-            margin: 30px 0;
-            padding: 0;
+            margin-top: 30px;
         }
-        
+
         .album-view-header {
             display: flex;
             justify-content: space-between;
@@ -390,15 +379,13 @@ body {
             flex-wrap: wrap;
             gap: 15px;
         }
-        
+
         #album-title {
             color: #3D4543;
-            font-size: 2rem;
-            margin: 0;
+            font-size: 1.8rem;
             position: relative;
-            display: inline-block;
         }
-        
+
         #album-title:after {
             content: '';
             position: absolute;
@@ -409,146 +396,164 @@ body {
             background: #FF9015;
             border-radius: 2px;
         }
-        
+
         #volver {
             padding: 10px 20px;
-            background: #f0f0f0;
-            color: #333;
+            background: #3D4543;
+            color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 500;
+            transition: background 0.3s;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        
+
         #volver:hover {
-            background: #e0e0e0;
-            transform: translateY(-2px);
+            background: #2a312f;
         }
-        
-        /* Fotos del álbum */
+
+        /* Fotos */
         .photos {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
-            margin-top: 20px;
         }
-        
+
         .photo-item {
-            position: relative;
-            border-radius: 12px;
+            border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            aspect-ratio: 4/3;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
+
         .photo-item:hover {
-            transform: translateY(-5px);
+            transform: scale(1.03);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
-        
+
         .photo-item img {
             width: 100%;
-            height: 100%;
+            height: 200px;
             object-fit: cover;
             display: block;
         }
-        
+
         /* Modal para imagen ampliada */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            backdrop-filter: blur(5px);
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content img {
+    max-width: 100%;
+    max-height: 85vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.4);  /* Fondo oscuro */
+    color: #fff;                     /* X blanca */
+    font-size: 1.8rem;               /* Tamaño de la X */
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s;
+    z-index: 1100;
+}
+
+.modal-close:hover {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+
+.galery-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+}
+
+
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
         }
-        
-        .modal-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
+
+        .loading i {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #FF9015;
         }
-        
-        .modal-content img {
-            max-width: 100%;
-            max-height: 80vh;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-        
-        .modal-close {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-        
-        /* Estados vacíos */
+
         .empty-state {
             text-align: center;
             padding: 60px 20px;
             color: #999;
             grid-column: 1 / -1;
         }
-        
+
         .empty-state i {
             font-size: 4rem;
             color: #e0e0e0;
             margin-bottom: 20px;
         }
-        
+
         .empty-state h3 {
             color: #888;
             margin-bottom: 10px;
-            font-weight: 500;
         }
-        
-        .empty-state p {
-            color: #aaa;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 60px 20px;
-            color: #666;
-        }
-        
-        .loading i {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            color: #FF9015;
-        }
-        
-        /* Animaciones */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .album, .photo-item {
-            animation: fadeIn 0.4s ease-out;
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            
+            .albums, .photos {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .album-view-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
 
 /*logueo */
@@ -610,7 +615,4 @@ body {
     left: auto;
     min-width: 140px;
 }
-}
-.hidden {
-  display: none;
 }
