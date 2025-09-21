@@ -41,10 +41,11 @@ function renderAlbums() {
   if (albums.length === 0) {
     albumsDiv.innerHTML = `
       <div class="empty-state">
-        <i class="fas fa-images"></i>
-        <h3>No hay álbumes creados</h3>
-        <p>Crea tu primer álbum para comenzar a organizar tus fotos.</p>
-      </div>`;
+        <i class="fas fa-folder-open"></i>
+        <h3>No hay álbumes aún</h3>
+        <p>Crea uno con el botón "Nuevo álbum".</p>
+      </div>
+    `;
     return;
   }
 
@@ -52,15 +53,16 @@ function renderAlbums() {
     const item = document.createElement("div");
     item.classList.add("album");
 
-    const thumbnail = album.fotos && album.fotos.length > 0
-      ? `<img src="${album.fotos[0].imagen}" alt="${album.titulo}">`
-      : `<i class="fas fa-image"></i>`;
+    // 🔹 Portada: primera foto (desde backend) o imagen por defecto
+    const thumbnail = album.portada
+      ? `<img src="${album.portada}" alt="Portada del álbum ${album.titulo}" class="album-preview">`
+      : `<img src="img/default.jpg" alt="Sin fotos" class="album-preview">`;
 
     item.innerHTML = `
       <div class="album-thumbnail">${thumbnail}</div>
       <div class="album-info">
         <h3>${album.titulo}</h3>
-        <p class="photo-count">${album.fotos ? album.fotos.length : 0} foto(s)</p>
+        <p class="photo-count">${album.total_fotos || 0} foto(s)</p>
         <div class="album-actions">
           <button onclick="openAlbum(${album.id})"><i class="fas fa-folder-open"></i> Abrir</button>
           <button onclick="editAlbum(${album.id}, '${album.titulo.replace(/'/g, "\\'")}')"><i class="fas fa-edit"></i> Editar</button>
