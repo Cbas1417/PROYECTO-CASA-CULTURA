@@ -126,23 +126,32 @@ function crearGalleryItem({ titulo, autor, descripcion, video, imagen }) {
 axios.get("http://127.0.0.1:8000/api/v1/exposiciones/")
   .then(res => {
     const exposiciones = res.data.data;
+
     exposiciones.forEach(expo => {
+      // Asegurar que la URL sea absoluta
+      let imagenUrl = "../imagenes/default.png";
+      if (expo.imagen) {
+        if (expo.imagen.startsWith("http")) {
+          imagenUrl = expo.imagen; // ya es absoluta
+        } else {
+          imagenUrl = `http://127.0.0.1:8000${expo.imagen}`;
+        }
+      }
+
       crearGalleryItem({
         titulo: expo.titulo || "",
         autor: expo.autor || "",
         descripcion: expo.descripcion || "",
         video: expo.video || "",
-        imagen: expo.imagen ? `http://127.0.0.1:8000${expo.imagen}` : "../imagenes/default.png"
+        imagen: imagenUrl
       });
     });
 
-    // Inicializar modal después de cargar las exposiciones
     inicializarModal();
   })
   .catch(err => {
     console.error("Error al cargar exposiciones:", err);
   });
-
 // =============================
 // MODAL
 // =============================

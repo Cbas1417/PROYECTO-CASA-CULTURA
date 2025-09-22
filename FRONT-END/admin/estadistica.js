@@ -50,9 +50,11 @@ function render(filtro = "") {
 
 const tr = document.createElement("tr");
 tr.innerHTML = `
-  <td>${expo.imagen
-        ? `<img class="img-tabla" src="http://127.0.0.1:8000${expo.imagen}" alt="${expo.titulo}">`
-        : "Sin imagen"}</td>
+  <td>${
+    expo.imagen
+      ? `<img class="img-tabla" src="${expo.imagen.startsWith('http') ? expo.imagen : 'http://127.0.0.1:8000' + expo.imagen}" alt="${expo.titulo}">`
+      : "Sin imagen"
+  }</td>
   <td>${expo.titulo}</td>
   <td>${expo.autor}</td>
   <td>${desc}</td>
