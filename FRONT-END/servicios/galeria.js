@@ -92,30 +92,6 @@ function loadAlbums() {
 // Ejecutar cuando cargue la página
 document.addEventListener("DOMContentLoaded", loadAlbums);
 
-function loadAlbums() {
-  axios.get("http://127.0.0.1:8000/api/v1/album/")
-    .then(response => {
-      console.log("📦 Datos del backend:", response.data);
-
-      const albums = Array.isArray(response.data) 
-        ? response.data 
-        : response.data.data;   // <- cambio aquí
-
-      renderAlbums(albums);     // <- cambio aquí
-    })
-    .catch(error => {
-      console.error("❌ Error al cargar álbumes:", error);
-
-      albumsDiv.innerHTML = `
-        <div class="error-state">
-          <h3>Error</h3>
-          <p>No se pudieron cargar los álbumes.</p>
-          <button onclick="loadAlbums()">Reintentar</button>
-        </div>
-      `;
-    });
-}
-
 function openAlbum(album) {
   currentAlbum = album;
   albumsContainer.classList.add("hidden");
