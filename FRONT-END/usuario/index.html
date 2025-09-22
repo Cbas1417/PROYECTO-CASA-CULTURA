@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio | Casa de la Cultura Caldas</title>
-    <link rel="stylesheet" href="inicio.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="icon" href="../imagenes/Captura de pantalla 2025-05-14 141000.png" type="image/png" style="width: 16px; height: 16px;">
 </head>
 <body id="contenedor">
@@ -54,13 +54,13 @@
     <button id="menu-toggle" aria-label="Abrir menú">&#9776;</button>
     <div id="menu">
         <ul>
-            <li><a href="inicio.html">Inicio</a></li>
+            <li><a href="index.html">Inicio</a></li>
             <li><a href="../servicios/nuestra.html">Nuestra casa</a></li>
             <li><a href="../servicios/programas.html">Programas de formación</a></li>
             <li><a href="../servicios/galeria.html">Galeria</a></li>
             <li><a href="../servicios/museo1.html">Museo</a></li>
             <li><a href="../servicios/mapa.html">Mapa</a></li>
-            <li><a href="../servicios/index.html">Infantil</a></li>
+            <li><a href="../servicios/infantil.html">Infantil</a></li>
         </ul>
     </div>
 </nav>
@@ -240,7 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cerrarSesion.addEventListener("click", (e) => {
       e.preventDefault();
       sessionStorage.removeItem("usuarioLogueado");
-      window.location.href = "inicio.html";
+      window.location.href = "index.html";
     });
   }
 
