@@ -258,3 +258,16 @@
       });
     }
   });
+
+  // ojito pa la contra
+document.querySelectorAll(".toggle-password").forEach(icon => {
+  icon.addEventListener("click", () => {
+    const targetId = icon.getAttribute("data-target");
+    const input = document.getElementById(targetId);
+    const type = input.getAttribute("type") === "password" ? "text" : "password";
+    input.setAttribute("type", type);
+    icon.classList.toggle("fa-eye");
+    icon.classList.toggle("fa-eye-slash");
+  });
+});
+

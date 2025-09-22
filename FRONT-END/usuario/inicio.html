@@ -341,18 +341,31 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   //parte admin
+// Parte admin: mostrar botón de "Volver al Admin" fijo en el header
 document.addEventListener("DOMContentLoaded", () => {
     const rol = localStorage.getItem("rol"); // Obtenemos el rol guardado
-
     const adminBotones = document.querySelectorAll(".admin-only");
+    const userActions = document.getElementById("user-actions");
 
-    if (rol !== "admin") {
-      // Si no es admin, ocultamos los botones
-      adminBotones.forEach(boton => {
-        boton.style.display = "none";
-      });
+    if (rol === "admin") {
+        // Crear botón dinámico para volver al admin
+        const volverAdmin = document.createElement("a");
+        volverAdmin.href = "../admin/dashboard.html"; // Ruta al panel admin
+        volverAdmin.textContent = "Volver al Administrador";
+        volverAdmin.classList.add("header-button", "btn-admin");
+
+        // Insertar el botón en el header (junto a iniciar/registrar/perfil)
+        if (userActions) {
+            userActions.appendChild(volverAdmin);
+        }
+    } else {
+        // Si no es admin, ocultamos todos los enlaces marcados con admin-only
+        adminBotones.forEach(boton => {
+            boton.style.display = "none";
+        });
     }
-  });
+});
+
 
 
 // //contectos y volver arriba

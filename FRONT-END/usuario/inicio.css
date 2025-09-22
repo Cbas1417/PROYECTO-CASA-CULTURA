@@ -787,3 +787,18 @@ body {
 .btn-subir {
   display: none;
 }
+
+.btn-admin {
+  background: #e63946;  /* rojo distintivo */
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  margin-left: 10px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.btn-admin:hover {
+  background: #c53030;
+}

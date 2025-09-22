@@ -196,3 +196,39 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "../usuario/iniciar.html";
   });
 });
+
+let idAEliminar = null;
+
+window.eliminarExposicion = (id) => {
+  idAEliminar = id;
+  document.getElementById("modalEliminar").classList.remove("hidden");
+};
+
+document.getElementById("cancelEliminar").addEventListener("click", () => {
+  idAEliminar = null;
+  document.getElementById("modalEliminar").classList.add("hidden");
+});
+
+document.getElementById("confirmEliminar").addEventListener("click", async () => {
+  if (!idAEliminar) return;
+  try {
+    await axios.delete(`${API_URL}${idAEliminar}/`);
+    cargarExposiciones();
+  } catch (error) {
+    console.error("Error eliminando obra:", error);
+    alert("No se pudo eliminar la obra.");
+  } finally {
+    idAEliminar = null;
+    document.getElementById("modalEliminar").classList.add("hidden");
+  }
+});
+
+// Menú adaptable
+const menuToggle = document.getElementById('menu-toggle');
+const menu = document.getElementById('menu');
+if (menuToggle && menu) {
+    menuToggle.addEventListener('click', () => {
+        menu.classList.toggle('active');
+    });
+}
+

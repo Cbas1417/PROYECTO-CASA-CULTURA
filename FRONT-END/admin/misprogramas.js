@@ -182,3 +182,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+let idAEliminar = null;
+
+function eliminarInscripcion(id) {
+  idAEliminar = id;
+  const modal = document.getElementById('modal-eliminar');
+  modal.classList.remove('hidden');
+}
+
+document.getElementById('cancelar-btn').addEventListener('click', () => {
+  document.getElementById('modal-eliminar').classList.add('hidden');
+  idAEliminar = null;
+});
+
+document.getElementById('confirmar-btn').addEventListener('click', () => {
+  if (idAEliminar !== null) {
+    const btn = document.querySelector(`button[onclick="eliminarInscripcion(${idAEliminar})"]`);
+    if (btn) {
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Eliminando...';
+      btn.disabled = true;
+    }
+
+    setTimeout(() => {
+      let inscripciones = JSON.parse(localStorage.getItem('inscripciones')) || [];
+      inscripciones = inscripciones.filter(insc => insc.id !== idAEliminar);
+      localStorage.setItem('inscripciones', JSON.stringify(inscripciones));
+      mostrarMensaje('Inscripción eliminada correctamente', 'success');
+      cargarInscripciones();
+      document.getElementById('modal-eliminar').classList.add('hidden');
+      idAEliminar = null;
+    }, 800);
+  }
+});

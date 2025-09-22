@@ -274,6 +274,7 @@ body {
             margin: 30px auto;
             padding: 0 20px;
             min-height: 60vh;
+            flex: 1; 
         }
 
         .gallery-header {

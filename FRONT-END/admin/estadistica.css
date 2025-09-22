@@ -484,3 +484,63 @@ tbody td:nth-child(3),
 tbody td:nth-child(4) {
   width: auto;
 }
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn-cancel {
+  background: #aaa;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-cancel:hover {
+  background: #888;
+}
+
+.btn-confirm {
+  background: #FF4D4D;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-confirm:hover {
+  background: #e60000;
+}
+
+.hidden {
+  display: none !important;
+}
+

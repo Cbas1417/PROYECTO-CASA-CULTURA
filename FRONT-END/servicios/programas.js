@@ -246,3 +246,48 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     toggleSeccionInscripciones();
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btnIniciar = document.getElementById("btn-iniciar");
+  const btnRegistrar = document.getElementById("btn-registrar");
+  const perfilIcono = document.getElementById("perfil-icono");
+  const dropdownMenu = document.getElementById("dropdown-menu");
+  const cerrarSesion = document.getElementById("cerrar-sesion");
+
+  // Usamos siempre sessionStorage (puedes cambiarlo por localStorage si quieres)
+  const estaLogueado = sessionStorage.getItem("usuarioLogueado") === "true";
+
+  if (estaLogueado) {
+    if (btnIniciar) btnIniciar.style.display = "none";
+    if (btnRegistrar) btnRegistrar.style.display = "none";
+    if (perfilIcono) perfilIcono.style.display = "inline-block";
+  } else {
+    if (btnIniciar) btnIniciar.style.display = "inline-block";
+    if (btnRegistrar) btnRegistrar.style.display = "inline-block";
+    if (perfilIcono) perfilIcono.style.display = "none";
+  }
+
+  // Toggle del menú de perfil
+  if (perfilIcono && dropdownMenu) {
+    perfilIcono.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle("hidden");
+    });
+
+    // Ocultar si hago clic fuera
+    document.addEventListener("click", (e) => {
+      if (!perfilIcono.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        dropdownMenu.classList.add("hidden");
+      }
+    });
+  }
+
+  // Cerrar sesión
+  if (cerrarSesion) {
+    cerrarSesion.addEventListener("click", (e) => {
+      e.preventDefault();
+      sessionStorage.removeItem("usuarioLogueado");
+      window.location.href = "programas.html"; // redirige o recarga
+    });
+  }
+});

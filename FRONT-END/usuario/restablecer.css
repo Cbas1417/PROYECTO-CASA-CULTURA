@@ -7,10 +7,11 @@ body {
   color: #000;
   margin: 0;
   padding-top: 48px;
-  font-family: oblique;
+  font-style: oblique;
 }
 *, *::before, *::after {
   box-sizing: border-box;
+  font-style: oblique;
 }
 
 body::before {
@@ -179,63 +180,88 @@ button.btn-primary {
   cursor: pointer;
   margin-top: 8px;
   transition: opacity 0.2s;
+  margin-bottom: 10px;
 }
 
 button.btn-primary:hover {
   opacity: 0.9;
 }
 
-p.problema {
-  font-size: 12px;
-  margin-top: 16px;
+
+/* Footer */
+#footer {
+  background: #FF9015;
+  padding: 20px 0;
+  color: black;
+  width: 100%;
+  z-index: 1;
 }
 
-p.problema a {
-  color: inherit;
-  text-decoration: underline;
-  color: #ff9015;
-}
-
-footer.footer {
-  margin: 0;
-  background: #ff9015;
-  padding: 24px 32px;
+#footer-container {
   display: flex;
   align-items: center;
-  gap: 32px;
-  z-index: 1;
-  position: relative;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 20px;
 }
 
-.footer-logo img {
-  width: 60px;
+#footer-logo img {
+  height: 85px;
+  width: auto;
+  display: block;
 }
 
-.footer-info {
-  border-left: 2px solid #000;
-  padding-left: 32px;
-  font-size: 14px;
-  line-height: 1.5;
+#footer-divider {
+  width: 2px;
+  height: 60px;
+  background: black;
+  margin: 0 24px;
+  display: block;
+}
+
+#footer-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 180px;
+}
+
+#footer-info p {
+  margin: 0;
+  font-size: 1em;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  #footer-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  #footer-divider {
+    display: none;
+  }
+  #footer-logo img {
+    margin-bottom: 12px;
+  }
+  #footer-info {
+    margin-left: 0;
+    min-width: unset;
+  }
 }
 
 @media (max-width: 600px) {
-  form.carta {
-    width: 90%;
-    padding: 32px 24px;
+  #footer {
+    padding: 14px 0;
   }
-
-  form.carta h1 {
-    font-size: 36px;
+  #footer-info p {
+    font-size: 0.97em;
   }
-
-  footer.footer {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .footer-info {
-    border-left: none;
-    padding-left: 0;
+  #footer-logo img {
+    height: 65px;
   }
 }
 
@@ -268,8 +294,8 @@ footer.footer {
 .input-container .toggle-password {
   position: absolute;
   right: 12px;   /* pegado al borde derecho */
-  top: 50%;
-  transform: translateY(-50%);
+  top: 25%;
+  transform: translateY(-30%);
   cursor: pointer;
   color: #333;
   font-size: 18px;
