@@ -123,3 +123,22 @@ document.addEventListener("click", (e) => {
     dropdownMenu.classList.add("hidden");
   }
 });
+
+// =============================
+// MOSTRAR/OCULTAR BOTONES SEGÚN SESIÓN
+// =============================
+const btnIniciar = document.getElementById("btn-iniciar");
+const btnRegistrar = document.getElementById("btn-registrar");
+const perfilIcono = document.getElementById("perfil-icono");
+
+if (userId && token) {
+  // Usuario autenticado → ocultar registrar/iniciar, mostrar perfil
+  if (btnIniciar) btnIniciar.style.display = "none";
+  if (btnRegistrar) btnRegistrar.style.display = "none";
+  if (perfilIcono) perfilIcono.style.display = "block";
+} else {
+  // Usuario no autenticado → mostrar registrar/iniciar, ocultar perfil
+  if (btnIniciar) btnIniciar.style.display = "inline-block";
+  if (btnRegistrar) btnRegistrar.style.display = "inline-block";
+  if (perfilIcono) perfilIcono.style.display = "none";
+}
