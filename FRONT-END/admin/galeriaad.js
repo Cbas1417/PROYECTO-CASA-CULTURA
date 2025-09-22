@@ -427,21 +427,3 @@ window.addEventListener('error', function(e) {
 window.addEventListener('unhandledrejection', function(e) {
   console.error('Promesa rechazada:', e.reason);
 });
-
-
-function openModal(src) {
-    console.log('Abriendo modal con', src);  // aquí SÍ existe src
-    modalImage.src = src;
-    imageModal.classList.remove("hidden");
-}
-
-
-modalClose.addEventListener("click", () => {
-    imageModal.classList.add("hidden");
-});
-
-imageModal.addEventListener("click", (e) => {
-    if (e.target === imageModal) {
-        imageModal.classList.add("hidden");
-    }
-});
