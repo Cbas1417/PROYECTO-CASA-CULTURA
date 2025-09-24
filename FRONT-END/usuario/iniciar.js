@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = decodeURIComponent(paginaAnterior);
       } else {
         sessionStorage.setItem("usuarioLogueado", "true");
-        window.location.href = 'inicio.html';
+        window.location.href = 'index.html';
       }
     } catch (error) {
       if (error.response) {
