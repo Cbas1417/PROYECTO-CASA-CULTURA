@@ -322,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cerrarSesion.addEventListener("click", (e) => {
             e.preventDefault();
             sessionStorage.removeItem("usuarioLogueado");
-            window.location.href = "index.html";
+            window.location.href = "infantil.html";
         });
     }
 
